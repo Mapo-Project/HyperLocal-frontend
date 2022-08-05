@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <ResetStyle />
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/" replace />} />
