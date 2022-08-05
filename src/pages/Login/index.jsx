@@ -4,7 +4,7 @@ import { LoginContainer, LoginButton } from './style';
 
 function Login() {
   return (
-    <LoginContainer theme="#0C69A6">
+    <LoginContainer>
       <Header />
       <h1>로그인</h1>
       <LoginButton domain="kakao">

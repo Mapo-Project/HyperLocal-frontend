@@ -4,9 +4,10 @@ import MainContainer from '../../layout/MainContainer';
 
 export const LoginContainer = styled(MainContainer)`
   text-align: center;
+  background-color: #0c69a6;
 
   h1 {
-    margin-top: 40px;
+    margin-top: 16px;
     margin-bottom: 568px;
     font-style: normal;
     font-weight: 500;
