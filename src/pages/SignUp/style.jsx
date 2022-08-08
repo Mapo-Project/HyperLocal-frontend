@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from '../../components/Button';
 import MainContainer from '../../layout/MainContainer';
 
 export const SignUpContainer = styled(MainContainer)`
@@ -15,6 +16,12 @@ export const SignUpContainer = styled(MainContainer)`
 
     color: #212121;
   }
+`;
+export const SignupForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
 `;
 
 export const InputWrapper = styled.div`
@@ -60,7 +67,14 @@ export const ErrorChecker = styled.div`
   position: absolute;
   top: 19.13px;
   right: 19.13px;
-  background-image: url('./assets/images/signup_check.png');
+  background-image: url(${(props) =>
+    props.checked === 'checked'
+      ? './assets/images/signup_check.png'
+      : './assets/images/signup_uncheck.png'});
   width: 12.7px;
   height: 9.75px;
+`;
+
+export const SignupButton = styled(Button)`
+  margin-top: 311px;
 `;

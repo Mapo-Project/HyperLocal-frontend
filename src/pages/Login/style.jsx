@@ -23,7 +23,7 @@ export const LoginContainer = styled(MainContainer)`
 export const LoginButton = styled(Button)`
   height: 48px;
   margin-bottom: ${(props) => (props.domain === 'kakao' ? '16px' : '0')};
-  background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A;')};
+  background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A')};
 
   display: inline-flex;
   justify-content: center;
