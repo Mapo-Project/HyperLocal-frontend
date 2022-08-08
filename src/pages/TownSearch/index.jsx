@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
 import Header from '../../layout/Header';
 import {
@@ -22,6 +23,10 @@ const TownList = [
   { townId: 9, townName: '마포구 상암동' },
 ];
 function TownSearch() {
+  const navigate = useNavigate();
+  const onClickToTownRegistration = useCallback(() => {
+    navigate('/town/registration');
+  }, [navigate]);
   return (
     <TownSearchContainer>
       <Header />
@@ -31,7 +36,7 @@ function TownSearch() {
           <TownSearchInput placeholder="동네 찾기" />
           <div />
         </Label>
-        <TownSearchButton>
+        <TownSearchButton onClick={onClickToTownRegistration}>
           <div />내 위치로 찾기
         </TownSearchButton>
       </TownSearchForm>
