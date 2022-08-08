@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../../layout/Footer';
 import Header from '../../layout/Header';
 import { LoginContainer, LoginButton } from './style';
 
@@ -25,6 +26,7 @@ function Login() {
           <span>네이버 로그인</span>
         </div>
       </LoginButton>
+      <Footer />
     </LoginContainer>
   );
 }

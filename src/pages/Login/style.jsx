@@ -3,8 +3,8 @@ import Button from '../../components/Button';
 import MainContainer from '../../layout/MainContainer';
 
 export const LoginContainer = styled(MainContainer)`
+  position: relative;
   text-align: center;
-  background-color: #0c69a6;
 
   h1 {
     margin-top: 16px;
