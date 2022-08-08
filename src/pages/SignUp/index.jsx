@@ -18,7 +18,7 @@ function SignUp() {
       <form>
         <InputWrapper>
           <Label>
-            <Input type="text" id="userId" name="userId" />
+            <Input type="text" id="userId" name="userId" placeholder="아이디" />
           </Label>
           <Error>한글, 영문, 숫자로</Error>
           <ErrorChecker />
