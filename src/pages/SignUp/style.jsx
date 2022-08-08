@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import MainContainer from '../../layout/MainContainer';
 
 export const SignUpContainer = styled(MainContainer)`
+  position: relative;
   text-align: center;
   h1 {
     margin-top: 16px;
@@ -20,7 +21,7 @@ export const SignUpContainer = styled(MainContainer)`
 export const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
   align-items: center;
 `;
 
@@ -39,6 +40,13 @@ export const Input = styled.input`
   width: 100%;
   height: 48px;
 
+  font-family: 'Pretendard';
+  padding-left: 12px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
   background: #f5f5f5;
   border-radius: 4px 4px 0px 0px;
 
@@ -46,22 +54,21 @@ export const Input = styled.input`
   border-bottom: 1px solid black;
   ::placeholder,
   ::-webkit-input-placeholder {
-    padding-left: 12px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-
-    color: #212121;
+    color: #9e9e9e;
   }
 `;
 export const Error = styled.div`
   text-align: start;
+
+  margin-top: 4px;
+  margin-left: 16px;
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  color: #f4511e;
+
+  color: #dd2c00;
 `;
 export const ErrorChecker = styled.div`
   position: absolute;
@@ -76,5 +83,6 @@ export const ErrorChecker = styled.div`
 `;
 
 export const SignupButton = styled(Button)`
-  margin-top: 311px;
+  position: absolute;
+  bottom: 52px;
 `;

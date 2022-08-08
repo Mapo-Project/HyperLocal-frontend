@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 const HomeContainer = styled(MainContainer)`
+  position: relative;
   text-align: center;
   font-family: 'Pretendard';
-  background-color: #e8f5e9;
 
   h1 {
     font-style: normal;

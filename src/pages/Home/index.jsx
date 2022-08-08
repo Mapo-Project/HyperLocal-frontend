@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Button from '../../components/Button';
+import Footer from '../../layout/Footer';
 import HomeContainer from './style';
 
 function Home() {
@@ -25,6 +26,7 @@ function Home() {
       <Button onClick={onClickToLogin}>
         <span>시작하기</span>
       </Button>
+      <Footer />
     </HomeContainer>
   );
 }

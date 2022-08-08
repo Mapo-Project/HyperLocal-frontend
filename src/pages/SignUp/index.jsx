@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router';
+import Footer from '../../layout/Footer';
 import Header from '../../layout/Header';
 import {
   Error,
@@ -12,11 +14,19 @@ import {
 } from './style';
 
 function SignUp() {
+  const navigate = useNavigate();
+  const onSubmitSignUp = useCallback(
+    (e) => {
+      e.preventDefault();
+      navigate('/town/search');
+    },
+    [navigate],
+  );
   return (
     <SignUpContainer>
       <Header />
       <h1>프로필 설정</h1>
-      <SignupForm>
+      <SignupForm onSubmit={onSubmitSignUp}>
         <InputWrapper>
           <Label>
             <Input type="text" id="userId" name="userId" placeholder="아이디" />
@@ -45,6 +55,7 @@ function SignUp() {
         </InputWrapper>
         <SignupButton>확인</SignupButton>
       </SignupForm>
+      <Footer />
     </SignUpContainer>
   );
 }
