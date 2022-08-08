@@ -4,6 +4,7 @@ import MainContainer from '../../layout/MainContainer';
 const HomeContainer = styled(MainContainer)`
   text-align: center;
   font-family: 'Pretendard';
+  background-color: #e8f5e9;
 
   h1 {
     font-style: normal;

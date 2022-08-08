@@ -4,9 +4,10 @@ import MainContainer from '../../layout/MainContainer';
 
 export const LoginContainer = styled(MainContainer)`
   text-align: center;
+  background-color: #0c69a6;
 
   h1 {
-    margin-top: 40px;
+    margin-top: 16px;
     margin-bottom: 568px;
     font-style: normal;
     font-weight: 500;
@@ -22,7 +23,7 @@ export const LoginContainer = styled(MainContainer)`
 export const LoginButton = styled(Button)`
   height: 48px;
   margin-bottom: ${(props) => (props.domain === 'kakao' ? '16px' : '0')};
-  background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A;')};
+  background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A')};
 
   display: inline-flex;
   justify-content: center;

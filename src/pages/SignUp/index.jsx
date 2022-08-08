@@ -1,7 +1,52 @@
 import React from 'react';
+import Header from '../../layout/Header';
+import {
+  Error,
+  ErrorChecker,
+  Input,
+  InputWrapper,
+  Label,
+  SignupButton,
+  SignUpContainer,
+  SignupForm,
+} from './style';
 
 function SignUp() {
-  return <div>회원가입 화면</div>;
+  return (
+    <SignUpContainer>
+      <Header />
+      <h1>프로필 설정</h1>
+      <SignupForm>
+        <InputWrapper>
+          <Label>
+            <Input type="text" id="userId" name="userId" placeholder="아이디" />
+          </Label>
+          <Error>한글, 영문, 숫자로</Error>
+          <ErrorChecker checked="checked" />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>
+            <Input
+              type="text"
+              id="phonenum"
+              name="phonenum"
+              placeholder="전화번호"
+            />
+          </Label>
+          <Error>유효하지 않은 전화번호입니다.</Error>
+          <ErrorChecker checked="checked" />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>
+            <Input type="email" id="email" name="email" placeholder="이메일" />
+          </Label>
+          <Error>사용할 수 없는 이메일입니다.</Error>
+          <ErrorChecker checked="unchecked" />
+        </InputWrapper>
+        <SignupButton>확인</SignupButton>
+      </SignupForm>
+    </SignUpContainer>
+  );
 }
 
 export default SignUp;
