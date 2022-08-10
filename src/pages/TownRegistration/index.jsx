@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
-import Header from '../../layout/Header';
 import {
   RegisteredTown,
   TownRegistrationButton,
@@ -17,7 +16,6 @@ function TownRegistration() {
   }, [navigate]);
   return (
     <TownRegistrationContainer>
-      <Header />
       <h1>동네 등록</h1>
 
       <TownRegistrationList>

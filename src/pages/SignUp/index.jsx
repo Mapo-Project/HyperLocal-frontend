@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
-import Header from '../../layout/Header';
 import {
   Error,
   ErrorChecker,
@@ -24,7 +23,6 @@ function SignUp() {
   );
   return (
     <SignUpContainer>
-      <Header />
       <h1>프로필 설정</h1>
       <SignupForm onSubmit={onSubmitSignUp}>
         <InputWrapper>

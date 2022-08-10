@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
-import Header from '../../layout/Header';
 import { LoginContainer, LoginButton } from './style';
 
 function Login() {
@@ -11,7 +10,6 @@ function Login() {
   }, [navigate]);
   return (
     <LoginContainer>
-      <Header />
       <h1>로그인</h1>
       <LoginButton domain="kakao" onClick={onClickToSignup}>
         <div>
