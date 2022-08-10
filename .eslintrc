@@ -17,6 +17,15 @@
   "rules": {
     "object-curly-newline": 0,
     "linebreak-style": 0,
+    // import 제한 해제
+    "import/extensions": 0,
+    // prop-type 제한 해제
+    "react/prop-types": 0,
+    // props 스프레드 연산자 쓸 수 있게
+    "react/jsx-props-no-spreading": 0,
+    "react/no-array-index-key": 0,
+    // button 아닌 html tag도 버튼처럼 쓸 수 있게
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": 0,
 
     // 함수 컴포넌트 함수선언문 -> 화살표함수
     "react/function-component-definition": [
