@@ -27,6 +27,7 @@ function SignUp() {
       <SignupForm onSubmit={onSubmitSignUp}>
         <InputWrapper>
           <Label>
+            <span>아이디</span>
             <Input type="text" id="userId" name="userId" placeholder="아이디" />
           </Label>
           <Error>한글, 영문, 숫자로</Error>
@@ -34,6 +35,7 @@ function SignUp() {
         </InputWrapper>
         <InputWrapper>
           <Label>
+            <span>전화번호</span>
             <Input
               type="text"
               id="phonenum"
@@ -46,7 +48,8 @@ function SignUp() {
         </InputWrapper>
         <InputWrapper>
           <Label>
-            <Input type="email" id="email" name="email" placeholder="이메일" />
+            <span>E-mail</span>
+            <Input type="email" id="email" name="email" placeholder="E-mail" />
           </Label>
           <Error>사용할 수 없는 이메일입니다.</Error>
           <ErrorChecker checked="unchecked" />

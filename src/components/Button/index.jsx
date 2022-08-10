@@ -2,14 +2,17 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   width: 328px;
-  height: 44px;
+  height: 48px;
 
-  background-color: ${(props) => props.backgroundColor};
+  padding: 14px 16px;
+
+  background-color: #424242;
   border-radius: 4px;
   border: 0;
 
   cursor: pointer;
 
+  font-family: 'Pretendard';
   color: #ffffff;
   font-style: normal;
   font-weight: 500;
@@ -18,9 +21,5 @@ const Button = styled.button`
   text-align: center;
   letter-spacing: 0.25px;
 `;
-
-Button.defaultProps = {
-  backgroundColor: '#424242',
-};
 
 export default Button;

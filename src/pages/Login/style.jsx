@@ -8,7 +8,6 @@ export const LoginContainer = styled(MainContainer)`
 
   h1 {
     margin-top: 16px;
-    margin-bottom: 568px;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -21,13 +20,10 @@ export const LoginContainer = styled(MainContainer)`
 `;
 
 export const LoginButton = styled(Button)`
-  height: 48px;
-  margin-bottom: ${(props) => (props.domain === 'kakao' ? '16px' : '0')};
   background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A')};
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  bottom: ${(props) => (props.domain === 'kakao' ? '116px' : '52px')};
+  left: 16px;
 
   div {
     display: flex;
