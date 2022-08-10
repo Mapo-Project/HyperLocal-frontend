@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
-import Header from '../../layout/Header';
 import {
   Label,
   TownItem,
@@ -29,7 +28,6 @@ function TownSearch() {
   }, [navigate]);
   return (
     <TownSearchContainer>
-      <Header />
       <h1>동네 찾기</h1>
       <TownSearchForm>
         <Label>

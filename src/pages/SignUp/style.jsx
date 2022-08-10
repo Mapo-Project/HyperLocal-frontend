@@ -27,13 +27,26 @@ export const SignupForm = styled.form`
 
 export const InputWrapper = styled.div`
   width: 328px;
-  height: 64px;
   position: relative;
   margin: auto;
 `;
 export const Label = styled.label`
   width: 100%;
   height: 48px;
+
+  span {
+    display: block;
+    text-align: start;
+
+    margin-bottom: 2px;
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #212121;
+  }
 `;
 
 export const Input = styled.input`
@@ -72,8 +85,8 @@ export const Error = styled.div`
 `;
 export const ErrorChecker = styled.div`
   position: absolute;
-  top: 19.13px;
-  right: 19.13px;
+  top: 40px;
+  right: 19px;
   background-image: url(${(props) =>
     props.checked === 'checked'
       ? './assets/images/signup_check.png'
