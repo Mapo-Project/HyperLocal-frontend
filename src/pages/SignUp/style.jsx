@@ -83,16 +83,11 @@ export const Error = styled.div`
 
   color: #dd2c00;
 `;
-export const ErrorChecker = styled.div`
+export const ErrorChecker = styled.img`
   position: absolute;
   top: 40px;
   right: 19px;
-  background-image: url(${(props) =>
-    props.checked === 'checked'
-      ? './assets/images/signup_check.png'
-      : './assets/images/signup_uncheck.png'});
   width: 12.7px;
-  height: 9.75px;
 `;
 
 export const SignupButton = styled(Button)`

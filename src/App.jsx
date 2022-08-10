@@ -7,6 +7,10 @@ import TownSearch from './pages/TownSearch';
 import ResetStyle from './utils/ResetStyle';
 import SocialLoginCallback from './pages/SocialLoginCallback';
 import Main from './pages/Main';
+import Create from './pages/Create';
+import MyPage from './pages/MyPage';
+import Interesting from './pages/Interesting';
+import Detail from './pages/Detail';
 
 function App() {
   return (
@@ -22,8 +26,12 @@ function App() {
             element={<SocialLoginCallback />}
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/town/search" element={<TownSearch />} />
-          <Route path="/town/registration" element={<TownRegistration />} />
+          <Route path="/town" element={<TownSearch />} />
+          <Route path="/town/regist" element={<TownRegistration />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/interesting" element={<Interesting />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
       </BrowserRouter>
     </>

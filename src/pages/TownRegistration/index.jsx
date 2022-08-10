@@ -21,13 +21,22 @@ function TownRegistration() {
       <TownRegistrationList>
         <RegisteredTown>
           마포구 성산동
-          <div />
+          <img
+            alt="search_cancel"
+            src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
+          />
         </RegisteredTown>
         <UnRegisteredTown>
-          <div />
+          <img
+            alt="search_cancel"
+            src={`${process.env.PUBLIC_URL}/assets/images/search_add.png`}
+          />
         </UnRegisteredTown>
         <UnRegisteredTown>
-          <div />
+          <img
+            alt="search_cancel"
+            src={`${process.env.PUBLIC_URL}/assets/images/search_add.png`}
+          />
         </UnRegisteredTown>
       </TownRegistrationList>
       <TownRegistrationButton onClick={onClickToMain}>
