@@ -30,13 +30,11 @@ export const Label = styled.label`
   position: relative;
   height: 56px;
   width: 328px;
-  div {
+  img {
     position: absolute;
     top: 21px;
     left: 19px;
     width: 14px;
-    height: 14px;
-    background-image: url('./../assets/images/town_search.png');
   }
 `;
 
@@ -71,10 +69,8 @@ export const TownSearchButton = styled(Button)`
   align-items: center;
   gap: 9px;
 
-  div {
+  img {
     width: 18px;
-    height: 18px;
-    background-image: url('./../assets/images/town_my_location.png');
   }
 `;
 

@@ -27,13 +27,14 @@ function MainItems({
   itemsHeartCount,
   itemsDeadline,
   isHeartEmpty,
-  isLock,
   onClickHeart,
+  onClickToDetailPage,
 }) {
   const ref = useRef();
   const { events } = useDraggable(ref);
+
   return (
-    <MainItemsContainer>
+    <MainItemsContainer onClick={onClickToDetailPage}>
       <div className="items_header">
         <div className="items_tag_wrapper" ref={ref} {...events}>
           {itemsTag.map((tag, idx) => (
@@ -71,7 +72,7 @@ function MainItems({
         </div>
         <div className="items_img_wrapper">
           {/* lock걸려있으면 사진을 보여주지 않음 */}
-          {isLock ? (
+          {itemsPrice !== '같이 정해요' ? (
             <img src={itemsImg} alt="items_img" />
           ) : (
             <div>
@@ -118,7 +119,7 @@ function Main() {
   const onSortByLocation = useCallback(() => {
     setMaindata([
       ...mainItemsData.filter((data) =>
-        data.itemsTownLocation.includes(selectedOption?.label),
+        data.itemsTownLocation.includes(selectedOption.label),
       ),
     ]);
   }, [selectedOption?.label]);
@@ -151,6 +152,19 @@ function Main() {
   const onClickToCreatePage = () => {
     navigate('/create');
   };
+  const onClickToLoginPage = () => {
+    navigate('/login');
+  };
+  const onClickToMyPage = () => {
+    navigate('/mypage');
+  };
+  const onClickToInterestingnPage = () => {
+    navigate('/interesting');
+  };
+  const onClickToDetailPage = () => {
+    navigate('/detail/2');
+  };
+
   return (
     <MainPageContainer>
       <FindTown>
@@ -170,14 +184,27 @@ function Main() {
             src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
             alt="search"
           />
-          <span className="FindTown_login">login</span>
+          <span
+            role="button"
+            onKeyDown={onClickToLoginPage}
+            tabIndex={0}
+            className="FindTown_login"
+            onClick={onClickToLoginPage}
+          >
+            login
+          </span>
         </div>
       </FindTown>
 
       <div className="main_banner" />
       <MainScrollbars autoHide style={{ height: '520px' }}>
         {maindata?.map((data) => (
-          <MainItems key={data.itemId} {...data} onClickHeart={onClickHeart} />
+          <MainItems
+            key={data.itemId}
+            {...data}
+            onClickHeart={onClickHeart}
+            onClickToDetailPage={onClickToDetailPage}
+          />
         ))}
       </MainScrollbars>
 
@@ -199,7 +226,13 @@ function Main() {
           </div>
           <div className="menu_text">홈</div>
         </div>
-        <div className="menu_container">
+        <div
+          className="menu_container"
+          role="button"
+          onKeyDown={onClickToInterestingnPage}
+          tabIndex={0}
+          onClick={onClickToInterestingnPage}
+        >
           <div className="menu_border">
             <img
               className="menu_photo"
@@ -219,7 +252,13 @@ function Main() {
           </div>
           <div className="menu_text">채팅</div>
         </div>
-        <div className="menu_container">
+        <div
+          className="menu_container"
+          role="button"
+          onKeyDown={onClickToMyPage}
+          tabIndex={0}
+          onClick={onClickToMyPage}
+        >
           <div className="menu_border">
             <img
               className="menu_photo"

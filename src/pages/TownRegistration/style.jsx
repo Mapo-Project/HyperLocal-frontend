@@ -50,10 +50,8 @@ export const RegisteredTown = styled.button`
 
   cursor: pointer;
 
-  div {
+  img {
     width: 20px;
-    height: 20px;
-    background-image: url('./../assets/images/search_cancel.png');
   }
 `;
 export const UnRegisteredTown = styled.button`
@@ -70,10 +68,8 @@ export const UnRegisteredTown = styled.button`
 
   cursor: pointer;
 
-  div {
+  img {
     width: 14px;
-    height: 14px;
-    background-image: url('./../assets/images/search_add.png');
   }
 `;
 

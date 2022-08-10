@@ -24,7 +24,7 @@ const TownList = [
 function TownSearch() {
   const navigate = useNavigate();
   const onClickToTownRegistration = useCallback(() => {
-    navigate('/town/registration');
+    navigate('/town/regist');
   }, [navigate]);
   return (
     <TownSearchContainer>
@@ -32,10 +32,17 @@ function TownSearch() {
       <TownSearchForm>
         <Label>
           <TownSearchInput placeholder="동네 찾기" />
-          <div />
+          <img
+            alt="town_search"
+            src={`${process.env.PUBLIC_URL}/assets/images/town_search.png`}
+          />
         </Label>
         <TownSearchButton onClick={onClickToTownRegistration}>
-          <div />내 위치로 찾기
+          <img
+            alt="town_my_location"
+            src={`${process.env.PUBLIC_URL}/assets/images/town_my_location.png`}
+          />
+          내 위치로 찾기
         </TownSearchButton>
       </TownSearchForm>
       {TownList.map((town) => (
