@@ -1,6 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate } from 'react-router';
+import useSWR from 'swr';
+import axios from 'axios';
+import useInput from '../../hooks/useInput';
 import Footer from '../../layout/Footer';
+import getAccessData from '../../utils/getAccessData';
 import {
   Error,
   ErrorChecker,
@@ -11,30 +15,109 @@ import {
   SignUpContainer,
   SignupForm,
 } from './style';
+import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 function SignUp() {
-  const navigate = useNavigate();
+  /*
+  새로고침 시 마다 userAccessData 사라지니 아예 로컬,세션 스토리지에 저장?
+  세션스토리지에서 유저 데이터 불러옴
+  지속적으로 유저데이터를 받아와야하므로 swr를 이용
+*/
+
+  const { data: userAccessData } = useSWR('localStorage', getAccessData);
+
+  const { data: userData, mutate: userMutate } = useSWR(
+    'http://172.30.1.5:7979/user/profile/select',
+    fetcherAccessToken,
+  );
+
+  // 닉네임
+  const [nickname, setNickname, onChangeNickname] = useInput('');
+  // 전화번호
+  const [phoneNum, setPhoneNum, onChangePhoneNum] = useInput('');
+  // 이메일
+  const [email, setEmail, onChangeEmail] = useInput('');
+
+  const [idCheck, setIdCheck] = useState(false);
+  const [phoneNumCheck, setPhoneNumCheck] = useState(false);
+  const [EmailCheck, setEmailCheck] = useState(false);
+
+  // 회원가입
   const onSubmitSignUp = useCallback(
     (e) => {
       e.preventDefault();
-      navigate('/town');
-    },
-    [navigate],
-  );
 
-  const [idCheck, setIdCheck] = useState(false);
-  const [phonenumCheck, setPhonenumCheck] = useState(false);
-  const [EmailCheck, setEmailCheck] = useState(false);
+      // setJoinError('');
+      axios
+        .post(
+          'http://172.30.1.5:7979/user/profile/add',
+          {
+            nickname,
+            phoneNum,
+            email,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userAccessData.accessToken}`,
+            },
+          },
+        )
+        .then((response) => {
+          console.log(response);
+          // setJoinError(response.data.message);
+          userMutate();
+
+          window.localStorage.verify = 'Y';
+
+          alert('회원가입되었습니다');
+        })
+        .catch((error) => {
+          console.log(error);
+          // setJoinError(error.response?.data.message);
+        });
+      setNickname('');
+      setPhoneNum('');
+      setEmail('');
+    },
+    [
+      nickname,
+      phoneNum,
+      setPhoneNum,
+      setEmail,
+      email,
+      userMutate,
+      // setJoinError,
+      setNickname,
+      userAccessData?.accessToken,
+    ],
+  );
 
   const onClickToIdChecked = useCallback(() => {
     setIdCheck(!idCheck);
   }, [idCheck]);
-  const onClickToPhonenumChecked = useCallback(() => {
-    setPhonenumCheck(!phonenumCheck);
-  }, [phonenumCheck]);
+  const onClickToPhoneNumChecked = useCallback(() => {
+    setPhoneNumCheck(!phoneNumCheck);
+  }, [phoneNumCheck]);
   const onClickToEmailChecked = useCallback(() => {
     setEmailCheck(!EmailCheck);
   }, [EmailCheck]);
+
+  if (userAccessData === undefined || userData === undefined) {
+    return <div>로딩중</div>;
+  }
+
+  // 토큰은 있지만 유저 아이디가 없어서 http 통신은 200으로 성공했지만 내부 statuscode는 400이다.
+  // if (!(userData.statusCode === 400)) {
+  //   return <Navigate to="/" replace />;
+  // }
+
+  // if (userAccessData.verify === 'Y') {
+  //   return <Navigate to="/" replace />;
+  // }
+  if (userData) {
+    console.log(userData);
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <SignUpContainer>
@@ -43,7 +126,14 @@ function SignUp() {
         <InputWrapper>
           <Label>
             <span>아이디</span>
-            <Input type="text" id="userId" name="userId" placeholder="아이디" />
+            <Input
+              type="text"
+              id="nickname"
+              name="nickname"
+              placeholder="아이디"
+              onChange={onChangeNickname}
+              value={nickname}
+            />
           </Label>
           <Error>한글, 영문, 숫자로</Error>
           <ErrorChecker
@@ -60,17 +150,19 @@ function SignUp() {
             <span>전화번호</span>
             <Input
               type="text"
-              id="phonenum"
-              name="phonenum"
+              id="phoneNum"
+              name="phoneNum"
               placeholder="전화번호"
+              onChange={onChangePhoneNum}
+              value={phoneNum}
             />
           </Label>
 
           <Error>유효하지 않은 전화번호입니다.</Error>
           <ErrorChecker
-            onClick={onClickToPhonenumChecked}
+            onClick={onClickToPhoneNumChecked}
             src={
-              phonenumCheck
+              phoneNumCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
                 : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
             }
@@ -79,7 +171,14 @@ function SignUp() {
         <InputWrapper>
           <Label>
             <span>E-mail</span>
-            <Input type="email" id="email" name="email" placeholder="E-mail" />
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="E-mail"
+              onChange={onChangeEmail}
+              value={email}
+            />
           </Label>
           <Error>사용할 수 없는 이메일입니다.</Error>
           <ErrorChecker

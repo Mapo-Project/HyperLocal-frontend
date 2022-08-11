@@ -3,6 +3,7 @@ import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Select from 'react-select';
 import { useDraggable } from 'react-use-draggable-scroll';
+import useSWR from 'swr';
 
 import {
   FindTown,
@@ -14,6 +15,7 @@ import {
 } from './style';
 
 import { mainItemsData, options } from '../../utils/dummyData/mainPageData.js';
+import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 function MainItems({
   itemId,
@@ -112,6 +114,11 @@ function MainItems({
 }
 
 function Main() {
+  const { data: userData } = useSWR(
+    'http://172.30.1.5:7979/user/profile/select',
+    fetcherAccessToken,
+  );
+
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const [maindata, setMaindata] = useState();
@@ -165,6 +172,7 @@ function Main() {
     navigate('/detail/2');
   };
 
+  console.log(userData);
   return (
     <MainPageContainer>
       <FindTown>
@@ -184,15 +192,19 @@ function Main() {
             src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
             alt="search"
           />
-          <span
-            role="button"
-            onKeyDown={onClickToLoginPage}
-            tabIndex={0}
-            className="FindTown_login"
-            onClick={onClickToLoginPage}
-          >
-            login
-          </span>
+          {!userData ? (
+            <span
+              role="button"
+              onKeyDown={onClickToLoginPage}
+              tabIndex={0}
+              className="FindTown_login"
+              onClick={onClickToLoginPage}
+            >
+              login
+            </span>
+          ) : (
+            <span>신고</span>
+          )}
         </div>
       </FindTown>
 
@@ -255,9 +267,9 @@ function Main() {
         <div
           className="menu_container"
           role="button"
-          onKeyDown={onClickToMyPage}
+          onKeyDown={userData ? onClickToMyPage : null}
           tabIndex={0}
-          onClick={onClickToMyPage}
+          onClick={userData ? onClickToMyPage : null}
         >
           <div className="menu_border">
             <img
