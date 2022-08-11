@@ -86,6 +86,7 @@ function MyPage() {
       <h1>nickname : {userData.data.nickname}</h1>
       <h1>email : {userData.data.email}</h1>
       <h1>전화번호 : {userData.data.phoneNum}</h1>
+      <img alt="profile_img" src={userData.data.profileImg} />
     </MyPageMainContainer>
   );
 }

@@ -203,7 +203,15 @@ function Main() {
               login
             </span>
           ) : (
-            <span>신고</span>
+            <img
+              className="main_profile"
+              role="button"
+              onKeyDown={onClickToLoginPage}
+              tabIndex={0}
+              alt="profile_img"
+              src={userData.data.profileImg}
+              onClick={onClickToMyPage}
+            />
           )}
         </div>
       </FindTown>

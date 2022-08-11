@@ -56,6 +56,11 @@ export const FindTown = styled.div`
     color: #212121;
     cursor: pointer;
   }
+  .main_profile {
+    width: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 `;
 
 export const Footer = styled.div`
