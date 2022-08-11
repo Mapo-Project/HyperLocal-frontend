@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Navigate } from 'react-router';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -42,12 +42,75 @@ function SignUp() {
   const [phoneNumCheck, setPhoneNumCheck] = useState(false);
   const [EmailCheck, setEmailCheck] = useState(false);
 
+  // 닉네임 중복체크 메시지
+  const [isNicknameDoubleCheck, setIsNicknameDoubleCheck] = useState('');
+
+  // 회원가입 에러 메시지
+  const [joinError, setJoinError] = useState('');
+
+  // 전화번호 validation
+  const phoneNumRef = useRef();
+
+  const changePhoneNum = () => {
+    const value = phoneNumRef.current.value.replace(/\D+/g, '');
+    const numberLength = 11;
+    let result = '';
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < value.length && i < numberLength; i++) {
+      switch (i) {
+        case 3:
+          result += '-';
+          break;
+        case 7:
+          result += '-';
+          break;
+        default:
+          break;
+      }
+      result += value[i];
+    }
+    phoneNumRef.current.value = result;
+  };
+
+  const isWrongPhone = useCallback(() => {
+    // eslint-disable-next-line no-unused-expressions
+    console.log(phoneNumRef.current.value.length);
+    // eslint-disable-next-line no-unused-expressions
+    phoneNumRef.current.value.length === 13
+      ? setPhoneNumCheck(true)
+      : setPhoneNumCheck(false);
+  }, []);
+
+  /**
+   * profile validation
+   *
+   * ID(nickname)
+   * 사용 중인 아이디입니다.(중복체크)
+   * 띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.
+   * 최소 2자 이상으로 작성해주세요.
+   * 최대 12자까지 작성할 수 있어요.
+   * 모든 조건이 완료되었을때 초록색 체크
+   *
+   * phoneNum
+   * 010-1111-1111
+   * 숫자만 가능
+   * 자동으로 - 추가됨
+   * 유효하지 않은 전화번호입니다.
+   * 모든 조건이 완료되었을때 초록색 체크
+   *
+   * Email
+   * ee@cc.com 정도
+   * 사용할 수 없는 이메일입니다.
+   * 모든 조건이 완료되었을때 초록색 체크
+   *
+   * 셋 다 조건이 완료되었을때 회원가입 버튼 활성화
+   */
+
   // 회원가입
   const onSubmitSignUp = useCallback(
     (e) => {
       e.preventDefault();
 
-      // setJoinError('');
       axios
         .post(
           'http://172.30.1.5:7979/user/profile/add',
@@ -69,36 +132,39 @@ function SignUp() {
 
           window.localStorage.verify = 'Y';
 
-          alert('회원가입되었습니다');
+          alert('회원가입되었습니다'); // 추후 삭제
         })
         .catch((error) => {
           console.log(error);
           alert(error.response?.data.message);
-          // setJoinError(error.response?.data.message);
+          setJoinError(error.response?.data.message);
         });
       setNickname('');
       setPhoneNum('');
       setEmail('');
     },
-    [
-      nickname,
-      phoneNum,
-      setPhoneNum,
-      setEmail,
-      email,
-      userMutate,
-      // setJoinError,
-      setNickname,
-      // userAccessData?.accessToken,
-    ],
+    [nickname, phoneNum, setPhoneNum, setEmail, email, userMutate, setNickname],
   );
+
+  // 중복체크 - get방식 , API : /user/duplicate/nickname/{nickname}
+  const doubleCheck = useCallback(() => {
+    axios
+      .get(`http://172.30.1.5:7979/user/  duplicate/nickname/${nickname}`)
+      .then((response) => {
+        // console.log(response);
+        // eslint-disable-next-line no-unused-expressions
+        response.data.duplicate === 'duplicate'
+          ? setIsNicknameDoubleCheck('사용 중인 아이디입니다.')
+          : setIsNicknameDoubleCheck('');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [nickname]);
 
   const onClickToIdChecked = useCallback(() => {
     setIdCheck(!idCheck);
   }, [idCheck]);
-  const onClickToPhoneNumChecked = useCallback(() => {
-    setPhoneNumCheck(!phoneNumCheck);
-  }, [phoneNumCheck]);
   const onClickToEmailChecked = useCallback(() => {
     setEmailCheck(!EmailCheck);
   }, [EmailCheck]);
@@ -126,9 +192,10 @@ function SignUp() {
               placeholder="아이디"
               onChange={onChangeNickname}
               value={nickname}
+              onBlur={doubleCheck}
             />
           </Label>
-          <Error>한글, 영문, 숫자로</Error>
+          <Error>{isNicknameDoubleCheck}</Error>
           <ErrorChecker
             onClick={onClickToIdChecked}
             src={
@@ -142,18 +209,26 @@ function SignUp() {
           <Label>
             <span>전화번호</span>
             <Input
+              ref={phoneNumRef}
               type="text"
               id="phoneNum"
               name="phoneNum"
               placeholder="전화번호"
-              onChange={onChangePhoneNum}
+              onChange={(e) => {
+                changePhoneNum();
+                onChangePhoneNum(e);
+              }}
               value={phoneNum}
+              onBlur={isWrongPhone}
             />
           </Label>
 
-          <Error>유효하지 않은 전화번호입니다.</Error>
+          <Error>
+            {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
+            {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
+            <span>{phoneNumCheck ? '사용가능한 전화번호 입니다' : ''}</span>
+          </Error>
           <ErrorChecker
-            onClick={onClickToPhoneNumChecked}
             src={
               phoneNumCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
@@ -173,7 +248,7 @@ function SignUp() {
               value={email}
             />
           </Label>
-          <Error>사용할 수 없는 이메일입니다.</Error>
+          <Error>.</Error>
           <ErrorChecker
             onClick={onClickToEmailChecked}
             src={
@@ -185,6 +260,7 @@ function SignUp() {
         </InputWrapper>
         <SignupButton>확인</SignupButton>
       </SignupForm>
+      {joinError}
       <Footer />
     </SignUpContainer>
   );
