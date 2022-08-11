@@ -4,17 +4,10 @@ import { Navigate } from 'react-router';
 import useSWR from 'swr';
 
 import axios from 'axios';
-import getAccessData from '../../utils/getAccessData';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import { MyPageMainContainer } from './style';
 
 function MyPage() {
-  // 로컬스토리지
-  const { data: userAccessData, mutate: userAccessMutate } = useSWR(
-    'localStorage',
-    getAccessData,
-  );
-
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
     'http://172.30.1.5:7979/user/profile/select',
@@ -25,14 +18,14 @@ function MyPage() {
 
   /**
    * 로그아웃
-   * 성공 시 로컬스토리지 비우고 swr데이터(유저, 로컬스토리지 데이터) 초기화한다.
+   * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const Logout = useCallback(() => {
     setLogout(false);
     axios
       .get('http://172.30.1.5:7979/user/logout', {
         headers: {
-          Authorization: `Bearer ${userAccessData.accessToken}`,
+          Authorization: `Bearer ${localStorage.accessToken}`,
         },
       })
       .then((response) => {
@@ -41,39 +34,37 @@ function MyPage() {
 
         // 로그아웃 후 로컬스토리지 비우고 swr데이터들을 초기화한다.
         window.localStorage.clear();
-        userAccessMutate();
         userMutate();
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [setLogout, userAccessMutate, userMutate, userAccessData?.accessToken]);
+  }, [setLogout, userMutate]);
 
   /**
    * 회원탈퇴
-   * 성공 시 로컬스토리지 비우고 swr데이터(유저, 로컬스토리지 데이터) 초기화한다.
+   * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const withdrawal = useCallback(() => {
     axios
       .delete('http://172.30.1.5:7979/user/withdrawal', {
         headers: {
-          Authorization: `Bearer ${userAccessData.accessToken}`,
+          Authorization: `Bearer ${localStorage.accessToken}`,
         },
       })
       .then((response) => {
         console.log(response);
         // 탈퇴 후 로컬스토리지 비우고 swr데이터들을 초기화한다.
         window.localStorage.clear();
-        userAccessMutate();
         userMutate();
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [userAccessMutate, userMutate, userAccessData?.accessToken]);
+  }, [userMutate]);
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
-  if (userAccessData === undefined || userData === undefined) {
+  if (userData === undefined) {
     return <div>로딩중</div>;
   }
 
@@ -81,7 +72,7 @@ function MyPage() {
   if (!userData) {
     return <Navigate to="/" replace />;
   }
-  // console.log(userData);
+
   return (
     <MyPageMainContainer>
       <h1>마이페이지</h1>

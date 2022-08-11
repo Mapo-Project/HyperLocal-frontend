@@ -1,9 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router';
-import useSWR from 'swr';
 
 import Footer from '../../layout/Footer';
-import getAccessData from '../../utils/getAccessData';
 import { LoginContainer, LoginButton } from './style';
 
 function Login() {
@@ -11,14 +9,10 @@ function Login() {
   const NAVER_AUTH_URL = process.env.REACT_APP_NAVER_AUTH_URL;
 
   /*
-  verify === Y, 즉 추가 회원정보가 있으면 main으로
-  verify === N, 가입은 되었지만 추가회원정보가 없으면 join으로
-  가입이 안되어있다면 그냥 login페이지를 보여줌
+  verify === N, 가입은 되었지만 추가회원정보가 없으면 signup으로
   */
 
-  const { data: userAccessData } = useSWR('localStorage', getAccessData);
-
-  if (userAccessData?.verify === 'N') {
+  if (window.localStorage.verify === 'N') {
     return <Navigate to="/signup" replace />;
   }
 

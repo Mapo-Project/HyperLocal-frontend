@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
 import Footer from '../../layout/Footer';
-import getAccessData from '../../utils/getAccessData';
+// import getAccessData from '../../utils/getAccessData';
 import {
   Error,
   ErrorChecker,
@@ -24,7 +24,7 @@ function SignUp() {
   지속적으로 유저데이터를 받아와야하므로 swr를 이용
 */
 
-  const { data: userAccessData } = useSWR('localStorage', getAccessData);
+  // const { data: userAccessData } = useSWR('localStorage', getAccessData);
 
   const { data: userData, mutate: userMutate } = useSWR(
     'http://172.30.1.5:7979/user/profile/select',
@@ -58,7 +58,7 @@ function SignUp() {
           },
           {
             headers: {
-              Authorization: `Bearer ${userAccessData.accessToken}`,
+              Authorization: `Bearer ${localStorage.accessToken}`,
             },
           },
         )
@@ -73,6 +73,7 @@ function SignUp() {
         })
         .catch((error) => {
           console.log(error);
+          alert(error.response?.data.message);
           // setJoinError(error.response?.data.message);
         });
       setNickname('');
@@ -88,7 +89,7 @@ function SignUp() {
       userMutate,
       // setJoinError,
       setNickname,
-      userAccessData?.accessToken,
+      // userAccessData?.accessToken,
     ],
   );
 
@@ -102,20 +103,12 @@ function SignUp() {
     setEmailCheck(!EmailCheck);
   }, [EmailCheck]);
 
-  if (userAccessData === undefined || userData === undefined) {
+  if (userData === undefined) {
     return <div>로딩중</div>;
   }
 
-  // 토큰은 있지만 유저 아이디가 없어서 http 통신은 200으로 성공했지만 내부 statuscode는 400이다.
-  // if (!(userData.statusCode === 400)) {
-  //   return <Navigate to="/" replace />;
-  // }
-
-  // if (userAccessData.verify === 'Y') {
-  //   return <Navigate to="/" replace />;
-  // }
   if (userData) {
-    console.log(userData);
+    // console.log(userData);
     return <Navigate to="/" replace />;
   }
 
