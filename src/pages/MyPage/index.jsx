@@ -12,7 +12,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 function MyPage() {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
-    'http://172.30.1.5:7979/user/profile/select',
+    `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
