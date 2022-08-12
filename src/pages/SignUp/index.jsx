@@ -17,6 +17,8 @@ import {
 } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 function SignUp() {
   /*
   새로고침 시 마다 userAccessData 사라지니 아예 로컬,세션 스토리지에 저장?
@@ -27,7 +29,7 @@ function SignUp() {
   // const { data: userAccessData } = useSWR('localStorage', getAccessData);
 
   const { data: userData, mutate: userMutate } = useSWR(
-    'http://172.30.1.5:7979/user/profile/select',
+    `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
@@ -74,8 +76,6 @@ function SignUp() {
 
   const isWrongPhone = useCallback(() => {
     // eslint-disable-next-line no-unused-expressions
-    console.log(phoneNumRef.current.value.length);
-    // eslint-disable-next-line no-unused-expressions
     phoneNumRef.current.value.length === 13
       ? setPhoneNumCheck(true)
       : setPhoneNumCheck(false);
@@ -113,7 +113,7 @@ function SignUp() {
 
       axios
         .post(
-          'http://172.30.1.5:7979/user/profile/add',
+          `${BACKEND_URL}/user/profile/add`,
           {
             nickname,
             phoneNum,
@@ -149,7 +149,7 @@ function SignUp() {
   // 중복체크 - get방식 , API : /user/duplicate/nickname/{nickname}
   const doubleCheck = useCallback(() => {
     axios
-      .get(`http://172.30.1.5:7979/user/  duplicate/nickname/${nickname}`)
+      .get(`${BACKEND_URL}/duplicate/nickname/${nickname}`)
       .then((response) => {
         // console.log(response);
         // eslint-disable-next-line no-unused-expressions

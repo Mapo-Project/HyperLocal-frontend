@@ -17,6 +17,8 @@ import {
 import { mainItemsData, options } from '../../utils/dummyData/mainPageData.js';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 function MainItems({
   itemId,
   itemsTag,
@@ -115,7 +117,7 @@ function MainItems({
 
 function Main() {
   const { data: userData } = useSWR(
-    'http://172.30.1.5:7979/user/profile/select',
+    `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 

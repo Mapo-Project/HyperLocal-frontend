@@ -7,6 +7,8 @@ import axios from 'axios';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import { MyPageMainContainer } from './style';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 function MyPage() {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
@@ -23,7 +25,7 @@ function MyPage() {
   const Logout = useCallback(() => {
     setLogout(false);
     axios
-      .get('http://172.30.1.5:7979/user/logout', {
+      .get(`${BACKEND_URL}/user/logout`, {
         headers: {
           Authorization: `Bearer ${localStorage.accessToken}`,
         },
@@ -47,7 +49,7 @@ function MyPage() {
    */
   const withdrawal = useCallback(() => {
     axios
-      .delete('http://172.30.1.5:7979/user/withdrawal', {
+      .delete(`${BACKEND_URL}/user/withdrawal`, {
         headers: {
           Authorization: `Bearer ${localStorage.accessToken}`,
         },
