@@ -211,7 +211,7 @@ function Main() {
               onKeyDown={onClickToLoginPage}
               tabIndex={0}
               alt="profile_img"
-              src={userData.data.profileImg}
+              src={userData.data.profile_img}
               onClick={onClickToMyPage}
             />
           )}
