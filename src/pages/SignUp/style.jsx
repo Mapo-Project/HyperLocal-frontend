@@ -81,7 +81,12 @@ export const Error = styled.div`
   font-size: 12px;
   line-height: 16px;
 
+  height: 16px;
   color: #dd2c00;
+
+  span {
+    color: green;
+  }
 `;
 export const ErrorChecker = styled.img`
   position: absolute;

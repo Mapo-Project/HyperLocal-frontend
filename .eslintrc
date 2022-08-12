@@ -3,10 +3,16 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "es2020": true
   },
   // airbnb eslint적용 , eslint-plugin-prettier + eslint-config-prettier 적용
   "extends": ["airbnb", "airbnb/hooks", "plugin:prettier/recommended"],
+
+  // optional chaining
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
 
   /*
     airbnb 규칙 수정 
