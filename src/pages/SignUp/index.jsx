@@ -229,7 +229,8 @@ function SignUp() {
                 onChangePhoneNum(e);
               }}
               value={phoneNum}
-              onBlur={isWrongPhone}
+              onKeyUp={isWrongPhone}
+              maxLength="13"
             />
           </Label>
 
@@ -256,7 +257,7 @@ function SignUp() {
               placeholder="E-mail"
               onChange={onChangeEmail}
               value={email}
-              onBlur={isWrongEmail}
+              onKeyUp={isWrongEmail}
             />
           </Label>
           <Error>
