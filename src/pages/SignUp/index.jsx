@@ -50,6 +50,10 @@ function SignUp() {
   // 회원가입 에러 메시지
   const [joinError, setJoinError] = useState('');
 
+  // validation
+
+  // nickname(id) validation
+
   // 전화번호 validation
   const phoneNumRef = useRef();
 
@@ -80,6 +84,15 @@ function SignUp() {
       ? setPhoneNumCheck(true)
       : setPhoneNumCheck(false);
   }, []);
+
+  // 이메일 validation
+  const isEmail = (emailValue) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailValue);
+
+  const isWrongEmail = useCallback(() => {
+    // eslint-disable-next-line no-unused-expressions
+    isEmail(email) ? setEmailCheck(true) : setEmailCheck(false);
+  }, [email]);
 
   /**
    * profile validation
@@ -165,9 +178,6 @@ function SignUp() {
   const onClickToIdChecked = useCallback(() => {
     setIdCheck(!idCheck);
   }, [idCheck]);
-  const onClickToEmailChecked = useCallback(() => {
-    setEmailCheck(!EmailCheck);
-  }, [EmailCheck]);
 
   if (userData === undefined) {
     return <div>로딩중</div>;
@@ -246,11 +256,15 @@ function SignUp() {
               placeholder="E-mail"
               onChange={onChangeEmail}
               value={email}
+              onBlur={isWrongEmail}
             />
           </Label>
-          <Error>.</Error>
+          <Error>
+            {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
+            {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
+            <span>{EmailCheck ? '사용가능한 이메일 입니다' : ''}</span>
+          </Error>
           <ErrorChecker
-            onClick={onClickToEmailChecked}
             src={
               EmailCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
