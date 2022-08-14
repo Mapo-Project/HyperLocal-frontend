@@ -21,6 +21,10 @@
     "error" or 2 - 에러 호출
   */
   "rules": {
+    "no-useless-escape": 0,
+    "no-unused-expressions": 0,
+    "no-plusplus": 0,
+    "no-nested-ternary": 0,
     "object-curly-newline": 0,
     "linebreak-style": 0,
     // import 제한 해제
