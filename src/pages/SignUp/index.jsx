@@ -12,6 +12,7 @@ import {
   InputWrapper,
   Label,
   SignupButton,
+  SignupButtonDisable,
   SignUpContainer,
   SignupForm,
 } from './style';
@@ -40,59 +41,19 @@ function SignUp() {
   // 이메일
   const [email, setEmail, onChangeEmail] = useInput('');
 
-  const [idCheck, setIdCheck] = useState(false);
+  // const [idCheck, setIdCheck] = useState(false);
+  const [idSpaceTypeCheck, setIdSpaceTypeCheck] = useState(false);
+  const [idMinCheck, setIdMinCheck] = useState(false);
+  const [idMaxCheck, setIdMaxCheck] = useState(false);
+
   const [phoneNumCheck, setPhoneNumCheck] = useState(false);
   const [EmailCheck, setEmailCheck] = useState(false);
 
   // 닉네임 중복체크 메시지
-  const [isNicknameDoubleCheck, setIsNicknameDoubleCheck] = useState('');
+  const [isNicknameDoubleCheck, setIsNicknameDoubleCheck] = useState(false);
 
   // 회원가입 에러 메시지
   const [joinError, setJoinError] = useState('');
-
-  // validation
-
-  // nickname(id) validation
-
-  // 전화번호 validation
-  const phoneNumRef = useRef();
-
-  const changePhoneNum = () => {
-    const value = phoneNumRef.current.value.replace(/\D+/g, '');
-    const numberLength = 11;
-    let result = '';
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < value.length && i < numberLength; i++) {
-      switch (i) {
-        case 3:
-          result += '-';
-          break;
-        case 7:
-          result += '-';
-          break;
-        default:
-          break;
-      }
-      result += value[i];
-    }
-    phoneNumRef.current.value = result;
-  };
-
-  const isWrongPhone = useCallback(() => {
-    // eslint-disable-next-line no-unused-expressions
-    phoneNumRef.current.value.length === 13
-      ? setPhoneNumCheck(true)
-      : setPhoneNumCheck(false);
-  }, []);
-
-  // 이메일 validation
-  const isEmail = (emailValue) =>
-    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailValue);
-
-  const isWrongEmail = useCallback(() => {
-    // eslint-disable-next-line no-unused-expressions
-    isEmail(email) ? setEmailCheck(true) : setEmailCheck(false);
-  }, [email]);
 
   /**
    * profile validation
@@ -118,6 +79,67 @@ function SignUp() {
    *
    * 셋 다 조건이 완료되었을때 회원가입 버튼 활성화
    */
+
+  // nickname(id) validation
+  const isIdSpace = (IdValue) => /\s/g.test(IdValue);
+  const isIdSpecial = (IdValue) => /[^가-힣a-zA-Z0-9]/gi.test(IdValue);
+  const isIdType = (IdValue) => /^[가-힣a-zA-Z0-9]/.test(IdValue);
+  const isIdMin = (IdValue) => /^[가-힣a-zA-Z0-9]{2}/.test(IdValue);
+  const isIdMax = (IdValue) => /^[가-힣a-zA-Z0-9]{2,12}$/.test(IdValue);
+
+  const isWrongId = useCallback(() => {
+    !isIdSpace(nickname) && !isIdSpecial(nickname) && isIdType(nickname)
+      ? setIdSpaceTypeCheck(true)
+      : setIdSpaceTypeCheck(false);
+
+    !isIdSpace(nickname) && !isIdSpecial(nickname) && isIdMin(nickname)
+      ? setIdMinCheck(true)
+      : setIdMinCheck(false);
+
+    !isIdSpace(nickname) && !isIdSpecial(nickname) && isIdMax(nickname)
+      ? setIdMaxCheck(true)
+      : setIdMaxCheck(false);
+  }, [nickname]);
+
+  // 전화번호 validation
+  const phoneNumRef = useRef();
+
+  const changePhoneNum = () => {
+    const value = phoneNumRef.current.value.replace(/\D+/g, '');
+    const numberLength = 11;
+    let result = '';
+
+    for (let i = 0; i < value.length && i < numberLength; i++) {
+      switch (i) {
+        case 3:
+          result += '-';
+          break;
+        case 7:
+          result += '-';
+          break;
+        default:
+          break;
+      }
+      result += value[i];
+    }
+    phoneNumRef.current.value = result;
+  };
+
+  const isWrongPhone = useCallback(() => {
+    phoneNumRef.current.value.length === 13
+      ? setPhoneNumCheck(true)
+      : setPhoneNumCheck(false);
+  }, []);
+
+  // 이메일 validation - https://emailregex.com/
+  const isEmail = (emailValue) =>
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      emailValue,
+    );
+
+  const isWrongEmail = useCallback(() => {
+    isEmail(email) ? setEmailCheck(true) : setEmailCheck(false);
+  }, [email]);
 
   // 회원가입
   const onSubmitSignUp = useCallback(
@@ -165,19 +187,15 @@ function SignUp() {
       .get(`${BACKEND_URL}/duplicate/nickname/${nickname}`)
       .then((response) => {
         // console.log(response);
-        // eslint-disable-next-line no-unused-expressions
-        response.data.duplicate === 'duplicate'
-          ? setIsNicknameDoubleCheck('사용 중인 아이디입니다.')
-          : setIsNicknameDoubleCheck('');
+
+        if (response.data.duplicate === 'duplicate') {
+          setIsNicknameDoubleCheck(true);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }, [nickname]);
-
-  const onClickToIdChecked = useCallback(() => {
-    setIdCheck(!idCheck);
-  }, [idCheck]);
 
   if (userData === undefined) {
     return <div>로딩중</div>;
@@ -203,13 +221,25 @@ function SignUp() {
               onChange={onChangeNickname}
               value={nickname}
               onBlur={doubleCheck}
+              onKeyUp={isWrongId}
             />
           </Label>
-          <Error>{isNicknameDoubleCheck}</Error>
+          <Error>
+            {nickname && isNicknameDoubleCheck
+              ? '사용 중인 아이디입니다.'
+              : nickname && !idSpaceTypeCheck
+              ? '띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.'
+              : nickname && !idMinCheck
+              ? '최소 2자 이상으로 작성해주세요.'
+              : nickname && !idMaxCheck
+              ? '최대 12자까지 작성할 수 있어요.'
+              : ''}
+
+            <span>{idMaxCheck ? '사용가능한 아이디 입니다' : ''}</span>
+          </Error>
           <ErrorChecker
-            onClick={onClickToIdChecked}
             src={
-              idCheck
+              idMaxCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
                 : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
             }
@@ -273,7 +303,11 @@ function SignUp() {
             }
           />
         </InputWrapper>
-        <SignupButton>확인</SignupButton>
+        {idMaxCheck && phoneNumCheck && EmailCheck ? (
+          <SignupButton>확인</SignupButton>
+        ) : (
+          <SignupButtonDisable>확인</SignupButtonDisable>
+        )}
       </SignupForm>
       {joinError}
       <Footer />

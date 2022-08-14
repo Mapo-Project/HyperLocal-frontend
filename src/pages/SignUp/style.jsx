@@ -99,3 +99,27 @@ export const SignupButton = styled(Button)`
   position: absolute;
   bottom: 52px;
 `;
+
+export const SignupButtonDisable = styled.div`
+  position: absolute;
+  bottom: 52px;
+  width: 328px;
+  height: 48px;
+
+  padding: 14px 16px;
+
+  background-color: gray;
+  border-radius: 4px;
+  border: 0;
+
+  cursor: pointer;
+
+  font-family: 'Pretendard';
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.25px;
+`;
