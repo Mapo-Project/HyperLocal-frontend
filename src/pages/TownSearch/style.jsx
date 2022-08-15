@@ -18,7 +18,7 @@ export const TownSearchContainer = styled(MainContainer)`
     color: #212121;
   }
 `;
-export const TownSearchForm = styled.form`
+export const TownSearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -90,4 +90,5 @@ export const TownItem = styled.div`
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;

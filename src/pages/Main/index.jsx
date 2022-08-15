@@ -115,7 +115,7 @@ function MainItems({
   );
 }
 
-function Main() {
+function Main({ currentSelectedTown, currentTown }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
@@ -174,7 +174,7 @@ function Main() {
     navigate('/detail/2');
   };
 
-  console.log(userData);
+  console.log({ userData, currentSelectedTown, currentTown });
   return (
     <MainPageContainer>
       <FindTown>

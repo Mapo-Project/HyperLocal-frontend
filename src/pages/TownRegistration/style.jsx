@@ -35,7 +35,9 @@ export const RegisteredTown = styled.button`
   width: 328px;
   height: 48px;
 
-  background: #00d082;
+  background: ${(props) =>
+    props.selected === 'selected' ? '#00d082' : 'gray'};
+
   border-radius: 4px;
 
   font-family: 'Pretendard';
