@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
@@ -13,12 +13,38 @@ import Interesting from './pages/Interesting';
 import Detail from './pages/Detail';
 
 function App() {
+  const [currentTown, setCurrentTown] = useState([]);
+  const [currentSelectedTown, setCurrentSelectedTown] = useState('');
+  const townId = useRef(0);
+  const onSelectTown = (newTown) => {
+    setCurrentTown((currentVal) => [
+      ...currentVal,
+      { town: newTown, townId: townId.current++ },
+    ]);
+  };
+  const onDeleteTown = (id) => {
+    setCurrentTown((currentVal) => [
+      ...currentVal.filter((townValue) => id !== townValue.townId),
+    ]);
+  };
+
+  const onSelectCurrentTown = (curTown) => {
+    setCurrentSelectedTown(curTown);
+  };
   return (
     <>
       <ResetStyle />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route
+            path="/"
+            element={
+              <Main
+                currentSelectedTown={currentSelectedTown}
+                currentTown={currentTown}
+              />
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Login />} />
           <Route
@@ -26,8 +52,26 @@ function App() {
             element={<SocialLoginCallback />}
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/town" element={<TownSearch />} />
-          <Route path="/town/regist" element={<TownRegistration />} />
+          <Route
+            path="/town"
+            element={
+              <TownSearch
+                onSelectTown={onSelectTown}
+                onSelectCurrentTown={onSelectCurrentTown}
+              />
+            }
+          />
+          <Route
+            path="/town/regist"
+            element={
+              <TownRegistration
+                currentTown={currentTown}
+                onDeleteTown={onDeleteTown}
+                currentSelectedTown={currentSelectedTown}
+                onSelectCurrentTown={onSelectCurrentTown}
+              />
+            }
+          />
           <Route path="/create" element={<Create />} />
           <Route path="/interesting" element={<Interesting />} />
           <Route path="/mypage" element={<MyPage />} />

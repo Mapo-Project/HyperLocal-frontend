@@ -22,7 +22,7 @@ const TownList = [
   { townId: 8, townName: '마포구 서교동' },
   { townId: 9, townName: '마포구 상암동' },
 ];
-function TownSearch() {
+function TownSearch({ onSelectTown, onSelectCurrentTown }) {
   const navigate = useNavigate();
 
   const [isTownSearch, setIsTownSearch] = useState(false);
@@ -32,9 +32,12 @@ function TownSearch() {
     setIsTownSearch(true);
   }, []);
 
-  const onSelectTown = (value) => {
-    console.log(value);
-    // value를 전역 상태 관리에 저장하고
+  const onSelectRegistTown = (value) => {
+    // console.log(value);
+
+    onSelectTown(value);
+    // value를 전역 상태 관리에 저장하고 등록페이지로 이동
+    onSelectCurrentTown(value);
     navigate('/town/regist');
   };
   return (
@@ -47,6 +50,7 @@ function TownSearch() {
             onKeyDown={onDisplyTownSearch}
             value={town}
             onChange={onChangeTown}
+            autoFocus
           />
           <img
             alt="town_search"
@@ -72,7 +76,7 @@ function TownSearch() {
         }).map((townVal) => (
           <TownItem
             onClick={() => {
-              onSelectTown(townVal.townName);
+              onSelectRegistTown(townVal.townName);
             }}
             key={townVal.townId}
           >
