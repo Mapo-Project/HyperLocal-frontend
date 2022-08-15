@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
-import TownSearch from './pages/TownSearch';
 import ResetStyle from './utils/ResetStyle';
 import SocialLoginCallback from './pages/SocialLoginCallback';
 import Main from './pages/Main';
@@ -11,6 +10,7 @@ import Create from './pages/Create';
 import MyPage from './pages/MyPage';
 import Interesting from './pages/Interesting';
 import Detail from './pages/Detail';
+import TownSearch from './pages/TownSearch';
 
 function App() {
   const [currentTown, setCurrentTown] = useState([]);
@@ -56,6 +56,7 @@ function App() {
             path="/town"
             element={
               <TownSearch
+                currentTown={currentTown}
                 onSelectTown={onSelectTown}
                 onSelectCurrentTown={onSelectCurrentTown}
               />

@@ -22,7 +22,7 @@ const TownList = [
   { townId: 8, townName: '마포구 서교동' },
   { townId: 9, townName: '마포구 상암동' },
 ];
-function TownSearch({ onSelectTown, onSelectCurrentTown }) {
+function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
   const navigate = useNavigate();
 
   const [isTownSearch, setIsTownSearch] = useState(false);
@@ -33,7 +33,16 @@ function TownSearch({ onSelectTown, onSelectCurrentTown }) {
   }, []);
 
   const onSelectRegistTown = (value) => {
-    // console.log(value);
+    console.log({ value, currentTown });
+
+    if (
+      currentTown[0]?.town === value ||
+      currentTown[1]?.town === value ||
+      currentTown[2]?.town === value
+    ) {
+      alert('이미 등록되어 있는 동네입니다.');
+      return;
+    }
 
     onSelectTown(value);
     // value를 전역 상태 관리에 저장하고 등록페이지로 이동

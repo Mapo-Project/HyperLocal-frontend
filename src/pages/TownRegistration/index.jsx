@@ -46,8 +46,13 @@ function TownRegistration({
             <img
               role="button"
               onKeyDown={() => {}}
-              onClick={() => {
+              onClick={(e) => {
                 onDeleteTown(currentTown[0].townId);
+                e.stopPropagation();
+                if (currentTown[0].town !== currentSelectedTown) {
+                  return;
+                }
+                onSelectCurrentTown('');
                 onClickToAddTown();
               }}
               tabIndex={0}
@@ -82,6 +87,10 @@ function TownRegistration({
               onClick={(e) => {
                 onDeleteTown(currentTown[1].townId);
                 e.stopPropagation();
+                if (currentTown[1].town !== currentSelectedTown) {
+                  return;
+                }
+                onSelectCurrentTown(currentTown[0].town);
               }}
               alt="search_cancel"
               src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
@@ -114,6 +123,10 @@ function TownRegistration({
               onClick={(e) => {
                 onDeleteTown(currentTown[2].townId);
                 e.stopPropagation();
+                if (currentTown[2].town !== currentSelectedTown) {
+                  return;
+                }
+                onSelectCurrentTown(currentTown[1].town);
               }}
               alt="search_cancel"
               src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
