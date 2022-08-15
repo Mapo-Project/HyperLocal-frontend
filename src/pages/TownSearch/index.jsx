@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
+import useInput from '../../hooks/useInput';
 import Footer from '../../layout/Footer';
 import {
   Label,
   TownItem,
   TownSearchButton,
   TownSearchContainer,
-  TownSearchForm,
   TownSearchInput,
+  TownSearchWrapper,
 } from './style';
 
 const TownList = [
@@ -23,31 +24,62 @@ const TownList = [
 ];
 function TownSearch() {
   const navigate = useNavigate();
-  const onClickToTownRegistration = useCallback(() => {
+
+  const [isTownSearch, setIsTownSearch] = useState(false);
+  const [town, , onChangeTown] = useInput('');
+
+  const onDisplyTownSearch = useCallback(() => {
+    setIsTownSearch(true);
+  }, []);
+
+  const onSelectTown = (value) => {
+    console.log(value);
+    // value를 전역 상태 관리에 저장하고
     navigate('/town/regist');
-  }, [navigate]);
+  };
   return (
     <TownSearchContainer>
       <h1>동네 찾기</h1>
-      <TownSearchForm>
+      <TownSearchWrapper>
         <Label>
-          <TownSearchInput placeholder="동네 찾기" />
+          <TownSearchInput
+            placeholder="동네 찾기"
+            onKeyDown={onDisplyTownSearch}
+            value={town}
+            onChange={onChangeTown}
+          />
           <img
             alt="town_search"
             src={`${process.env.PUBLIC_URL}/assets/images/town_search.png`}
           />
         </Label>
-        <TownSearchButton onClick={onClickToTownRegistration}>
+        <TownSearchButton>
           <img
             alt="town_my_location"
             src={`${process.env.PUBLIC_URL}/assets/images/town_my_location.png`}
           />
           내 위치로 찾기
         </TownSearchButton>
-      </TownSearchForm>
-      {TownList.map((town) => (
-        <TownItem key={town.townId}>{town.townName}</TownItem>
-      ))}
+      </TownSearchWrapper>
+      {isTownSearch &&
+        TownList.filter((townValue) => {
+          // 공백제거 후 search 메소드로 -1(없는 경우)를 제외
+          const searchTown = town.replace(/\s/g, '');
+          if (searchTown && townValue.townName.search(searchTown) !== -1) {
+            return true;
+          }
+          return false;
+        }).map((townVal) => (
+          <TownItem
+            onClick={() => {
+              onSelectTown(townVal.townName);
+            }}
+            key={townVal.townId}
+          >
+            {townVal.townName}
+          </TownItem>
+        ))}
+
       <Footer />
     </TownSearchContainer>
   );
