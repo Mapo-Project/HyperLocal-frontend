@@ -203,6 +203,11 @@ function SignUp() {
 
   if (userData) {
     // console.log(userData);
+    return <Navigate to="/town" replace />;
+  }
+
+  // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  if (!localStorage?.verify) {
     return <Navigate to="/" replace />;
   }
 
