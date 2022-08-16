@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router';
-import Select from 'react-select';
 import { useDraggable } from 'react-use-draggable-scroll';
 import useSWR from 'swr';
 
@@ -12,12 +11,63 @@ import {
   MainPageContainer,
   MainItemsContainer,
   MainScrollbars,
+  SelectWrapper,
+  Label,
+  SelectOptions,
+  Option,
 } from './style';
 
-import { mainItemsData, options } from '../../utils/dummyData/mainPageData.js';
+import { mainItemsData } from '../../utils/dummyData/mainPageData.js';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+function SelectBox({
+  options,
+  defaultValue,
+  onSelectAdditionalTown,
+  onSelectCurrentTown,
+}) {
+  const [isShowOptions, setShowOptions] = useState(false);
+
+  return (
+    <SelectWrapper onClick={() => setShowOptions((prev) => !prev)}>
+      <img
+        src={`${process.env.PUBLIC_URL}/assets/images/main_expand_more.png`}
+        alt="expand_more"
+      />
+      <Label>{defaultValue}</Label>
+      <SelectOptions show={isShowOptions}>
+        {!options.length ? (
+          <Option key="성산동" value="성산동">
+            성산동
+          </Option>
+        ) : (
+          options?.map((option) => (
+            <Option
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectCurrentTown(e.target.textContent);
+              }}
+            >
+              {option.town}
+            </Option>
+          ))
+        )}
+
+        <Option
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectAdditionalTown();
+          }}
+          type="changeTown"
+        >
+          동네설정
+        </Option>
+      </SelectOptions>
+    </SelectWrapper>
+  );
+}
 
 function MainItems({
   itemId,
@@ -115,35 +165,33 @@ function MainItems({
   );
 }
 
-function Main({ currentSelectedTown, currentTown }) {
+function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
-
-  const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const [maindata, setMaindata] = useState();
 
   const onSortByLocation = useCallback(() => {
     setMaindata([
       ...mainItemsData.filter((data) =>
-        data.itemsTownLocation.includes(selectedOption.label),
+        data.itemsTownLocation.includes(currentSelectedTown),
       ),
     ]);
-  }, [selectedOption?.label]);
+  }, [currentSelectedTown]);
 
   useEffect(() => {
     onSortByLocation();
   }, [onSortByLocation]);
 
-  const onChangeTown = useCallback(
-    (e) => {
-      setSelectedOption(e);
-      onSortByLocation();
-    },
-    [setSelectedOption, onSortByLocation],
-  );
+  // const onChangeTown = useCallback(
+  //   (e) => {
+  //     setSelectedOption(e);
+  //     onSortByLocation();
+  //   },
+  //   [setSelectedOption, onSortByLocation],
+  // );
 
   const onClickHeart = (e) => {
     const targetNum = e.target.attributes.tabindex.nodeValue * 1;
@@ -158,6 +206,15 @@ function Main({ currentSelectedTown, currentTown }) {
   };
 
   const navigate = useNavigate();
+
+  const onSelectAdditionalTown = () => {
+    if (currentTown.length === 3) {
+      navigate('/town/regist');
+    } else {
+      navigate('/town');
+    }
+  };
+
   const onClickToCreatePage = () => {
     navigate('/create');
   };
@@ -178,16 +235,12 @@ function Main({ currentSelectedTown, currentTown }) {
   return (
     <MainPageContainer>
       <FindTown>
-        <div className="FindTown_selectBox_container">
-          <Select
-            classNamePrefix="react-select"
-            className="FindTown_selectBox"
-            defaultValue={options[0]}
-            onChange={onChangeTown}
-            options={options}
-            isSearchable={false}
-          />
-        </div>
+        <SelectBox
+          options={currentTown}
+          defaultValue={currentSelectedTown}
+          onSelectAdditionalTown={onSelectAdditionalTown}
+          onSelectCurrentTown={onSelectCurrentTown}
+        />
         <div className="FindTown_search_container">
           <img
             className="FindTown_search"
@@ -211,7 +264,7 @@ function Main({ currentSelectedTown, currentTown }) {
               onKeyDown={onClickToLoginPage}
               tabIndex={0}
               alt="profile_img"
-              src={userData.data.profile_img}
+              src={userData.data.profileImg}
               onClick={onClickToMyPage}
             />
           )}

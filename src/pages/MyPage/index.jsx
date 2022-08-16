@@ -9,7 +9,7 @@ import { MyPageMainContainer } from './style';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function MyPage() {
+function MyPage({ currentSelectedTown, currentTown }) {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
@@ -65,6 +65,7 @@ function MyPage() {
       });
   }, [userMutate]);
 
+  console.log({ currentSelectedTown, currentTown });
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined) {
     return <div>로딩중</div>;
@@ -88,6 +89,7 @@ function MyPage() {
       <h1>nickname : {userData.data.nickname}</h1>
       <h1>email : {userData.data.email}</h1>
       <h1>전화번호 : {userData.data.phoneNum}</h1>
+      <h1>동네 : {currentSelectedTown}</h1>
       <img alt="profile_img" src={userData.data.profileImg} />
     </MyPageMainContainer>
   );

@@ -20,22 +20,6 @@ export const FindTown = styled.div`
 
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 
-  .FindTown_selectBox {
-    margin-left: 16px;
-    margin-right: 14px;
-  }
-  .react-select__control {
-    border: none;
-    box-shadow: none;
-  }
-
-  .react-select__indicators span {
-    width: 0;
-  }
-  .react-select__indicator {
-    color: #212121;
-  }
-
   .FindTown_search_container {
     display: flex;
     align-items: center;
@@ -61,6 +45,65 @@ export const FindTown = styled.div`
     border-radius: 50%;
     cursor: pointer;
   }
+`;
+export const SelectWrapper = styled.div`
+  position: relative;
+  width: 112px;
+  cursor: pointer;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  letter-spacing: 0.15px;
+  border: 0;
+  color: #212121;
+
+  img {
+    position: absolute;
+    left: 18px;
+    top: 8px;
+    width: 12px;
+    height: 7.4px;
+  }
+`;
+
+export const SelectOptions = styled.div`
+  z-index: 10;
+
+  position: absolute;
+  top: 40px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+
+  overflow: hidden;
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  padding: 0;
+`;
+
+export const Option = styled.div`
+  width: 112px;
+  padding: 12px 16px;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #000000;
+  &:hover {
+    background-color: #00d082;
+  }
+  color: ${(props) => (props.type === 'changeTown' ? '#9E9E9E' : '#000')};
+`;
+
+export const Label = styled.div`
+  text-align: end;
+  padding-right: 6px;
 `;
 
 export const Footer = styled.div`

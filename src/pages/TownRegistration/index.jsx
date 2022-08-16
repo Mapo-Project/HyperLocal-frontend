@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import Footer from '../../layout/Footer';
 import {
   RegisteredTown,
@@ -26,10 +26,10 @@ function TownRegistration({
     navigate('/town');
   }, [navigate]);
 
-  // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  if (!localStorage?.verify) {
-    return <Navigate to="/" replace />;
-  }
+  // // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  // if (!localStorage?.verify) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <TownRegistrationContainer>
