@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import useInput from '../../hooks/useInput';
 import Footer from '../../layout/Footer';
 import {
@@ -50,10 +50,10 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
     navigate('/town/regist');
   };
 
-  // // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  // if (!localStorage?.verify) {
-  //   return <Navigate to="/" replace />;
-  // }
+  // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  if (!localStorage?.verify) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <TownSearchContainer>
