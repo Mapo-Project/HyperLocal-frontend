@@ -208,10 +208,14 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
   const navigate = useNavigate();
 
   const onSelectAdditionalTown = () => {
-    if (currentTown.length === 3) {
-      navigate('/town/regist');
+    if (userData) {
+      if (currentTown.length === 3) {
+        navigate('/town/regist');
+      } else {
+        navigate('/town');
+      }
     } else {
-      navigate('/town');
+      navigate('/login');
     }
   };
 
