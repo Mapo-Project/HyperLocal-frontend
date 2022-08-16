@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router';
-import Footer from '../../layout/Footer';
+import { Navigate, useNavigate } from 'react-router';
 import {
   RegisteredTown,
   TownRegistrationButton,
@@ -25,6 +24,11 @@ function TownRegistration({
   const onClickToAddTown = useCallback(() => {
     navigate('/town');
   }, [navigate]);
+
+  // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  if (!localStorage?.verify) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <TownRegistrationContainer>
@@ -144,7 +148,6 @@ function TownRegistration({
       <TownRegistrationButton onClick={onClickToMain}>
         이웃의 마켓 구경하기
       </TownRegistrationButton>
-      <Footer />
     </TownRegistrationContainer>
   );
 }

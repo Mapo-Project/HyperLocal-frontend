@@ -7,14 +7,14 @@ import ResetStyle from './utils/ResetStyle';
 import SocialLoginCallback from './pages/SocialLoginCallback';
 import Main from './pages/Main';
 import Create from './pages/Create';
-import MyPage from './pages/MyPage';
 import Interesting from './pages/Interesting';
 import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
+import MyPage from './pages/MyPage';
 
 function App() {
   const [currentTown, setCurrentTown] = useState([]);
-  const [currentSelectedTown, setCurrentSelectedTown] = useState('');
+  const [currentSelectedTown, setCurrentSelectedTown] = useState('성산동');
   const townId = useRef(0);
   const onSelectTown = (newTown) => {
     setCurrentTown((currentVal) => [
@@ -42,6 +42,7 @@ function App() {
               <Main
                 currentSelectedTown={currentSelectedTown}
                 currentTown={currentTown}
+                onSelectCurrentTown={onSelectCurrentTown}
               />
             }
           />
@@ -75,7 +76,16 @@ function App() {
           />
           <Route path="/create" element={<Create />} />
           <Route path="/interesting" element={<Interesting />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route
+            path="/mypage"
+            element={
+              <MyPage
+                currentSelectedTown={currentSelectedTown}
+                currentTown={currentTown}
+                onSelectCurrentTown={onSelectCurrentTown}
+              />
+            }
+          />
           <Route path="/detail/:id" element={<Detail />} />
         </Routes>
       </BrowserRouter>

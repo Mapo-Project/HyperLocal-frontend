@@ -36,7 +36,7 @@ export const RegisteredTown = styled.button`
   height: 48px;
 
   background: ${(props) =>
-    props.selected === 'selected' ? '#00d082' : 'gray'};
+    props.selected === 'selected' ? '#00d082' : '#9E9E9E'};
 
   border-radius: 4px;
 

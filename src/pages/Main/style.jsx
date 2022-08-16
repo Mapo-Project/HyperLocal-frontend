@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const FindTown = styled.div`
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,22 +20,6 @@ export const FindTown = styled.div`
   color: #212121;
 
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-
-  .FindTown_selectBox {
-    margin-left: 16px;
-    margin-right: 14px;
-  }
-  .react-select__control {
-    border: none;
-    box-shadow: none;
-  }
-
-  .react-select__indicators span {
-    width: 0;
-  }
-  .react-select__indicator {
-    color: #212121;
-  }
 
   .FindTown_search_container {
     display: flex;
@@ -62,8 +47,72 @@ export const FindTown = styled.div`
     cursor: pointer;
   }
 `;
+export const SelectWrapper = styled.div`
+  position: relative;
+  width: 145px;
+  cursor: pointer;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+  letter-spacing: 0.15px;
+  border: 0;
+  color: #212121;
+  padding: 16px 0;
+  padding-right: 16px;
+
+  img {
+    position: absolute;
+    left: 18px;
+    top: 24px;
+    width: 12px;
+    height: 7.4px;
+  }
+`;
+
+export const SelectOptions = styled.div`
+  z-index: 10;
+
+  width: 112px;
+  position: absolute;
+  top: 56px;
+  left: 40px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+
+  overflow: hidden;
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  padding: 0;
+`;
+
+export const Option = styled.div`
+  padding: 12px 16px;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #000000;
+  &:hover {
+    background-color: #00d082;
+  }
+  color: ${(props) => (props.type === 'changeTown' ? '#9E9E9E' : '#000')};
+`;
+
+export const Label = styled.div`
+  text-align: start;
+  padding-left: 55px;
+  padding-right: 6px;
+`;
 
 export const Footer = styled.div`
+  background-color: #ffffff;
   font-family: 'Pretendard';
   position: absolute;
   bottom: 0;
@@ -72,6 +121,8 @@ export const Footer = styled.div`
   z-index: 1;
   display: flex;
   gap: 8px;
+
+  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.1);
 
   div.menu_container {
     margin-top: 8px;
@@ -101,6 +152,7 @@ export const Footer = styled.div`
 
 export const MainItemsContainer = styled.div`
   font-family: 'Pretendard';
+  background-color: #ffffff;
   padding: 16px;
   border-bottom: 4px solid #eeeeee;
   padding-bottom: 5px;
@@ -250,6 +302,7 @@ export const MainItemsContainer = styled.div`
       width: 16px;
       margin-left: 18px;
       margin-right: 6px;
+      cursor: pointer;
     }
     span {
       margin-left: 105px;
@@ -284,15 +337,18 @@ export const MainButton = styled.button`
 `;
 
 export const MainPageContainer = styled(MainContainer)`
-  background: #ffffff;
   position: relative;
+  overflow: hidden;
+
+  background: #f5f5f5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .main_banner {
     position: absolute;
     top: 56px;
     width: 100%;
     height: 136px;
-    background-color: #ececec;
+    background-color: #ffffff;
   }
 `;
 

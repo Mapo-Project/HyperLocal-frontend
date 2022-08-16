@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import useInput from '../../hooks/useInput';
-import Footer from '../../layout/Footer';
 import {
   Label,
   TownItem,
@@ -12,15 +11,16 @@ import {
 } from './style';
 
 const TownList = [
-  { townId: 1, townName: '마포구 성산동' },
-  { townId: 2, townName: '마포구 성산1동' },
-  { townId: 3, townName: '마포구 성산2동' },
-  { townId: 4, townName: '마포구 망원1동' },
-  { townId: 5, townName: '마포구 망원2동' },
-  { townId: 6, townName: '마포구 연남동' },
-  { townId: 7, townName: '마포구 합정동' },
-  { townId: 8, townName: '마포구 서교동' },
-  { townId: 9, townName: '마포구 상암동' },
+  { townId: 1, townValue: '성산동', townName: '마포구 성산동' },
+  { townId: 2, townValue: '성산1동', townName: '마포구 성산1동' },
+  { townId: 3, townValue: '성산2동', townName: '마포구 성산2동' },
+  { townId: 4, townValue: '망원1동', townName: '마포구 망원1동' },
+  { townId: 5, townValue: '망원2동', townName: '마포구 망원2동' },
+  { townId: 6, townValue: '연남동', townName: '마포구 연남동' },
+  { townId: 7, townValue: '합정동', townName: '마포구 합정동' },
+  { townId: 8, townValue: '서교동', townName: '마포구 서교동' },
+  { townId: 9, townValue: '상암동', townName: '마포구 상암동' },
+  { townId: 10, townValue: '망원동', townName: '마포구 망원동' },
 ];
 function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
   const navigate = useNavigate();
@@ -49,6 +49,12 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
     onSelectCurrentTown(value);
     navigate('/town/regist');
   };
+
+  // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  if (!localStorage?.verify) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <TownSearchContainer>
       <h1>동네 찾기</h1>
@@ -85,15 +91,13 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
         }).map((townVal) => (
           <TownItem
             onClick={() => {
-              onSelectRegistTown(townVal.townName);
+              onSelectRegistTown(townVal.townValue);
             }}
             key={townVal.townId}
           >
             {townVal.townName}
           </TownItem>
         ))}
-
-      <Footer />
     </TownSearchContainer>
   );
 }

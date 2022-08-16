@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import useSWR from 'swr';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
-import Footer from '../../layout/Footer';
+// import Footer from '../../layout/Footer';
 // import getAccessData from '../../utils/getAccessData';
 import {
   Error,
@@ -59,7 +59,8 @@ function SignUp() {
    * profile validation
    *
    * ID(nickname)
-   * 사용 중인 아이디입니다.(중복체크)
+   * 사용 중인 아이디입니다.(중복체크) - onBlur로 확인
+   * onKeyUp으로 전부 확인
    * 띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.
    * 최소 2자 이상으로 작성해주세요.
    * 최대 12자까지 작성할 수 있어요.
@@ -167,7 +168,7 @@ function SignUp() {
 
           window.localStorage.verify = 'Y';
 
-          alert('회원가입되었습니다'); // 추후 삭제
+          // alert('회원가입되었습니다'); // 추후 삭제
         })
         .catch((error) => {
           console.log(error);
@@ -184,12 +185,14 @@ function SignUp() {
   // 중복체크 - get방식 , API : /user/duplicate/nickname/{nickname}
   const doubleCheck = useCallback(() => {
     axios
-      .get(`${BACKEND_URL}/duplicate/nickname/${nickname}`)
+      .get(`${BACKEND_URL}/user/duplicate/nickname/${nickname}`)
       .then((response) => {
         // console.log(response);
 
         if (response.data.duplicate === 'duplicate') {
           setIsNicknameDoubleCheck(true);
+        } else {
+          setIsNicknameDoubleCheck(false);
         }
       })
       .catch((error) => {
@@ -203,7 +206,12 @@ function SignUp() {
 
   if (userData) {
     // console.log(userData);
-    return <Navigate to="/" replace />;
+    return <Navigate to="/town" replace />;
+  }
+
+  // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  if (!localStorage?.verify) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
@@ -221,7 +229,10 @@ function SignUp() {
               onChange={onChangeNickname}
               value={nickname}
               onBlur={doubleCheck}
-              onKeyUp={isWrongId}
+              onKeyUp={() => {
+                setIsNicknameDoubleCheck(false);
+                isWrongId();
+              }}
             />
           </Label>
           <Error>
@@ -234,12 +245,10 @@ function SignUp() {
               : nickname && !idMaxCheck
               ? '최대 12자까지 작성할 수 있어요.'
               : ''}
-
-            <span>{idMaxCheck ? '사용가능한 아이디 입니다' : ''}</span>
           </Error>
           <ErrorChecker
             src={
-              idMaxCheck
+              !isNicknameDoubleCheck && idMaxCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
                 : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
             }
@@ -253,7 +262,7 @@ function SignUp() {
               type="text"
               id="phoneNum"
               name="phoneNum"
-              placeholder="전화번호"
+              placeholder="000-0000-0000"
               onChange={(e) => {
                 changePhoneNum();
                 onChangePhoneNum(e);
@@ -267,7 +276,6 @@ function SignUp() {
           <Error>
             {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
             {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
-            <span>{phoneNumCheck ? '사용가능한 전화번호 입니다' : ''}</span>
           </Error>
           <ErrorChecker
             src={
@@ -293,7 +301,6 @@ function SignUp() {
           <Error>
             {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
             {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
-            <span>{EmailCheck ? '사용가능한 이메일 입니다' : ''}</span>
           </Error>
           <ErrorChecker
             src={
@@ -303,14 +310,14 @@ function SignUp() {
             }
           />
         </InputWrapper>
-        {idMaxCheck && phoneNumCheck && EmailCheck ? (
+        {!isNicknameDoubleCheck && idMaxCheck && phoneNumCheck && EmailCheck ? (
           <SignupButton>확인</SignupButton>
         ) : (
           <SignupButtonDisable>확인</SignupButtonDisable>
         )}
       </SignupForm>
       {joinError}
-      <Footer />
+      {/* <Footer /> */}
     </SignUpContainer>
   );
 }
