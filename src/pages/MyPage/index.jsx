@@ -79,7 +79,7 @@ function MyPage({ currentSelectedTown, currentTown }) {
 
   // 유저데이터가 없으면 첫 페이지로 이동
   if (!userData) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (

@@ -52,7 +52,7 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
 
   // 소셜로그인 안하면 url로 접근 시 리다이렉트
   if (!localStorage?.verify) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (
