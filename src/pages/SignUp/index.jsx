@@ -59,7 +59,8 @@ function SignUp() {
    * profile validation
    *
    * ID(nickname)
-   * 사용 중인 아이디입니다.(중복체크)
+   * 사용 중인 아이디입니다.(중복체크) - onBlur로 확인
+   * onKeyUp으로 전부 확인
    * 띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.
    * 최소 2자 이상으로 작성해주세요.
    * 최대 12자까지 작성할 수 있어요.
@@ -167,7 +168,7 @@ function SignUp() {
 
           window.localStorage.verify = 'Y';
 
-          alert('회원가입되었습니다'); // 추후 삭제
+          // alert('회원가입되었습니다'); // 추후 삭제
         })
         .catch((error) => {
           console.log(error);
@@ -184,12 +185,14 @@ function SignUp() {
   // 중복체크 - get방식 , API : /user/duplicate/nickname/{nickname}
   const doubleCheck = useCallback(() => {
     axios
-      .get(`${BACKEND_URL}/duplicate/nickname/${nickname}`)
+      .get(`${BACKEND_URL}/user/duplicate/nickname/${nickname}`)
       .then((response) => {
         // console.log(response);
 
         if (response.data.duplicate === 'duplicate') {
           setIsNicknameDoubleCheck(true);
+        } else {
+          setIsNicknameDoubleCheck(false);
         }
       })
       .catch((error) => {
@@ -226,7 +229,10 @@ function SignUp() {
               onChange={onChangeNickname}
               value={nickname}
               onBlur={doubleCheck}
-              onKeyUp={isWrongId}
+              onKeyUp={() => {
+                setIsNicknameDoubleCheck(false);
+                isWrongId();
+              }}
             />
           </Label>
           <Error>
@@ -240,7 +246,11 @@ function SignUp() {
               ? '최대 12자까지 작성할 수 있어요.'
               : ''}
 
-            <span>{idMaxCheck ? '사용가능한 아이디 입니다' : ''}</span>
+            <span>
+              {!isNicknameDoubleCheck && idMinCheck
+                ? '사용가능한 아이디 입니다'
+                : ''}
+            </span>
           </Error>
           <ErrorChecker
             src={
@@ -308,7 +318,7 @@ function SignUp() {
             }
           />
         </InputWrapper>
-        {idMaxCheck && phoneNumCheck && EmailCheck ? (
+        {!isNicknameDoubleCheck && idMaxCheck && phoneNumCheck && EmailCheck ? (
           <SignupButton>확인</SignupButton>
         ) : (
           <SignupButtonDisable>확인</SignupButtonDisable>
