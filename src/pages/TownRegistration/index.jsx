@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Navigate, useNavigate } from 'react-router';
-import Footer from '../../layout/Footer';
 import {
   RegisteredTown,
   TownRegistrationButton,
@@ -149,7 +148,6 @@ function TownRegistration({
       <TownRegistrationButton onClick={onClickToMain}>
         이웃의 마켓 구경하기
       </TownRegistrationButton>
-      <Footer />
     </TownRegistrationContainer>
   );
 }

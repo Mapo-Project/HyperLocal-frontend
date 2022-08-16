@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const FindTown = styled.div`
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,7 +49,7 @@ export const FindTown = styled.div`
 `;
 export const SelectWrapper = styled.div`
   position: relative;
-  width: 112px;
+  width: 145px;
   cursor: pointer;
 
   font-family: 'Pretendard';
@@ -60,11 +61,13 @@ export const SelectWrapper = styled.div`
   letter-spacing: 0.15px;
   border: 0;
   color: #212121;
+  padding: 16px 0;
+  padding-right: 16px;
 
   img {
     position: absolute;
     left: 18px;
-    top: 8px;
+    top: 24px;
     width: 12px;
     height: 7.4px;
   }
@@ -73,8 +76,10 @@ export const SelectWrapper = styled.div`
 export const SelectOptions = styled.div`
   z-index: 10;
 
+  width: 112px;
   position: absolute;
-  top: 40px;
+  top: 56px;
+  left: 40px;
   background: #ffffff;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 2px 6px 2px rgba(0, 0, 0, 0.15);
@@ -86,7 +91,6 @@ export const SelectOptions = styled.div`
 `;
 
 export const Option = styled.div`
-  width: 112px;
   padding: 12px 16px;
   font-family: 'Pretendard';
   font-style: normal;
@@ -102,11 +106,13 @@ export const Option = styled.div`
 `;
 
 export const Label = styled.div`
-  text-align: end;
+  text-align: start;
+  padding-left: 55px;
   padding-right: 6px;
 `;
 
 export const Footer = styled.div`
+  background-color: #ffffff;
   font-family: 'Pretendard';
   position: absolute;
   bottom: 0;
@@ -116,7 +122,8 @@ export const Footer = styled.div`
   display: flex;
   gap: 8px;
 
-  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.1);
+
   div.menu_container {
     margin-top: 8px;
     margin-left: 14px;
@@ -145,6 +152,7 @@ export const Footer = styled.div`
 
 export const MainItemsContainer = styled.div`
   font-family: 'Pretendard';
+  background-color: #ffffff;
   padding: 16px;
   border-bottom: 4px solid #eeeeee;
   padding-bottom: 5px;
@@ -294,6 +302,7 @@ export const MainItemsContainer = styled.div`
       width: 16px;
       margin-left: 18px;
       margin-right: 6px;
+      cursor: pointer;
     }
     span {
       margin-left: 105px;
@@ -328,15 +337,18 @@ export const MainButton = styled.button`
 `;
 
 export const MainPageContainer = styled(MainContainer)`
-  background: #ffffff;
   position: relative;
+  overflow: hidden;
+
+  background: #f5f5f5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .main_banner {
     position: absolute;
     top: 56px;
     width: 100%;
     height: 136px;
-    background-color: #ececec;
+    background-color: #ffffff;
   }
 `;
 

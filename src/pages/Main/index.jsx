@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router';
-import { useDraggable } from 'react-use-draggable-scroll';
 import useSWR from 'swr';
 
 import {
@@ -84,13 +83,10 @@ function MainItems({
   onClickHeart,
   onClickToDetailPage,
 }) {
-  const ref = useRef();
-  const { events } = useDraggable(ref);
-
   return (
-    <MainItemsContainer onClick={onClickToDetailPage}>
+    <MainItemsContainer>
       <div className="items_header">
-        <div className="items_tag_wrapper" ref={ref} {...events}>
+        <div className="items_tag_wrapper">
           {itemsTag.map((tag, idx) => (
             <div key={idx} className="items_tag">
               {tag}
@@ -103,7 +99,13 @@ function MainItems({
           alt="items_detail_bar"
         />
       </div>
-      <div className="items_content_wrapper">
+      <div
+        className="items_content_wrapper"
+        role="button"
+        onKeyDown={onClickToDetailPage}
+        tabIndex={0}
+        onClick={onClickToDetailPage}
+      >
         <div className="items_text_wrapper">
           <h1>{itemsHeadText}</h1>
           <div className="items_main">

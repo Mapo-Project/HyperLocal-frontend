@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router';
 
-import Footer from '../../layout/Footer';
 import { LoginContainer, LoginButton } from './style';
 
 function Login() {
@@ -41,7 +40,6 @@ function Login() {
           </div>
         </LoginButton>
       </a>
-      <Footer />
     </LoginContainer>
   );
 }

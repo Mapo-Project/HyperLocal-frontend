@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import useSWR from 'swr';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
-import Footer from '../../layout/Footer';
+// import Footer from '../../layout/Footer';
 // import getAccessData from '../../utils/getAccessData';
 import {
   Error,
@@ -245,16 +245,10 @@ function SignUp() {
               : nickname && !idMaxCheck
               ? '최대 12자까지 작성할 수 있어요.'
               : ''}
-
-            <span>
-              {!isNicknameDoubleCheck && idMinCheck
-                ? '사용가능한 아이디 입니다'
-                : ''}
-            </span>
           </Error>
           <ErrorChecker
             src={
-              idMaxCheck
+              !isNicknameDoubleCheck && idMaxCheck
                 ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
                 : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
             }
@@ -268,7 +262,7 @@ function SignUp() {
               type="text"
               id="phoneNum"
               name="phoneNum"
-              placeholder="전화번호"
+              placeholder="000-0000-0000"
               onChange={(e) => {
                 changePhoneNum();
                 onChangePhoneNum(e);
@@ -282,7 +276,6 @@ function SignUp() {
           <Error>
             {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
             {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
-            <span>{phoneNumCheck ? '사용가능한 전화번호 입니다' : ''}</span>
           </Error>
           <ErrorChecker
             src={
@@ -308,7 +301,6 @@ function SignUp() {
           <Error>
             {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
             {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
-            <span>{EmailCheck ? '사용가능한 이메일 입니다' : ''}</span>
           </Error>
           <ErrorChecker
             src={
@@ -325,7 +317,7 @@ function SignUp() {
         )}
       </SignupForm>
       {joinError}
-      <Footer />
+      {/* <Footer /> */}
     </SignUpContainer>
   );
 }

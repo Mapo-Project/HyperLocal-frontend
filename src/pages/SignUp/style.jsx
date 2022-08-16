@@ -83,10 +83,6 @@ export const Error = styled.div`
 
   height: 16px;
   color: #dd2c00;
-
-  span {
-    color: green;
-  }
 `;
 export const ErrorChecker = styled.img`
   position: absolute;
