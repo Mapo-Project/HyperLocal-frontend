@@ -116,6 +116,7 @@ export const Footer = styled.div`
   display: flex;
   gap: 8px;
 
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   div.menu_container {
     margin-top: 8px;
     margin-left: 14px;
