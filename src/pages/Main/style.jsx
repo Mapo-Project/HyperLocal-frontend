@@ -100,7 +100,7 @@ export const Option = styled.div`
 
   color: #000000;
   &:hover {
-    background-color: #00d082;
+    background-color: #f5f5f5;
   }
   color: ${(props) => (props.type === 'changeTown' ? '#9E9E9E' : '#000')};
 `;
