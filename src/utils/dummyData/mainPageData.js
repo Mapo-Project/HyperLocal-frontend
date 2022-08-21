@@ -12,6 +12,11 @@ export const mainItemsData = [
     isHeartEmpty: false,
     isLock: true,
     itemsHeartCount: 5,
+    // itemsCategory,
+    // itemsText,
+    // itemsLink,
+    // itemsisHomemade,
+    // itemsDate,
   },
   {
     itemId: 1,
@@ -168,10 +173,4 @@ export const mainItemsData = [
     isLock: true,
     itemsHeartCount: 7,
   },
-];
-
-export const options = [
-  { value: '성산동', label: '성산동' },
-  { value: '망원동', label: '망원동' },
-  { value: '합정동', label: '합정동' },
 ];

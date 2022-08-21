@@ -102,7 +102,7 @@ function MainItems({
       <div
         className="items_content_wrapper"
         role="button"
-        onKeyDown={onClickToDetailPage}
+        onKeyDown={() => {}}
         tabIndex={0}
         onClick={onClickToDetailPage}
       >
@@ -149,7 +149,7 @@ function MainItems({
         {itemsCurrentParticipants}명 참여중
         <img
           role="button"
-          onKeyDown={onClickHeart}
+          onKeyDown={() => {}}
           tabIndex={itemId}
           onClick={onClickHeart}
           className="items_heart"
@@ -256,7 +256,7 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
           {!userData ? (
             <span
               role="button"
-              onKeyDown={onClickToLoginPage}
+              onKeyDown={() => {}}
               tabIndex={0}
               className="FindTown_login"
               onClick={onClickToLoginPage}
@@ -267,7 +267,7 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
             <img
               className="main_profile"
               role="button"
-              onKeyDown={onClickToLoginPage}
+              onKeyDown={() => {}}
               tabIndex={0}
               alt="profile_img"
               src={userData.data.profileImg}
@@ -310,7 +310,7 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
         <div
           className="menu_container"
           role="button"
-          onKeyDown={onClickToInterestingnPage}
+          onKeyDown={() => {}}
           tabIndex={0}
           onClick={onClickToInterestingnPage}
         >
@@ -336,7 +336,7 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
         <div
           className="menu_container"
           role="button"
-          onKeyDown={userData ? onClickToMyPage : null}
+          onKeyDown={() => {}}
           tabIndex={0}
           onClick={userData ? onClickToMyPage : null}
         >
