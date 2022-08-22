@@ -57,12 +57,7 @@ function MyContainer({ className, children }) {
   );
 }
 
-function Create({
-  currentSelectedTown,
-  newShareData,
-  setNewShareDate,
-  dataId,
-}) {
+function Create({ currentSelectedTown, setMaindata, dataId }) {
   // 사진
   const [img, setImg] = useState([]);
 
@@ -103,7 +98,7 @@ function Create({
     (e) => {
       e.preventDefault();
       alert('폼제출됨');
-      setNewShareDate((prov) => [
+      setMaindata((prov) => [
         ...prov,
         {
           // eslint-disable-next-line no-param-reassign
@@ -140,7 +135,6 @@ function Create({
         dueDate,
         category,
         currentSelectedTown,
-        newShareData,
       });
       navigate('/', { replace: true });
     },
@@ -159,8 +153,7 @@ function Create({
       dueDate,
       category,
       currentSelectedTown,
-      setNewShareDate,
-      newShareData,
+      setMaindata,
     ],
   );
 

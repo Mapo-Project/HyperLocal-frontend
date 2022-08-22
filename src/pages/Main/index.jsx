@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
@@ -17,7 +17,6 @@ import {
   Option,
 } from './style';
 
-import { mainItemsData } from '../../utils/dummyData/mainPageData.js';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -147,7 +146,9 @@ function MainItems({
         role="button"
         onKeyDown={() => {}}
         tabIndex={0}
-        onClick={onClickToDetailPage}
+        onClick={() => {
+          onClickToDetailPage(itemId);
+        }}
       >
         <div className="items_text_wrapper">
           <h1>{itemsHeadText}</h1>
@@ -202,7 +203,9 @@ function MainItems({
           role="button"
           onKeyDown={() => {}}
           tabIndex={itemId}
-          onClick={onClickHeart}
+          onClick={() => {
+            onClickHeart(itemId);
+          }}
           className="items_heart"
           src={
             isHeartEmpty
@@ -222,61 +225,39 @@ function Main({
   currentSelectedTown,
   currentTown,
   onSelectCurrentTown,
-  newShareData,
+  mainData,
+  setMaindata,
+  onClickHeart,
 }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
-  // 더미데이터와 추가데이터 병합
-  const mainItemsData2 = useMemo(
-    () => [...mainItemsData, ...newShareData],
-    [newShareData],
-  );
-
-  const [maindata, setMaindata] = useState();
-
   // 지역별 정렬
   const onSortByLocation = useCallback(() => {
-    setMaindata([
-      ...mainItemsData2.filter((data) =>
+    setMaindata((prov) => [
+      ...prov.filter((data) =>
         data.itemsTownLocation?.includes(currentSelectedTown),
       ),
     ]);
-  }, [currentSelectedTown, mainItemsData2]);
+  }, [currentSelectedTown, setMaindata]);
+  // useEffect(() => {
+  //   mainData.filter((data) => data.itemsTownLocation?.includes(currentSelectedTown))
+
+  // },[])
 
   // 날짜순 정렬
   const onSortByDate = useCallback(() => {
-    setMaindata([
-      ...mainItemsData2.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
+    setMaindata((prov) => [
+      ...prov.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
     ]);
-  }, [mainItemsData2]);
+  }, [setMaindata]);
 
   useEffect(() => {
     onSortByLocation();
     onSortByDate();
   }, [onSortByLocation, onSortByDate]);
-
-  // 하트
-  const onClickHeart = (e) => {
-    const targetNum = e.target.attributes.tabindex.nodeValue * 1;
-
-    setMaindata((maindata2) =>
-      maindata2.map((data) =>
-        data.itemId === targetNum
-          ? {
-              ...data,
-              isHeartEmpty: !data.isHeartEmpty,
-
-              itemsHeartCount: !data.isHeartEmpty
-                ? data.itemsHeartCount + 1
-                : data.itemsHeartCount - 1,
-            }
-          : data,
-      ),
-    );
-  };
 
   const navigate = useNavigate();
 
@@ -304,11 +285,11 @@ function Main({
   const onClickToInterestingnPage = () => {
     navigate('/interesting');
   };
-  const onClickToDetailPage = () => {
-    navigate('/detail/2');
+  const onClickToDetailPage = (id) => {
+    navigate(`/detail/${id}`);
   };
 
-  console.log({ userData, currentSelectedTown, currentTown, newShareData });
+  console.log({ userData, currentSelectedTown, currentTown });
   return (
     <MainPageContainer>
       <FindTown>
@@ -350,7 +331,7 @@ function Main({
 
       <div className="main_banner" />
       <MainScrollbars autoHide style={{ height: '520px' }}>
-        {maindata?.map((data) => (
+        {mainData?.map((data) => (
           <MainItems
             key={data.itemId}
             {...data}
