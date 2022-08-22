@@ -31,6 +31,12 @@ function App() {
   const onSelectCurrentTown = (curTown) => {
     setCurrentSelectedTown(curTown);
   };
+
+  const [newShareData, setNewShareDate] = useState([]);
+
+  // new Data
+  const dataId = useRef(20);
+
   return (
     <>
       <ResetStyle />
@@ -43,6 +49,7 @@ function App() {
                 currentSelectedTown={currentSelectedTown}
                 currentTown={currentTown}
                 onSelectCurrentTown={onSelectCurrentTown}
+                newShareData={newShareData}
               />
             }
           />
@@ -74,7 +81,17 @@ function App() {
               />
             }
           />
-          <Route path="/create" element={<Create />} />
+          <Route
+            path="/create"
+            element={
+              <Create
+                currentSelectedTown={currentSelectedTown}
+                newShareData={newShareData}
+                setNewShareDate={setNewShareDate}
+                dataId={dataId}
+              />
+            }
+          />
           <Route path="/interesting" element={<Interesting />} />
           <Route
             path="/mypage"

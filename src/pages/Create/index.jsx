@@ -57,7 +57,12 @@ function MyContainer({ className, children }) {
   );
 }
 
-function Create() {
+function Create({
+  currentSelectedTown,
+  newShareData,
+  setNewShareDate,
+  dataId,
+}) {
   // 사진
   const [img, setImg] = useState([]);
 
@@ -92,12 +97,37 @@ function Create() {
   const years = _.range(getYear(new Date()), getYear(new Date()) + 2, 1);
   const months = _.range(getMonth(new Date()), getMonth(new Date()) + 12, 1);
 
+  const navigate = useNavigate();
   // 데이터 제출
   const onSubmitCreateData = useCallback(
     (e) => {
       e.preventDefault();
       alert('폼제출됨');
+      setNewShareDate((prov) => [
+        ...prov,
+        {
+          // eslint-disable-next-line no-param-reassign
+          itemId: dataId.current++,
+          itemsTag: [category],
+          itemsImg: img,
+          itemsHeadText: title,
+          itemsText: text,
+          itemsLink: link,
+          itemsConfidence: isConfidence,
+          itemsHomemade: isHomemade,
+          itemsTownLocation: currentSelectedTown,
+          itemsLimitParticipants: participant,
+          itemsCurrentParticipants: 0,
+          itemsPrice: price,
+          itemsPriceType: priceType,
+          itemsHeartCount: 0,
+          itemsDeadline: dueDate,
+          isHeartEmpty: false,
+          isLock: !!isHomemade,
+        },
+      ]);
       console.log({
+        dataId,
         img,
         title,
         text,
@@ -109,9 +139,14 @@ function Create() {
         priceType,
         dueDate,
         category,
+        currentSelectedTown,
+        newShareData,
       });
+      navigate('/', { replace: true });
     },
     [
+      navigate,
+      dataId,
       img,
       title,
       text,
@@ -123,10 +158,12 @@ function Create() {
       priceType,
       dueDate,
       category,
+      currentSelectedTown,
+      setNewShareDate,
+      newShareData,
     ],
   );
 
-  const navigate = useNavigate();
   const onClickToMain = useCallback(() => {
     navigate('/');
   }, [navigate]);
@@ -167,7 +204,7 @@ function Create() {
                   // 사진파일 취소했을때 에러뜨는 것을 방지하기위해
                   if (e.target.files.length) {
                     const [files] = e.target.files;
-
+                    console.log(files);
                     if (img.length < 10) {
                       setImg((prov) => [
                         ...prov,

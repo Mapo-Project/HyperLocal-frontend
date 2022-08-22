@@ -304,6 +304,10 @@ export const MainItemsContainer = styled.div`
       margin-right: 6px;
       cursor: pointer;
     }
+    /* 하트 클릭 시 UI 전환하지 않도록 고정 */
+    p {
+      min-width: 10px;
+    }
     span {
       margin-left: 105px;
       color: #9e9e9e;

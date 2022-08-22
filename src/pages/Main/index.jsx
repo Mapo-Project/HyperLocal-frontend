@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
 
+import { getMonth, getDate } from 'date-fns';
 import {
   FindTown,
   Footer,
@@ -69,25 +70,67 @@ function SelectBox({
 }
 
 function MainItems({
-  itemId,
-  itemsTag,
-  itemsImg,
-  itemsHeadText,
-  itemsTownLocation,
-  itemsLimitParticipants,
-  itemsCurrentParticipants,
-  itemsPrice,
-  itemsHeartCount,
-  itemsDeadline,
-  isHeartEmpty,
-  onClickHeart,
+  itemId, //
+  itemsTag, //
+  itemsImg, //
+  itemsHeadText, //
+  itemsTownLocation, //
+  itemsLimitParticipants, //
+  itemsCurrentParticipants, // 처음에 0
+  itemsPrice, //
+  itemsHeartCount, // 해야함
+  itemsDeadline, //
+  isHeartEmpty, // 해야함
+  onClickHeart, // 해야함
   onClickToDetailPage,
+  isLock,
+  itemsHomemade,
 }) {
+  let itemsDeadline2 = '';
+  if (typeof itemsDeadline !== 'string') {
+    itemsDeadline2 = `${
+      getMonth(itemsDeadline) > 8
+        ? `${getMonth(itemsDeadline) + 1}`
+        : `0${getMonth(itemsDeadline) + 1}`
+    }.${
+      getDate(itemsDeadline) > 9
+        ? `${getDate(itemsDeadline)}`
+        : `0${getDate(itemsDeadline)}`
+    }`;
+  } else {
+    itemsDeadline2 = itemsDeadline;
+  }
+  let itemsTag2 = [...itemsTag];
+  if (itemsTag.length < 2) {
+    switch (itemsTag[0]) {
+      case '배달':
+        itemsTag2 = ['배달 🛵'];
+        break;
+      case 'OTT':
+        itemsTag2 = ['OTT 📺'];
+        break;
+      case '식품':
+        itemsTag2 = ['식품 🍎'];
+        break;
+      case '의류':
+        itemsTag2 = ['의류 👕'];
+        break;
+      case '장보기 친구':
+        itemsTag2 = ['장보기 친구 🤝 '];
+        break;
+      default:
+        itemsTag2;
+    }
+    if (itemsHomemade) {
+      itemsTag2.push('홈메이드 🧡');
+    }
+  }
+
   return (
     <MainItemsContainer>
       <div className="items_header">
         <div className="items_tag_wrapper">
-          {itemsTag.map((tag, idx) => (
+          {itemsTag2.map((tag, idx) => (
             <div key={idx} className="items_tag">
               {tag}
             </div>
@@ -122,14 +165,22 @@ function MainItems({
                 src={`${process.env.PUBLIC_URL}/assets/images/main_calendar_month.png`}
                 alt="items_deadline"
               />
-              ~{itemsDeadline}
+              {/* 더미데이터 때문에 */}~{itemsDeadline2}
             </div>
           </div>
         </div>
         <div className="items_img_wrapper">
           {/* lock걸려있으면 사진을 보여주지 않음 */}
-          {itemsPrice !== '같이 정해요' ? (
-            <img src={itemsImg} alt="items_img" />
+          {!isLock ? (
+            <img
+              // 더미데이터때문에 만들어놓음
+              src={
+                itemsImg[0] === '/'
+                  ? itemsImg
+                  : URL.createObjectURL(itemsImg[0].files)
+              }
+              alt="items_img"
+            />
           ) : (
             <div>
               <img
@@ -160,48 +211,68 @@ function MainItems({
           }
           alt="heart"
         />
-        {itemsHeartCount}
+        <p>{itemsHeartCount}</p>
         <span>{itemsTownLocation} - 아이디</span>
       </div>
     </MainItemsContainer>
   );
 }
 
-function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
+function Main({
+  currentSelectedTown,
+  currentTown,
+  onSelectCurrentTown,
+  newShareData,
+}) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
+  // 더미데이터와 추가데이터 병합
+  const mainItemsData2 = useMemo(
+    () => [...mainItemsData, ...newShareData],
+    [newShareData],
+  );
+
   const [maindata, setMaindata] = useState();
 
+  // 지역별 정렬
   const onSortByLocation = useCallback(() => {
     setMaindata([
-      ...mainItemsData.filter((data) =>
-        data.itemsTownLocation.includes(currentSelectedTown),
+      ...mainItemsData2.filter((data) =>
+        data.itemsTownLocation?.includes(currentSelectedTown),
       ),
     ]);
-  }, [currentSelectedTown]);
+  }, [currentSelectedTown, mainItemsData2]);
+
+  // 날짜순 정렬
+  const onSortByDate = useCallback(() => {
+    setMaindata([
+      ...mainItemsData2.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
+    ]);
+  }, [mainItemsData2]);
 
   useEffect(() => {
     onSortByLocation();
-  }, [onSortByLocation]);
+    onSortByDate();
+  }, [onSortByLocation, onSortByDate]);
 
-  // const onChangeTown = useCallback(
-  //   (e) => {
-  //     setSelectedOption(e);
-  //     onSortByLocation();
-  //   },
-  //   [setSelectedOption, onSortByLocation],
-  // );
-
+  // 하트
   const onClickHeart = (e) => {
     const targetNum = e.target.attributes.tabindex.nodeValue * 1;
 
     setMaindata((maindata2) =>
       maindata2.map((data) =>
         data.itemId === targetNum
-          ? { ...data, isHeartEmpty: !data.isHeartEmpty }
+          ? {
+              ...data,
+              isHeartEmpty: !data.isHeartEmpty,
+
+              itemsHeartCount: !data.isHeartEmpty
+                ? data.itemsHeartCount + 1
+                : data.itemsHeartCount - 1,
+            }
           : data,
       ),
     );
@@ -237,7 +308,7 @@ function Main({ currentSelectedTown, currentTown, onSelectCurrentTown }) {
     navigate('/detail/2');
   };
 
-  console.log({ userData, currentSelectedTown, currentTown });
+  console.log({ userData, currentSelectedTown, currentTown, newShareData });
   return (
     <MainPageContainer>
       <FindTown>
