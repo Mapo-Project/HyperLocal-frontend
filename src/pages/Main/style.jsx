@@ -293,6 +293,7 @@ export const MainItemsContainer = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
+    position: relative;
 
     .items_chat {
       margin-right: 5px;
@@ -304,8 +305,11 @@ export const MainItemsContainer = styled.div`
       margin-right: 6px;
       cursor: pointer;
     }
+
     span {
-      margin-left: 105px;
+      position: absolute;
+      top: 16px;
+      right: 0;
       color: #9e9e9e;
       font-weight: 400;
       font-size: 14px;

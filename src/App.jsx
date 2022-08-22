@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
@@ -11,6 +11,7 @@ import Interesting from './pages/Interesting';
 import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
+import { mainItemsData } from './utils/dummyData/mainPageData';
 
 function App() {
   const [currentTown, setCurrentTown] = useState([]);
@@ -31,6 +32,33 @@ function App() {
   const onSelectCurrentTown = (curTown) => {
     setCurrentSelectedTown(curTown);
   };
+
+  const [mainData, setMaindata] = useState([...mainItemsData]);
+  // new Data
+  const dataId = useRef(20);
+
+  // const onDetailItem = useCallback((id) => {
+  //   setMaindata((prov) => prov.filter((data) => `${data.itemId}` === id));
+  // }, []);
+
+  // 하트
+  const onClickHeart = useCallback((id) => {
+    setMaindata((prov) =>
+      prov.map((data) =>
+        data.itemId === id
+          ? {
+              ...data,
+              isHeartEmpty: !data.isHeartEmpty,
+
+              itemsHeartCount: !data.isHeartEmpty
+                ? data.itemsHeartCount + 1
+                : data.itemsHeartCount - 1,
+            }
+          : data,
+      ),
+    );
+  }, []);
+
   return (
     <>
       <ResetStyle />
@@ -43,6 +71,9 @@ function App() {
                 currentSelectedTown={currentSelectedTown}
                 currentTown={currentTown}
                 onSelectCurrentTown={onSelectCurrentTown}
+                mainData={mainData}
+                setMaindata={setMaindata}
+                onClickHeart={onClickHeart}
               />
             }
           />
@@ -74,7 +105,16 @@ function App() {
               />
             }
           />
-          <Route path="/create" element={<Create />} />
+          <Route
+            path="/create"
+            element={
+              <Create
+                currentSelectedTown={currentSelectedTown}
+                dataId={dataId}
+                setMaindata={setMaindata}
+              />
+            }
+          />
           <Route path="/interesting" element={<Interesting />} />
           <Route
             path="/mypage"
@@ -86,7 +126,16 @@ function App() {
               />
             }
           />
-          <Route path="/detail/:id" element={<Detail />} />
+          <Route
+            path="/detail/:currentItemId"
+            element={
+              <Detail
+                mainData={mainData}
+                // onDetailItem={onDetailItem}
+                onClickHeart={onClickHeart}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

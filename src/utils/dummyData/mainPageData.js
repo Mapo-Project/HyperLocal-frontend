@@ -10,7 +10,7 @@ export const mainItemsData = [
     itemsPrice: '12,000',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: true,
+    isLock: false,
     itemsHeartCount: 5,
     // itemsCategory,
     // itemsText,
@@ -44,7 +44,7 @@ export const mainItemsData = [
     itemsPrice: '같이 정해요',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: false,
+    isLock: true,
     itemsHeartCount: 8,
   },
   {
@@ -58,7 +58,7 @@ export const mainItemsData = [
     itemsPrice: '같이 정해요',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: false,
+    isLock: true,
     itemsHeartCount: 5,
   },
   {
@@ -128,7 +128,7 @@ export const mainItemsData = [
     itemsPrice: '6,000',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: true,
+    isLock: false,
     itemsHeartCount: 2,
   },
   {
@@ -142,7 +142,7 @@ export const mainItemsData = [
     itemsPrice: '6,000',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: true,
+    isLock: false,
     itemsHeartCount: 5,
   },
   {
@@ -156,7 +156,7 @@ export const mainItemsData = [
     itemsPrice: '6,000',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: true,
+    isLock: false,
     itemsHeartCount: 5,
   },
   {
@@ -170,7 +170,7 @@ export const mainItemsData = [
     itemsPrice: '6,000',
     itemsDeadline: '08.30',
     isHeartEmpty: false,
-    isLock: true,
+    isLock: false,
     itemsHeartCount: 7,
   },
 ];
