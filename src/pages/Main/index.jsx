@@ -358,7 +358,7 @@ function Main({
         ))}
       </MainScrollbars>
 
-      <MainButton onClick={onClickToCreatePage}>
+      <MainButton onClick={userData ? onClickToCreatePage : null}>
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/main_add.png`}
           alt="pencil"
@@ -381,7 +381,7 @@ function Main({
           role="button"
           onKeyDown={() => {}}
           tabIndex={0}
-          onClick={onClickToInterestingPage}
+          onClick={userData ? onClickToInterestingPage : null}
         >
           <div className="menu_border">
             <img

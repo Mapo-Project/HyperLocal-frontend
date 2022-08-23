@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 
 import Scrollbars from 'react-custom-scrollbars-2';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 
 import DatePicker, { CalendarContainer } from 'react-datepicker';
 
@@ -177,6 +177,17 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   const onClickToMain = useCallback(() => {
     navigate('/');
   }, [navigate]);
+
+  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
+  if (userData === undefined) {
+    return <div>로딩중</div>;
+  }
+
+  // 유저데이터가 없으면 첫 페이지로 이동
+  if (!userData) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <CreatePageMainContainer>
       <Scrollbars autoHide style={{ height: '800px' }}>
