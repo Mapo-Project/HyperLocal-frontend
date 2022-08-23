@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import useSWR from 'swr';
 import { getMonth, getDate } from 'date-fns';
 
@@ -51,6 +51,16 @@ function Interesting({ mainData }) {
   const onClickToDetailPage = (id) => {
     navigate(`/detail/${id}`);
   };
+
+  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
+  if (userData === undefined) {
+    return <div>로딩중</div>;
+  }
+
+  // 유저데이터가 없으면 첫 페이지로 이동
+  if (!userData) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <InterestingMainContainer>

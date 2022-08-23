@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
@@ -42,11 +42,13 @@ function SelectBox({
             성산동
           </Option>
         ) : (
-          options?.map((option) => (
+          options?.map((option, idx) => (
             <Option
+              key={idx}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectCurrentTown(e.target.textContent);
+                setShowOptions((prev) => !prev);
               }}
             >
               {option.town}
@@ -99,6 +101,7 @@ function MainItems({
   } else {
     itemsDeadline2 = itemsDeadline;
   }
+
   let itemsTag2 = [...itemsTag];
   if (itemsTag.length < 2) {
     switch (itemsTag[0]) {
@@ -114,8 +117,20 @@ function MainItems({
       case '의류':
         itemsTag2 = ['의류 👕'];
         break;
-      case '장보기 친구':
-        itemsTag2 = ['장보기 친구 🤝 '];
+      case '장보기친구':
+        itemsTag2 = ['장보기친구 🙋 '];
+        break;
+      case '생활용품':
+        itemsTag2 = ['생활용품 🧹 '];
+        break;
+      case '미용/화장품':
+        itemsTag2 = ['미용/화장품 💄 '];
+        break;
+      case '온라인강의/Software':
+        itemsTag2 = ['온라인강의/Software 💻 '];
+        break;
+      case '반려동물':
+        itemsTag2 = ['반려동물 🐾 '];
         break;
       default:
         itemsTag2;
@@ -226,7 +241,6 @@ function Main({
   currentTown,
   onSelectCurrentTown,
   mainData,
-  setMaindata,
   onClickHeart,
 }) {
   const { data: userData } = useSWR(
@@ -234,30 +248,34 @@ function Main({
     fetcherAccessToken,
   );
 
-  // 지역별 정렬
-  const onSortByLocation = useCallback(() => {
-    setMaindata((prov) => [
-      ...prov.filter((data) =>
-        data.itemsTownLocation?.includes(currentSelectedTown),
-      ),
-    ]);
-  }, [currentSelectedTown, setMaindata]);
+  const onSortByLocation = mainData.filter((data) =>
+    data.itemsTownLocation?.includes(currentSelectedTown),
+  );
+
+  const onSortByDate = onSortByLocation.sort((data1, data2) => {
+    return data2.itemRegistDate - data1.itemRegistDate;
+  });
+
+  // // 지역별 정렬
+  // const onSortByLocation = useCallback(() => {
+  //   setMaindata((prov) => [
+  //     ...prov.filter((data) =>
+  //       data.itemsTownLocation?.includes(currentSelectedTown),
+  //     ),
+  //   ]);
+  // }, [currentSelectedTown, setMaindata]);
+
+  // // 날짜순 정렬
+  // const onSortByDate = useCallback(() => {
+  //   setMaindata((prov) => [
+  //     ...prov.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
+  //   ]);
+  // }, [setMaindata]);
+
   // useEffect(() => {
-  //   mainData.filter((data) => data.itemsTownLocation?.includes(currentSelectedTown))
-
-  // },[])
-
-  // 날짜순 정렬
-  const onSortByDate = useCallback(() => {
-    setMaindata((prov) => [
-      ...prov.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
-    ]);
-  }, [setMaindata]);
-
-  useEffect(() => {
-    onSortByLocation();
-    onSortByDate();
-  }, [onSortByLocation, onSortByDate]);
+  //   onSortByLocation();
+  //   onSortByDate();
+  // }, [onSortByLocation, onSortByDate]);
 
   const navigate = useNavigate();
 
@@ -313,7 +331,7 @@ function Main({
               className="FindTown_login"
               onClick={onClickToLoginPage}
             >
-              login
+              Sign-In
             </span>
           ) : (
             <img
@@ -329,9 +347,9 @@ function Main({
         </div>
       </FindTown>
 
-      <div className="main_banner" />
-      <MainScrollbars autoHide style={{ height: '520px' }}>
-        {mainData?.map((data) => (
+      <MainScrollbars autoHide style={{ height: '665px' }}>
+        <div className="main_banner" />
+        {onSortByDate?.map((data) => (
           <MainItems
             key={data.itemId}
             {...data}
@@ -341,7 +359,7 @@ function Main({
         ))}
       </MainScrollbars>
 
-      <MainButton onClick={onClickToCreatePage}>
+      <MainButton onClick={userData ? onClickToCreatePage : null}>
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/main_add.png`}
           alt="pencil"
@@ -364,7 +382,7 @@ function Main({
           role="button"
           onKeyDown={() => {}}
           tabIndex={0}
-          onClick={onClickToInterestingPage}
+          onClick={userData ? onClickToInterestingPage : null}
         >
           <div className="menu_border">
             <img

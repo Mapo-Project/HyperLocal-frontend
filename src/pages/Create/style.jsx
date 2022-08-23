@@ -427,7 +427,9 @@ export const RadioBox = styled.input`
 
   &:checked {
     box-shadow: 0 0 0 2px #212121;
-    background-color: #212121;
+
+    background-color: ${(props) =>
+      props.ishomemade || !props.isChecked ? '#fff' : '#212121'};
     border-width: 3px;
   }
 `;
@@ -492,7 +494,7 @@ export const SelectDateContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-left: 16px;
-  margin-bottom: 16px;
+  padding-bottom: 16px;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -527,6 +529,31 @@ export const CreateButton = styled(Button)`
   margin-bottom: 135px;
   margin-left: 16px;
   margin-top: 16px;
+`;
+export const CreateButtonDisable = styled.div`
+  background-color: gray;
+  margin-bottom: 135px;
+  margin-left: 16px;
+  margin-top: 16px;
+
+  font-family: 'Pretendard';
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.25px;
+
+  width: 328px;
+  height: 48px;
+
+  padding: 14px 16px;
+
+  border-radius: 4px;
+  border: 0;
+
+  cursor: pointer;
 `;
 
 export const MyCalendarContainer = styled.div`

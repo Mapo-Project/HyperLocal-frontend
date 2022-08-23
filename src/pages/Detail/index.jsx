@@ -65,8 +65,20 @@ function Detail({ mainData, onClickHeart }) {
       case '의류':
         itemsTag2 = ['의류 👕'];
         break;
-      case '장보기 친구':
-        itemsTag2 = ['장보기 친구 🤝 '];
+      case '장보기친구':
+        itemsTag2 = ['장보기친구 🙋 '];
+        break;
+      case '생활용품':
+        itemsTag2 = ['생활용품 🧹 '];
+        break;
+      case '미용/화장품':
+        itemsTag2 = ['미용/화장품 💄 '];
+        break;
+      case '온라인강의/Software':
+        itemsTag2 = ['온라인강의/Software 💻 '];
+        break;
+      case '반려동물':
+        itemsTag2 = ['반려동물 🐾 '];
         break;
       default:
         itemsTag2;
@@ -139,11 +151,13 @@ function Detail({ mainData, onClickHeart }) {
             {tag}
           </div>
         ))} */}
-        {itemsTag2.map((tag, idx) => (
-          <div key={idx} className="item_tag">
-            {tag}
-          </div>
-        ))}
+        <div className="item_tag_wrapper">
+          {itemsTag2.map((tag, idx) => (
+            <div key={idx} className="item_tag">
+              {tag}
+            </div>
+          ))}
+        </div>
 
         <h1 className="item_title">{selectedData.itemsHeadText}</h1>
         <div className="item_text_wrapper wrapper">
@@ -153,13 +167,17 @@ function Detail({ mainData, onClickHeart }) {
           />
           <p>{selectedData.itemsText}</p>
         </div>
-        <div className="item_link_wrapper wrapper">
-          <img
-            alt="link"
-            src={`${process.env.PUBLIC_URL}/assets/images/detail_shopping_basket.png`}
-          />
-          <a href={selectedData.itemsLink}>{selectedData.itemsLink}</a>
-        </div>
+        {selectedData.itemsLink && (
+          <div className="item_link_wrapper wrapper">
+            <img
+              alt="link"
+              src={`${process.env.PUBLIC_URL}/assets/images/detail_shopping_basket.png`}
+            />
+            <a href={selectedData.itemsLink} target="_blank" rel="noreferrer">
+              {selectedData.itemsLink}
+            </a>
+          </div>
+        )}
         {selectedData.itemsConfidence && (
           <div className="item_confidence_wrapper wrapper">
             <img
