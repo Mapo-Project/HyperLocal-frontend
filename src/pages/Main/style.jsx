@@ -215,6 +215,8 @@ export const MainItemsContainer = styled.div`
     display: flex;
     gap: 16px;
     margin-top: 16px;
+    cursor: pointer;
+    padding-bottom: 16px;
   }
   .items_img_wrapper img {
     width: 84px;
@@ -250,7 +252,7 @@ export const MainItemsContainer = styled.div`
   .items_text_wrapper .items_main {
     display: flex;
     align-items: center;
-    padding-bottom: 16px;
+
     margin-top: 16px;
   }
   .items_price {
