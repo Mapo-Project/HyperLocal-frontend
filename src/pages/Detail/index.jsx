@@ -206,10 +206,25 @@ function Detail({ mainData, onClickHeart }) {
           )}
 
           <div className="user_name_wrapper">
-            <div>{selectedData.itemsTownLocation} ◦ 동네이웃001</div>
+            <div>
+              {selectedData.itemsTownLocation} ◦{' '}
+              {selectedData.itemUserName
+                ? selectedData.itemUserName
+                : '동네이웃001'}
+            </div>
             <div>식빵지수</div>
           </div>
-          <div className="user_create_date">1일전 작성</div>
+          <div className="user_create_date">
+            {selectedData.itemRegistDate
+              ? `${
+                  getDate(new Date() - selectedData.itemRegistDate) - 1 === 0
+                    ? '오늘 작성'
+                    : `${
+                        getDate(new Date() - selectedData.itemRegistDate) - 1
+                      }일전 작성`
+                }`
+              : '1일전 작성'}
+          </div>
         </div>
       </DetailContent>
       <DetailFooter>
