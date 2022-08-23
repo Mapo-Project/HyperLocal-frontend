@@ -115,7 +115,10 @@ function App() {
               />
             }
           />
-          <Route path="/interesting" element={<Interesting />} />
+          <Route
+            path="/interesting"
+            element={<Interesting mainData={mainData} />}
+          />
           <Route
             path="/mypage"
             element={
