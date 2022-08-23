@@ -11,9 +11,13 @@ export const DetailHeader = styled.header`
   width: 100%;
   height: 160px;
   background: #f5f5f5;
+  overflow: hidden;
+
   .detail_main_img {
-    width: 100%;
-    height: 160px;
+    display: block;
+    margin: auto;
+    /* width: 100%; */
+    height: 100%;
     opacity: 0.7;
     border-radius: 2px;
   }
@@ -98,8 +102,6 @@ export const DetailContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-  overflow-y: scroll;
-  height: 530px;
 
   .item_tag_wrapper {
     display: flex;

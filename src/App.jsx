@@ -72,7 +72,6 @@ function App() {
                 currentTown={currentTown}
                 onSelectCurrentTown={onSelectCurrentTown}
                 mainData={mainData}
-                setMaindata={setMaindata}
                 onClickHeart={onClickHeart}
               />
             }

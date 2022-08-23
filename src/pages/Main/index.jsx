@@ -84,8 +84,8 @@ function MainItems({
   isHeartEmpty, // 해야함
   onClickHeart, // 해야함
   onClickToDetailPage,
-  isLock,
   itemsHomemade,
+  itemUserName,
 }) {
   let itemsDeadline2 = '';
   if (typeof itemsDeadline !== 'string') {
@@ -166,7 +166,11 @@ function MainItems({
         }}
       >
         <div className="items_text_wrapper">
-          <h1>{itemsHeadText}</h1>
+          <h1>
+            {itemsHeadText.length > 30
+              ? `${itemsHeadText.slice(0, 30)}...`
+              : itemsHeadText}
+          </h1>
           <div className="items_main">
             <div className="items_price">₩ {itemsPrice} / </div>
             <div className="items_participants">
@@ -186,8 +190,7 @@ function MainItems({
           </div>
         </div>
         <div className="items_img_wrapper">
-          {/* lock걸려있으면 사진을 보여주지 않음 */}
-          {!isLock ? (
+          {itemsImg.length ? (
             <img
               // 더미데이터때문에 만들어놓음
               src={
@@ -198,12 +201,7 @@ function MainItems({
               alt="items_img"
             />
           ) : (
-            <div>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/main_lock.png`}
-                alt="lock"
-              />
-            </div>
+            <div />
           )}
         </div>
       </div>
@@ -230,7 +228,9 @@ function MainItems({
           alt="heart"
         />
         <p>{itemsHeartCount}</p>
-        <span>{itemsTownLocation} - 아이디</span>
+        <span>
+          {itemsTownLocation} - {itemUserName}
+        </span>
       </div>
     </MainItemsContainer>
   );
@@ -255,27 +255,6 @@ function Main({
   const onSortByDate = onSortByLocation.sort((data1, data2) => {
     return data2.itemRegistDate - data1.itemRegistDate;
   });
-
-  // // 지역별 정렬
-  // const onSortByLocation = useCallback(() => {
-  //   setMaindata((prov) => [
-  //     ...prov.filter((data) =>
-  //       data.itemsTownLocation?.includes(currentSelectedTown),
-  //     ),
-  //   ]);
-  // }, [currentSelectedTown, setMaindata]);
-
-  // // 날짜순 정렬
-  // const onSortByDate = useCallback(() => {
-  //   setMaindata((prov) => [
-  //     ...prov.sort((a, b) => b.itemsDeadline - a.itemsDeadline),
-  //   ]);
-  // }, [setMaindata]);
-
-  // useEffect(() => {
-  //   onSortByLocation();
-  //   onSortByDate();
-  // }, [onSortByLocation, onSortByDate]);
 
   const navigate = useNavigate();
 
@@ -306,6 +285,11 @@ function Main({
   const onClickToDetailPage = (id) => {
     navigate(`/detail/${id}`);
   };
+
+  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
+  if (userData === undefined) {
+    return <div>로딩중</div>;
+  }
 
   console.log({ userData, currentSelectedTown, currentTown });
   return (
@@ -359,6 +343,7 @@ function Main({
         ))}
       </MainScrollbars>
 
+      {/* <MainButton onClick={onClickToCreatePage}> */}
       <MainButton onClick={userData ? onClickToCreatePage : null}>
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/main_add.png`}

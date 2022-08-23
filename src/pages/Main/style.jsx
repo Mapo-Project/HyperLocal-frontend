@@ -48,6 +48,7 @@ export const FindTown = styled.div`
   }
   .main_profile {
     width: 24px;
+    border: 2px solid #000000;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -222,22 +223,15 @@ export const MainItemsContainer = styled.div`
   }
   .items_img_wrapper img {
     width: 84px;
-  }
-  .items_img_wrapper div {
-    position: relative;
-    width: 84px;
     height: 84px;
-    background: #e0e0e0;
     border-radius: 4px;
   }
-  .items_img_wrapper div img {
-    width: 13.33px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .items_img_wrapper div {
+    width: 84px;
+    height: 84px;
+    border-radius: 4px;
+    background: #e0e0e0;
   }
-
   .items_content_wrapper .items_text_wrapper {
     display: flex;
     flex-direction: column;
