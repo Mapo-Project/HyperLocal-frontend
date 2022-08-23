@@ -171,7 +171,9 @@ function Detail({ mainData, onClickHeart }) {
               alt="link"
               src={`${process.env.PUBLIC_URL}/assets/images/detail_shopping_basket.png`}
             />
-            <a href={selectedData.itemsLink}>{selectedData.itemsLink}</a>
+            <a href={selectedData.itemsLink} target="_blank" rel="noreferrer">
+              {selectedData.itemsLink}
+            </a>
           </div>
         )}
         {selectedData.itemsConfidence && (

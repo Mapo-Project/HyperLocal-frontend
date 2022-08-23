@@ -100,7 +100,7 @@ function MainItems({
   } else {
     itemsDeadline2 = itemsDeadline;
   }
-  console.log(itemsTag[0]);
+
   let itemsTag2 = [...itemsTag];
   if (itemsTag.length < 2) {
     switch (itemsTag[0]) {
