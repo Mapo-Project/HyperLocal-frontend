@@ -17,6 +17,7 @@ import {
   CategorySelectOptions,
   ConfidenceWrapper,
   CreateButton,
+  CreateButtonDisable,
   CreatePageMainContainer,
   ErrorChecker,
   HeadAndTextContainer,
@@ -42,9 +43,9 @@ import fetcherAccessToken from '../../utils/fetcherAccessToken';
 const _ = require('lodash');
 
 const radioBoxList = [
-  { label: '같이 정해요', value: 'together' },
-  { label: '나눔', value: 'share' },
-  { label: '물물교환', value: 'exchange' },
+  { label: '같이 정해요', value: 'together', checked: false },
+  { label: '나눔', value: 'share', checked: false },
+  { label: '물물교환', value: 'exchange', checked: false },
 ];
 
 const categoryValue = categroies;
@@ -96,7 +97,10 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   const [price, setPrice] = useState('');
   // 가격 유형
   const [priceType, setPriceType] = useState('');
+  // radioBox
+  const [radioValue, setradioValue] = useState(radioBoxList);
 
+  console.log(radioValue);
   // 캘린더
   const [dueDate, setDueDate] = useState(null);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
@@ -109,50 +113,59 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   const onSubmitCreateData = useCallback(
     (e) => {
       e.preventDefault();
-      alert('폼제출됨');
-      setMaindata((prov) => [
-        {
-          // eslint-disable-next-line no-param-reassign
-          itemId: dataId.current++,
-          itemsTag: [category],
-          itemsImg: img,
-          itemsHeadText: title,
-          itemsText: text,
-          itemsLink: link,
-          itemsConfidence: isConfidence,
-          itemsHomemade: isHomemade,
-          itemsTownLocation: currentSelectedTown,
-          itemsLimitParticipants: participant,
-          itemsCurrentParticipants: 0,
-          itemsPrice: price,
-          itemsPriceType: priceType,
-          itemsHeartCount: 0,
-          itemsDeadline: dueDate,
-          isHeartEmpty: false,
-          isLock: !!isHomemade,
-          itemUserName: userData?.data?.nickname,
-          // eslint-disable-next-line radix
-          itemRegistDate: new Date(),
-        },
+      if (
+        img.length > 0 &&
+        title &&
+        text &&
+        category !== '카테고리' &&
+        participant &&
+        price &&
+        dueDate
+      ) {
+        setMaindata((prov) => [
+          {
+            // eslint-disable-next-line no-param-reassign
+            itemId: dataId.current++,
+            itemsTag: [category],
+            itemsImg: img,
+            itemsHeadText: title,
+            itemsText: text,
+            itemsLink: link,
+            itemsConfidence: isConfidence,
+            itemsHomemade: isHomemade,
+            itemsTownLocation: currentSelectedTown,
+            itemsLimitParticipants: participant,
+            itemsCurrentParticipants: 0,
+            itemsPrice: price,
+            itemsPriceType: priceType,
+            itemsHeartCount: 0,
+            itemsDeadline: dueDate,
+            isHeartEmpty: false,
+            isLock: !!isHomemade,
+            itemUserName: userData?.data?.nickname,
+            // eslint-disable-next-line radix
+            itemRegistDate: new Date(),
+          },
 
-        ...prov,
-      ]);
-      console.log({
-        dataId,
-        img,
-        title,
-        text,
-        link,
-        isConfidence,
-        isHomemade,
-        participant,
-        price,
-        priceType,
-        dueDate,
-        category,
-        currentSelectedTown,
-      });
-      navigate('/', { replace: true });
+          ...prov,
+        ]);
+        console.log({
+          dataId,
+          img,
+          title,
+          text,
+          link,
+          isConfidence,
+          isHomemade,
+          participant,
+          price,
+          priceType,
+          dueDate,
+          category,
+          currentSelectedTown,
+        });
+        navigate('/', { replace: true });
+      }
     },
     [
       userData,
@@ -354,30 +367,35 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           </LinkContainer>
 
           <ConfidenceWrapper>
-            <label htmlFor="confidence">
-              <input
-                type="checkbox"
-                id="confidence"
-                value={isConfidence}
-                onClick={() => {
-                  setIsConfidence((prov) => !prov);
-                }}
-              />
-              당신의 🧺용기가 필요해요
-            </label>
-            {category === '식품' ? (
-              <label htmlFor="homemade">
-                <input
-                  type="checkbox"
-                  id="homemade"
-                  value={isHomemade}
-                  onClick={() => {
-                    setIsHomemade((prov) => !prov);
-                  }}
-                />
-                홈메이드🧡
-              </label>
-            ) : null}
+            {category === '식품' && (
+              <>
+                <label htmlFor="confidence">
+                  <input
+                    type="checkbox"
+                    id="confidence"
+                    value={isConfidence}
+                    onClick={() => {
+                      setIsConfidence((prov) => !prov);
+                    }}
+                  />
+                  당신의 🧺용기가 필요해요
+                </label>
+                <label htmlFor="homemade">
+                  <input
+                    type="checkbox"
+                    id="homemade"
+                    value={isHomemade}
+                    onClick={() => {
+                      setIsHomemade((prov) => !prov);
+                      if (!(price === '나눔' || price === '물물교환')) {
+                        setPrice('');
+                      }
+                    }}
+                  />
+                  홈메이드🧡
+                </label>
+              </>
+            )}
           </ConfidenceWrapper>
 
           <PriceContainer ishomemade={isHomemade}>
@@ -389,7 +407,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
                 onChange={(e) => {
                   setPrice(e.target.value);
                 }}
-                disabled={isHomemade}
+                disabled={isHomemade || priceType}
               />
               <span>₩</span>
               <ErrorChecker
@@ -403,9 +421,10 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           </PriceContainer>
 
           <BarterContainer>
-            {radioBoxList.map(
+            {radioValue.map(
               (radioBox, idx) => (
                 <div key={idx}>
+                  {/* 라디오 박스를 state로 설정하고 활성화되면 true, 체크해제는 false하여 조작한다. */}
                   <RadioBox
                     type="radio"
                     id={radioBox.value}
@@ -414,8 +433,22 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
                     disabled={radioBox.value === 'together' && isHomemade}
                     ishomemade={radioBox.value === 'together' && isHomemade}
                     onClick={() => {
-                      setPriceType(radioBox.value);
+                      setradioValue((prov) =>
+                        prov.map((data) =>
+                          data.value === radioBox.value
+                            ? { ...data, checked: !data.checked }
+                            : { ...data, checked: false },
+                        ),
+                      );
+                      if (!radioBox.checked) {
+                        setPriceType(radioBox.value);
+                        setPrice(radioBox.label);
+                      } else {
+                        setPriceType('');
+                        setPrice('');
+                      }
                     }}
+                    isChecked={radioBox.checked}
                   />
                   <RadioBoxLabel
                     htmlFor={radioBox.value}
@@ -599,7 +632,17 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             />
           </SelectDateContainer>
 
-          <CreateButton>확인</CreateButton>
+          {img.length > 0 &&
+          title &&
+          text &&
+          category !== '카테고리' &&
+          participant &&
+          price &&
+          dueDate ? (
+            <CreateButton>확인</CreateButton>
+          ) : (
+            <CreateButtonDisable>확인</CreateButtonDisable>
+          )}
         </form>
       </Scrollbars>
     </CreatePageMainContainer>

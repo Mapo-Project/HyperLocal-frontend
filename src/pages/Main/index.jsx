@@ -42,8 +42,9 @@ function SelectBox({
             성산동
           </Option>
         ) : (
-          options?.map((option) => (
+          options?.map((option, idx) => (
             <Option
+              key={idx}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectCurrentTown(e.target.textContent);

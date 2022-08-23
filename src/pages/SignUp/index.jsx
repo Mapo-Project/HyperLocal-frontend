@@ -146,7 +146,6 @@ function SignUp() {
   const onSubmitSignUp = useCallback(
     (e) => {
       e.preventDefault();
-
       axios
         .post(
           `${BACKEND_URL}/user/profile/add`,
