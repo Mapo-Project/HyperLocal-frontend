@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 import { getYear, getMonth } from 'date-fns';
 
+import useSWR from 'swr';
 import {
   BarterContainer,
   CategoryLabel,
@@ -36,6 +37,8 @@ import {
 import { category as categroies } from '../../utils/dummyData/createPageData';
 import useInput from '../../hooks/useInput';
 
+import fetcherAccessToken from '../../utils/fetcherAccessToken';
+
 const _ = require('lodash');
 
 const radioBoxList = [
@@ -45,6 +48,8 @@ const radioBoxList = [
 ];
 
 const categoryValue = categroies;
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 function MyContainer({ className, children }) {
   return (
@@ -58,6 +63,13 @@ function MyContainer({ className, children }) {
 }
 
 function Create({ currentSelectedTown, setMaindata, dataId }) {
+  // 유저데이터
+
+  const { data: userData } = useSWR(
+    `${BACKEND_URL}/user/profile/select`,
+    fetcherAccessToken,
+  );
+
   // 사진
   const [img, setImg] = useState([]);
 
@@ -119,6 +131,9 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           itemsDeadline: dueDate,
           isHeartEmpty: false,
           isLock: !!isHomemade,
+          itemUserName: userData?.data?.nickname,
+          // eslint-disable-next-line radix
+          itemRegistDate: new Date(),
         },
       ]);
       console.log({
@@ -139,6 +154,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
       navigate('/', { replace: true });
     },
     [
+      userData,
       navigate,
       dataId,
       img,

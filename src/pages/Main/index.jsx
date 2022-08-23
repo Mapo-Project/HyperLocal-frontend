@@ -282,7 +282,7 @@ function Main({
   const onClickToMyPage = () => {
     navigate('/mypage');
   };
-  const onClickToInterestingnPage = () => {
+  const onClickToInterestingPage = () => {
     navigate('/interesting');
   };
   const onClickToDetailPage = (id) => {
@@ -364,7 +364,7 @@ function Main({
           role="button"
           onKeyDown={() => {}}
           tabIndex={0}
-          onClick={onClickToInterestingnPage}
+          onClick={onClickToInterestingPage}
         >
           <div className="menu_border">
             <img

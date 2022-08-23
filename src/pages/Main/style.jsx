@@ -125,8 +125,8 @@ export const Footer = styled.div`
   box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.1);
 
   div.menu_container {
-    margin-top: 8px;
-    margin-left: 14px;
+    padding-top: 8px;
+    padding-left: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,6 +215,8 @@ export const MainItemsContainer = styled.div`
     display: flex;
     gap: 16px;
     margin-top: 16px;
+    cursor: pointer;
+    padding-bottom: 16px;
   }
   .items_img_wrapper img {
     width: 84px;
@@ -250,7 +252,7 @@ export const MainItemsContainer = styled.div`
   .items_text_wrapper .items_main {
     display: flex;
     align-items: center;
-    padding-bottom: 16px;
+
     margin-top: 16px;
   }
   .items_price {
