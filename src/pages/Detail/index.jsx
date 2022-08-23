@@ -151,11 +151,13 @@ function Detail({ mainData, onClickHeart }) {
             {tag}
           </div>
         ))} */}
-        {itemsTag2.map((tag, idx) => (
-          <div key={idx} className="item_tag">
-            {tag}
-          </div>
-        ))}
+        <div className="item_tag_wrapper">
+          {itemsTag2.map((tag, idx) => (
+            <div key={idx} className="item_tag">
+              {tag}
+            </div>
+          ))}
+        </div>
 
         <h1 className="item_title">{selectedData.itemsHeadText}</h1>
         <div className="item_text_wrapper wrapper">

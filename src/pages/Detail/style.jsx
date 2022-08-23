@@ -101,6 +101,10 @@ export const DetailContent = styled.div`
   overflow-y: scroll;
   height: 530px;
 
+  .item_tag_wrapper {
+    display: flex;
+    gap: 8px;
+  }
   .item_tag {
     display: inline-block;
     background: #e0e0e0;
