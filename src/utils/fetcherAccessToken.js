@@ -11,7 +11,10 @@ const fetcherAccessToken = (url) => {
       })
       // 성공하면 데이터 실패하면 false를 저장한다.
       .then((response) => response.data)
-      .catch(() => false)
+      .catch((error) => {
+        console.log(error);
+        return false;
+      })
   );
 };
 

@@ -34,12 +34,17 @@ export const FindTown = styled.div`
   .FindTown_login {
     font-family: 'Pretendard';
     font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
 
     color: #212121;
     cursor: pointer;
+
+    border: 1px solid #000000;
+    border-radius: 12px;
+
+    padding: 4px 8px;
   }
   .main_profile {
     width: 24px;
@@ -178,9 +183,6 @@ export const MainItemsContainer = styled.div`
     /* Hide scrollbar for Chrome, Safari and Opera */
     &::-webkit-scrollbar {
       display: none;
-    }
-    div:hover {
-      background-color: rgba(0, 0, 0, 0.4);
     }
   }
   .items_header .items_tag_wrapper .items_tag {
@@ -350,14 +352,10 @@ export const MainPageContainer = styled(MainContainer)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .main_banner {
-    position: absolute;
-    top: 56px;
     width: 100%;
     height: 136px;
-    background-color: #ffffff;
+    background-color: #ef9a9a;
   }
 `;
 
-export const MainScrollbars = styled(Scrollbars)`
-  margin-top: 144px;
-`;
+export const MainScrollbars = styled(Scrollbars)``;

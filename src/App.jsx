@@ -35,7 +35,7 @@ function App() {
 
   const [mainData, setMaindata] = useState([...mainItemsData]);
   // new Data
-  const dataId = useRef(20);
+  const dataId = useRef(12);
 
   // const onDetailItem = useCallback((id) => {
   //   setMaindata((prov) => prov.filter((data) => `${data.itemId}` === id));

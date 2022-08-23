@@ -111,7 +111,6 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
       e.preventDefault();
       alert('폼제출됨');
       setMaindata((prov) => [
-        ...prov,
         {
           // eslint-disable-next-line no-param-reassign
           itemId: dataId.current++,
@@ -135,6 +134,8 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           // eslint-disable-next-line radix
           itemRegistDate: new Date(),
         },
+
+        ...prov,
       ]);
       console.log({
         dataId,
