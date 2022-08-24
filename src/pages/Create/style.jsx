@@ -462,7 +462,7 @@ export const SelectPaticipantContainer = styled.div`
   border-bottom: 1px solid #e0e0e0;
 
   span {
-    margin-bottom: 4px;
+    /* margin-bottom: 4px; */
   }
   .participant-control-wrapper {
     display: flex;
@@ -485,7 +485,13 @@ export const SelectPaticipantContainer = styled.div`
   }
   .participant-control-wrapper div > img {
     width: 16px;
+    height: 16px;
+    padding: 4px;
+    box-sizing: content-box;
     margin-right: 4px;
+  }
+  .participant-control-wrapper div > span {
+    min-width: 20px;
   }
 `;
 

@@ -100,7 +100,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   // radioBox
   const [radioValue, setradioValue] = useState(radioBoxList);
 
-  console.log(radioValue);
+  // console.log(radioValue);
   // 캘린더
   const [dueDate, setDueDate] = useState(null);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
@@ -114,7 +114,6 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
     (e) => {
       e.preventDefault();
       if (
-        img.length > 0 &&
         title &&
         text &&
         category !== '카테고리' &&
@@ -143,6 +142,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             isHeartEmpty: false,
             isLock: !!isHomemade,
             itemUserName: userData?.data?.nickname,
+            itemUserImg: userData?.data?.profileImg,
             // eslint-disable-next-line radix
             itemRegistDate: new Date(),
           },
@@ -295,7 +295,12 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             </SelectPhotoWrapper>
           </SelectPhotoContainer>
 
-          <SelectCategory onClick={() => setShowCategory((prev) => !prev)}>
+          <SelectCategory
+            onClick={() => {
+              setShowCategory((prev) => !prev);
+              setIsHomemade(false);
+            }}
+          >
             {!isShowCategory ? (
               <img
                 src={`${process.env.PUBLIC_URL}/assets/images/main_expand_more.png`}
@@ -491,7 +496,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
                   alt="pariticipant"
                   src={`${process.env.PUBLIC_URL}/assets/images/create_person.png`}
                 />
-                {participant}
+                <span>{participant}</span>
               </div>
 
               <img
@@ -632,8 +637,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             />
           </SelectDateContainer>
 
-          {img.length > 0 &&
-          title &&
+          {title &&
           text &&
           category !== '카테고리' &&
           participant &&

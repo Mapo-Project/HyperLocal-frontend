@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const FindTown = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -19,7 +24,7 @@ export const FindTown = styled.div`
 
   color: #212121;
 
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.15);
 
   .FindTown_search_container {
     display: flex;
@@ -48,6 +53,7 @@ export const FindTown = styled.div`
   }
   .main_profile {
     width: 24px;
+    border: 2px solid #000000;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -160,7 +166,7 @@ export const MainItemsContainer = styled.div`
   background-color: #ffffff;
   padding: 16px;
   border-bottom: 4px solid #eeeeee;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
   height: 213px;
 
   .items_header {
@@ -222,22 +228,15 @@ export const MainItemsContainer = styled.div`
   }
   .items_img_wrapper img {
     width: 84px;
-  }
-  .items_img_wrapper div {
-    position: relative;
-    width: 84px;
     height: 84px;
-    background: #e0e0e0;
     border-radius: 4px;
   }
-  .items_img_wrapper div img {
-    width: 13.33px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .items_img_wrapper div {
+    width: 84px;
+    height: 84px;
+    border-radius: 4px;
+    background: #e0e0e0;
   }
-
   .items_content_wrapper .items_text_wrapper {
     display: flex;
     flex-direction: column;
@@ -359,3 +358,25 @@ export const MainPageContainer = styled(MainContainer)`
 `;
 
 export const MainScrollbars = styled(Scrollbars)``;
+
+export const MainShowNoData = styled.div`
+  padding: 45px 16px 0 16px;
+  h1 {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+
+    margin-bottom: 30px;
+  }
+  img {
+    width: 328px;
+    height: 323.36px;
+  }
+`;

@@ -29,7 +29,7 @@ export const MyPageMainContainer = styled(MainContainer)`
 `;
 
 export const MyPageProfileBox = styled.div`
-  border: 1px solid #000000;
+  background: #d9d9d9;
   border-radius: 0px 0px 20px 20px;
   width: 100%;
 `;
@@ -81,7 +81,6 @@ export const ProfileWrapper = styled.div`
     }
   }
   img {
-    border: 4px solid #000000;
     border-radius: 29px;
     width: 96px;
   }

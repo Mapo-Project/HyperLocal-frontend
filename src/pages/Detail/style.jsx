@@ -11,9 +11,13 @@ export const DetailHeader = styled.header`
   width: 100%;
   height: 160px;
   background: #f5f5f5;
+  overflow: hidden;
+
   .detail_main_img {
-    width: 100%;
-    height: 160px;
+    display: block;
+    margin: auto;
+    /* width: 100%; */
+    height: 100%;
     opacity: 0.7;
     border-radius: 2px;
   }
@@ -98,8 +102,6 @@ export const DetailContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-  overflow-y: scroll;
-  height: 530px;
 
   .item_tag_wrapper {
     display: flex;
@@ -185,12 +187,14 @@ export const DetailContent = styled.div`
       width: 40px;
       height: 40px;
       border-radius: 50%;
+      border: 1px solid #9e9e9e;
     }
     .user_dummy_img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       background: #d9d9d9;
+      border: 1px solid #9e9e9e;
     }
     .user_name_wrapper {
       display: flex;
