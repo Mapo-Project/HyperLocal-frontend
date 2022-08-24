@@ -65,6 +65,9 @@ a, ul, li{
     color: inherit;
 }
 
+body{
+	background-color: #d7d2cb;
+}
 `;
 
 export default ResetStyle;

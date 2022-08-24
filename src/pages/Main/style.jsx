@@ -164,15 +164,16 @@ export const Footer = styled.div`
 export const MainItemsContainer = styled.div`
   font-family: 'Pretendard';
   background-color: #ffffff;
-  padding: 16px;
-  border-bottom: 4px solid #eeeeee;
-  padding-bottom: 8px;
-  height: 213px;
+  padding: 16px 0;
+  margin-bottom: 8px;
 
+  height: 213px;
+  position: relative;
   .items_header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 16px;
   }
   .items_header .items_tag_wrapper {
     border-radius: 4px;
@@ -213,9 +214,16 @@ export const MainItemsContainer = styled.div`
 
     color: #616161;
   }
-  .items_header .items_detail {
+
+  .items_detail {
+    position: absolute;
+
+    top: 16px;
+    right: 8px;
     height: 12px;
     width: 3px;
+    padding: 4px 8.5px;
+    box-sizing: content-box;
     cursor: pointer;
   }
 
@@ -225,6 +233,9 @@ export const MainItemsContainer = styled.div`
     margin-top: 16px;
     cursor: pointer;
     padding-bottom: 16px;
+  }
+  .items_img_wrapper {
+    margin-right: 16px;
   }
   .items_img_wrapper img {
     width: 84px;
@@ -249,12 +260,14 @@ export const MainItemsContainer = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
+    margin-left: 16px;
   }
   .items_text_wrapper .items_main {
     display: flex;
     align-items: center;
 
     margin-top: 16px;
+    margin-left: 16px;
   }
   .items_price {
     font-weight: 400;
@@ -287,7 +300,9 @@ export const MainItemsContainer = styled.div`
       width: 14px;
     }
   }
+
   .items_footer {
+    padding: 0 16px;
     border-top: 1px solid #f5f5f5;
     padding-top: 14px;
     display: flex;
@@ -303,7 +318,7 @@ export const MainItemsContainer = styled.div`
       width: 20px;
     }
     .items_heart {
-      width: 16px;
+      width: 20px;
       margin-left: 18px;
       margin-right: 6px;
       cursor: pointer;
@@ -312,7 +327,7 @@ export const MainItemsContainer = styled.div`
     span {
       position: absolute;
       top: 16px;
-      right: 0;
+      right: 16px;
       color: #9e9e9e;
       font-weight: 400;
       font-size: 14px;
@@ -347,20 +362,23 @@ export const MainPageContainer = styled(MainContainer)`
   position: relative;
   overflow: hidden;
 
-  background: #f5f5f5;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+`;
 
+export const MainScrollbars = styled(Scrollbars)`
   .main_banner {
+    display: block;
     width: 100%;
-    height: 136px;
-    background-color: #ef9a9a;
+    height: 144px;
+    background-color: #ececec;
+    margin-bottom: 8px;
   }
 `;
 
-export const MainScrollbars = styled(Scrollbars)``;
-
 export const MainShowNoData = styled.div`
   padding: 45px 16px 0 16px;
+  background-color: #ffffff;
+  height: 100%;
   h1 {
     font-family: 'Pretendard';
     font-style: normal;
