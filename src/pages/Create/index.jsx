@@ -142,6 +142,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             isHeartEmpty: false,
             isLock: !!isHomemade,
             itemUserName: userData?.data?.nickname,
+            itemUserImg: userData?.data?.profileImg,
             // eslint-disable-next-line radix
             itemRegistDate: new Date(),
           },

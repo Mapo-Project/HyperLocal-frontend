@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const FindTown = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
@@ -19,7 +24,7 @@ export const FindTown = styled.div`
 
   color: #212121;
 
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.15);
 
   .FindTown_search_container {
     display: flex;
@@ -161,7 +166,7 @@ export const MainItemsContainer = styled.div`
   background-color: #ffffff;
   padding: 16px;
   border-bottom: 4px solid #eeeeee;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
   height: 213px;
 
   .items_header {

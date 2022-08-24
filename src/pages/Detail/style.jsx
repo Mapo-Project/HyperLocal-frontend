@@ -187,12 +187,14 @@ export const DetailContent = styled.div`
       width: 40px;
       height: 40px;
       border-radius: 50%;
+      border: 1px solid #9e9e9e;
     }
     .user_dummy_img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       background: #d9d9d9;
+      border: 1px solid #9e9e9e;
     }
     .user_name_wrapper {
       display: flex;

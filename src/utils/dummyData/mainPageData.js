@@ -4,10 +4,14 @@ export const mainItemsData = [
     itemsTag: ['배달 🛵'],
     itemsImg: `${process.env.PUBLIC_URL}/assets/images/main_thumbnail.png`,
     itemsHeadText: '카페 마마스 같이 시키실 분? 마포중앙도서관 근처 ',
+    itemsText: `샐러드랑 청포도주스 먹고싶은데 동네에 카페 마마스가 없어서 배민으로 주문하려고 합니다. 
+    마포중앙도서관 앞에서 만나 같이 주문하고 
+    배달비 나눠내요~`,
+    itemsConfidence: true,
     itemsTownLocation: '성산동',
-    itemsLimitParticipants: 3,
+    itemsLimitParticipants: 2,
     itemsCurrentParticipants: 1,
-    itemsPrice: '같이 정해요',
+    itemsPrice: '4,200',
     itemsDeadline: '08.23',
     isHeartEmpty: false,
 

@@ -225,11 +225,11 @@ function Detail({ mainData, onClickHeart }) {
             <p>{changeDate(selectedData.itemsDeadline)}</p>
           </div>
           <div className="item_user_wrapper">
-            {userData?.data?.profileImg ? (
+            {selectedData?.itemUserImg ? (
               <img
                 className="userImg"
                 alt="userData"
-                src={userData.data.profileImg}
+                src={selectedData.itemUserImg}
               />
             ) : (
               <div className="user_dummy_img" />

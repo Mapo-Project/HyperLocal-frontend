@@ -283,6 +283,9 @@ function Main({
   const onClickToInterestingPage = () => {
     navigate('/interesting');
   };
+  // const onClickToCategorySearchPage = () => {
+  //   navigate('/search');
+  // };
   const onClickToDetailPage = (id) => {
     navigate(`/detail/${id}`);
   };
@@ -307,6 +310,10 @@ function Main({
             className="FindTown_search"
             src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
             alt="search"
+            role="button"
+            onKeyDown={() => {}}
+            tabIndex={0}
+            // onClick={onClickToCategorySearchPage}
           />
           {!userData ? (
             <span
@@ -332,10 +339,22 @@ function Main({
         </div>
       </FindTown>
 
-      <MainScrollbars autoHide style={{ height: '665px' }}>
+      <MainScrollbars
+        autoHide
+        style={{
+          height: '665px',
+          position: 'absolute',
+          top: '54px',
+          zIndex: 0,
+        }}
+      >
         {onSortByDate.length ? (
           <>
-            <div className="main_banner" />
+            <img
+              className="main_banner"
+              src={`${process.env.PUBLIC_URL}/assets/images/main_banner.jpg`}
+              alt="banner"
+            />
             {onSortByDate?.map((data) => (
               <MainItems
                 key={data.itemId}
