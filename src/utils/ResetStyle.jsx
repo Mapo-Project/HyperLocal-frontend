@@ -1,7 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const ResetStyle = createGlobalStyle`
-
 
 /* RESET CSS */
 html, body, div, span, applet, object, iframe,
@@ -56,7 +55,7 @@ table {
 }
 body {
     font-family: 'Noto Sans KR', sans-serif;
-	${"" /* background-color: ${({ theme }) => theme.colors.bg}; */}
+	${'' /* background-color: ${({ theme }) => theme.colors.bg}; */}
 }
 ol, ul {
 	list-style: none;
@@ -66,6 +65,9 @@ a, ul, li{
     color: inherit;
 }
 
+body{
+	background-color: #d7d2cb;
+}
 `;
 
 export default ResetStyle;
