@@ -15,6 +15,7 @@ import {
   Label,
   SelectOptions,
   Option,
+  MainShowNoData,
 } from './style';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
@@ -332,15 +333,31 @@ function Main({
       </FindTown>
 
       <MainScrollbars autoHide style={{ height: '665px' }}>
-        <div className="main_banner" />
-        {onSortByDate?.map((data) => (
-          <MainItems
-            key={data.itemId}
-            {...data}
-            onClickHeart={onClickHeart}
-            onClickToDetailPage={onClickToDetailPage}
-          />
-        ))}
+        {onSortByDate.length ? (
+          <>
+            <div className="main_banner" />
+            {onSortByDate?.map((data) => (
+              <MainItems
+                key={data.itemId}
+                {...data}
+                onClickHeart={onClickHeart}
+                onClickToDetailPage={onClickToDetailPage}
+              />
+            ))}
+          </>
+        ) : (
+          <MainShowNoData>
+            <h1>
+              찾고있는 공동구매가 없나요?
+              <br /> 직접 마켓을 열어 공동구매를
+              <br /> 함께 할 이웃을 찾아보세요!
+            </h1>
+            <img
+              alt="no_data_img"
+              src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
+            />
+          </MainShowNoData>
+        )}
       </MainScrollbars>
 
       {/* <MainButton onClick={onClickToCreatePage}> */}

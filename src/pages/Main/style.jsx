@@ -353,3 +353,25 @@ export const MainPageContainer = styled(MainContainer)`
 `;
 
 export const MainScrollbars = styled(Scrollbars)``;
+
+export const MainShowNoData = styled.div`
+  padding: 45px 16px 0 16px;
+  h1 {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+
+    margin-bottom: 30px;
+  }
+  img {
+    width: 328px;
+    height: 323.36px;
+  }
+`;
