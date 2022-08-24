@@ -104,7 +104,7 @@ function Detail({ mainData, onClickHeart }) {
       <DetailHeader>
         {typeof selectedData.itemsImg === 'string' ? (
           <img
-            className="detail_main_img"
+            className="detail_main_no_img"
             alt="header_img"
             src={selectedData.itemsImg}
           />

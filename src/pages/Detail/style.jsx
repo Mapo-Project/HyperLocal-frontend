@@ -13,6 +13,14 @@ export const DetailHeader = styled.header`
   background: #f5f5f5;
   overflow: hidden;
 
+  .detail_main_no_img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    border-radius: 2px;
+  }
   .detail_main_img {
     display: block;
     margin: auto;
