@@ -230,7 +230,7 @@ function MainItems({
         />
         <p>{itemsHeartCount}</p>
         <span>
-          {itemsTownLocation} - {itemUserName}
+          {itemsTownLocation} ◦ {itemUserName}
         </span>
       </div>
     </MainItemsContainer>
@@ -346,6 +346,7 @@ function Main({
           position: 'absolute',
           top: '54px',
           zIndex: 0,
+          backgroundColor: '#f5f5f5',
         }}
       >
         {onSortByDate.length ? (

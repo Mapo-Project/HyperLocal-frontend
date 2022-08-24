@@ -34,7 +34,7 @@ export const MyPageProfileBox = styled.div`
   width: 100%;
 `;
 export const ProfileHeader = styled.div`
-  padding-top: 40px;
+  padding-top: 16px;
   position: relative;
   h1 {
     text-align: center;
