@@ -220,10 +220,10 @@ export const MainItemsContainer = styled.div`
 
     top: 16px;
     right: 8px;
-    height: 12px;
-    width: 3px;
-    padding: 4px 8.5px;
-    box-sizing: content-box;
+    height: 20px;
+    width: 20px;
+    /* padding: 4px 8.5px;
+    box-sizing: content-box; */
     cursor: pointer;
   }
 

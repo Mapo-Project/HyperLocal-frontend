@@ -153,7 +153,7 @@ function MainItems({
         </div>
         <img
           className="items_detail"
-          src={`${process.env.PUBLIC_URL}/assets/images/main_detail_bar.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/main_detail_bar.jpg`}
           alt="items_detail_bar"
         />
       </div>
