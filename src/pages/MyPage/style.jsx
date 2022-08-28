@@ -10,7 +10,7 @@ export const MyPageMainContainer = styled(MainContainer)`
 
   letter-spacing: 0.15px;
 
-  color: #000000;
+  color: #212121;
 
   h2 {
     font-family: 'Pretendard';
@@ -22,7 +22,7 @@ export const MyPageMainContainer = styled(MainContainer)`
 
     letter-spacing: -0.25px;
 
-    color: #000000;
+    color: #212121;
     margin-left: 28px;
     margin-top: 20px;
   }
@@ -46,7 +46,7 @@ export const ProfileHeader = styled.div`
 
     letter-spacing: 0.15px;
 
-    color: #000000;
+    color: #212121;
   }
   img {
     position: absolute;
@@ -71,7 +71,7 @@ export const ProfileWrapper = styled.div`
 
     letter-spacing: -0.25px;
 
-    color: #000000;
+    color: #212121;
     h1 {
       margin-bottom: 14px;
     }

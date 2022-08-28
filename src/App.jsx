@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import React, { useCallback, useRef, useState } from 'react';
+
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
@@ -38,10 +39,6 @@ function App() {
   // new Data
   const dataId = useRef(12);
 
-  // const onDetailItem = useCallback((id) => {
-  //   setMaindata((prov) => prov.filter((data) => `${data.itemId}` === id));
-  // }, []);
-
   // 하트
   const onClickHeart = useCallback((id) => {
     setMaindata((prov) =>
@@ -63,6 +60,7 @@ function App() {
   return (
     <>
       <ResetStyle />
+
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route
@@ -132,13 +130,7 @@ function App() {
           />
           <Route
             path="/detail/:currentItemId"
-            element={
-              <Detail
-                mainData={mainData}
-                // onDetailItem={onDetailItem}
-                onClickHeart={onClickHeart}
-              />
-            }
+            element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
           />
         </Routes>
       </BrowserRouter>

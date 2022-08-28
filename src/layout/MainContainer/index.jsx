@@ -8,7 +8,6 @@ const MainContainer = styled.main`
   overflow: hidden;
 
   background-color: #ffffff;
-  font-family: 'Pretendard';
 `;
 
 export default MainContainer;

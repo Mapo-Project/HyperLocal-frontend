@@ -46,14 +46,14 @@ export const FindTown = styled.div`
     color: #212121;
     cursor: pointer;
 
-    border: 1px solid #000000;
+    border: 1px solid #212121;
     border-radius: 12px;
 
     padding: 4px 8px;
   }
   .main_profile {
     width: 24px;
-    border: 2px solid #000000;
+    border: 2px solid #212121;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -109,7 +109,7 @@ export const Option = styled.div`
   font-size: 16px;
   line-height: 24px;
 
-  color: #000000;
+  color: #212121;
   &:hover {
     background-color: #f5f5f5;
   }
@@ -389,7 +389,7 @@ export const MainShowNoData = styled.div`
     display: flex;
     align-items: center;
 
-    color: #000000;
+    color: #212121;
 
     margin-bottom: 30px;
   }

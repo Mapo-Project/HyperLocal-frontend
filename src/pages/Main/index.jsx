@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
-
 import { getMonth, getDate } from 'date-fns';
+
 import {
   FindTown,
   Footer,

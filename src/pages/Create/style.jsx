@@ -11,7 +11,7 @@ export const CreatePageMainContainer = styled(MainContainer)`
 
   letter-spacing: 0.15px;
 
-  color: #000000;
+  color: #212121;
 `;
 
 export const HeaderTextContainer = styled.div`
@@ -186,7 +186,7 @@ export const CategoryOption = styled.div`
   font-size: 14px;
   line-height: 20px;
 
-  color: #000000;
+  color: #212121;
   &:hover {
     background-color: #f5f5f5;
   }
