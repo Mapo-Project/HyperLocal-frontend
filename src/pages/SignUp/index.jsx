@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Navigate } from 'react-router';
+
 import useSWR from 'swr';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
@@ -203,15 +203,15 @@ function SignUp() {
     return <div>로딩중</div>;
   }
 
-  if (userData) {
-    // console.log(userData);
-    return <Navigate to="/town" replace />;
-  }
+  // if (userData) {
+  //   // console.log(userData);
+  //   return <Navigate to="/town" replace />;
+  // }
 
-  // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  if (!localStorage?.verify) {
-    return <Navigate to="/login" replace />;
-  }
+  // // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  // if (!localStorage?.verify) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return (
     <SignUpContainer>

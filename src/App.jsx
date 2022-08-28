@@ -19,21 +19,21 @@ function App() {
   const [currentTown, setCurrentTown] = useState([]);
   const [currentSelectedTown, setCurrentSelectedTown] = useState('성산동');
   const townId = useRef(0);
-  const onSelectTown = (newTown) => {
+  const onSelectTown = useCallback((newTown) => {
     setCurrentTown((currentVal) => [
       ...currentVal,
       { town: newTown, townId: townId.current++ },
     ]);
-  };
-  const onDeleteTown = (id) => {
+  }, []);
+  const onDeleteTown = useCallback((id) => {
     setCurrentTown((currentVal) => [
       ...currentVal.filter((townValue) => id !== townValue.townId),
     ]);
-  };
+  }, []);
 
-  const onSelectCurrentTown = (curTown) => {
+  const onSelectCurrentTown = useCallback((curTown) => {
     setCurrentSelectedTown(curTown);
-  };
+  }, []);
 
   const [mainData, setMaindata] = useState([...mainItemsData]);
   // new Data

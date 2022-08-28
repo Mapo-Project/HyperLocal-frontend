@@ -14,6 +14,7 @@ import {
   DetailMainContainer,
 } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import { changeTagFormat } from '../../utils/changeFormat';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -51,43 +52,6 @@ function Detail({ mainData, onClickHeart }) {
     return `${originDate.slice(1, 2)}월 ${originDate.slice(3, 5)}일까지`;
   };
 
-  let itemsTag2 = [...selectedData.itemsTag];
-  if (selectedData.itemsTag.length < 2) {
-    switch (selectedData.itemsTag[0]) {
-      case '배달':
-        itemsTag2 = ['배달 🛵'];
-        break;
-      case 'OTT':
-        itemsTag2 = ['OTT 📺'];
-        break;
-      case '식품':
-        itemsTag2 = ['식품 🍎'];
-        break;
-      case '의류':
-        itemsTag2 = ['의류 👕'];
-        break;
-      case '장보기친구':
-        itemsTag2 = ['장보기친구 🙋 '];
-        break;
-      case '생활용품':
-        itemsTag2 = ['생활용품 🧹 '];
-        break;
-      case '미용/화장품':
-        itemsTag2 = ['미용/화장품 💄 '];
-        break;
-      case '온라인강의/Software':
-        itemsTag2 = ['온라인강의/Software 💻 '];
-        break;
-      case '반려동물':
-        itemsTag2 = ['반려동물 🐾 '];
-        break;
-      default:
-        itemsTag2;
-    }
-    if (selectedData.itemsHomemade) {
-      itemsTag2.push('홈메이드 🧡');
-    }
-  }
   const navigate = useNavigate();
 
   const onClicktoMain = useCallback(() => {
@@ -163,7 +127,10 @@ function Detail({ mainData, onClickHeart }) {
           </div>
         ))} */}
           <div className="item_tag_wrapper">
-            {itemsTag2.map((tag, idx) => (
+            {changeTagFormat(
+              selectedData.itemsTag,
+              selectedData.itemsHeartCount,
+            ).map((tag, idx) => (
               <div key={idx} className="item_tag">
                 {tag}
               </div>

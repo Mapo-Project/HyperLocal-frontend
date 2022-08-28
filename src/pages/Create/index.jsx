@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 
 import Scrollbars from 'react-custom-scrollbars-2';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import DatePicker, { CalendarContainer } from 'react-datepicker';
 
@@ -187,19 +187,21 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
     ],
   );
 
-  const onClickToMain = useCallback(() => {
+  const onClickToMain = () => {
     navigate('/');
-  }, [navigate]);
+  };
+
+  console.log('create 컴포넌트 리렌더링되는중');
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined) {
     return <div>로딩중</div>;
   }
 
-  // 유저데이터가 없으면 첫 페이지로 이동
-  if (!userData) {
-    return <Navigate to="/login" replace />;
-  }
+  // // 유저데이터가 없으면 첫 페이지로 이동
+  // if (!userData) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return (
     <CreatePageMainContainer>
@@ -426,55 +428,42 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           </PriceContainer>
 
           <BarterContainer>
-            {radioValue.map(
-              (radioBox, idx) => (
-                <div key={idx}>
-                  {/* 라디오 박스를 state로 설정하고 활성화되면 true, 체크해제는 false하여 조작한다. */}
-                  <RadioBox
-                    type="radio"
-                    id={radioBox.value}
-                    value={radioBox.value}
-                    name="barter"
-                    disabled={radioBox.value === 'together' && isHomemade}
-                    ishomemade={radioBox.value === 'together' && isHomemade}
-                    onClick={() => {
-                      setradioValue((prov) =>
-                        prov.map((data) =>
-                          data.value === radioBox.value
-                            ? { ...data, checked: !data.checked }
-                            : { ...data, checked: false },
-                        ),
-                      );
-                      if (!radioBox.checked) {
-                        setPriceType(radioBox.value);
-                        setPrice(radioBox.label);
-                      } else {
-                        setPriceType('');
-                        setPrice('');
-                      }
-                    }}
-                    isChecked={radioBox.checked}
-                  />
-                  <RadioBoxLabel
-                    htmlFor={radioBox.value}
-                    ishomemade={radioBox.value === 'together' && isHomemade}
-                  >
-                    {radioBox.label}
-                  </RadioBoxLabel>
-                </div>
-              ),
-              // radioBox.value === 'together' && isHomemade ? null : (
-              //   <div key={idx}>
-              //     <input
-              //       type="radio"
-              //       id={radioBox.value}
-              //       value={radioBox.value}
-              //       name="barter"
-              //     />
-              //     <label htmlFor={radioBox.value}>{radioBox.label}</label>
-              //   </div>
-              // ),
-            )}
+            {radioValue.map((radioBox, idx) => (
+              <div key={idx}>
+                {/* 라디오 박스를 state로 설정하고 활성화되면 true, 체크해제는 false하여 조작한다. */}
+                <RadioBox
+                  type="radio"
+                  id={radioBox.value}
+                  value={radioBox.value}
+                  name="barter"
+                  disabled={radioBox.value === 'together' && isHomemade}
+                  ishomemade={radioBox.value === 'together' && isHomemade}
+                  onClick={() => {
+                    setradioValue((prov) =>
+                      prov.map((data) =>
+                        data.value === radioBox.value
+                          ? { ...data, checked: !data.checked }
+                          : { ...data, checked: false },
+                      ),
+                    );
+                    if (!radioBox.checked) {
+                      setPriceType(radioBox.value);
+                      setPrice(radioBox.label);
+                    } else {
+                      setPriceType('');
+                      setPrice('');
+                    }
+                  }}
+                  isChecked={radioBox.checked}
+                />
+                <RadioBoxLabel
+                  htmlFor={radioBox.value}
+                  ishomemade={radioBox.value === 'together' && isHomemade}
+                >
+                  {radioBox.label}
+                </RadioBoxLabel>
+              </div>
+            ))}
           </BarterContainer>
 
           <SelectPaticipantContainer>

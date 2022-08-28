@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import useSWR from 'swr';
-import { getMonth, getDate } from 'date-fns';
 
 import {
   InterestingContent,
@@ -10,6 +9,7 @@ import {
 } from './style';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import { changeDate } from '../../utils/changeFormat';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -20,21 +20,6 @@ function Interesting({ mainData }) {
   );
 
   const interestingDate = mainData.filter((data) => data.isHeartEmpty);
-
-  const changeDate = (originDate) => {
-    if (typeof originDate !== 'string') {
-      return `${
-        getMonth(originDate) > 8
-          ? `${getMonth(originDate) + 1}`
-          : `0${getMonth(originDate) + 1}`
-      }.${
-        getDate(originDate) > 9
-          ? `${getDate(originDate)}`
-          : `0${getDate(originDate)}`
-      }`;
-    }
-    return originDate;
-  };
 
   console.log(mainData, interestingDate);
 
