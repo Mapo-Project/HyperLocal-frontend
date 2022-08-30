@@ -40,8 +40,6 @@ import useInput from '../../hooks/useInput';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
-const _ = require('lodash');
-
 const radioBoxList = [
   { label: '같이 정해요', value: 'together', checked: false },
   { label: '나눔', value: 'share', checked: false },
@@ -105,8 +103,15 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   const [dueDate, setDueDate] = useState(null);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
 
-  const years = _.range(getYear(new Date()), getYear(new Date()) + 2, 1);
-  const months = _.range(getMonth(new Date()), getMonth(new Date()) + 12, 1);
+  // lodash 안쓰고 직접 구현
+  const myRange = (prevNum, nextNum) => {
+    return new Array(nextNum - prevNum)
+      .fill(prevNum)
+      .map((elm, idx) => elm + idx);
+  };
+
+  const years = myRange(getYear(new Date()), getYear(new Date()) + 2);
+  const months = myRange(getMonth(new Date()), getMonth(new Date()) + 12);
 
   const navigate = useNavigate();
   // 데이터 제출
@@ -209,6 +214,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
         <form onSubmit={onSubmitCreateData}>
           <HeaderTextContainer>
             <img
+              draggable="false"
               role="button"
               onKeyDown={() => {}}
               tabIndex={0}
@@ -305,11 +311,13 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           >
             {!isShowCategory ? (
               <img
+                draggable="false"
                 src={`${process.env.PUBLIC_URL}/assets/images/main_expand_more.png`}
                 alt="expand_more"
               />
             ) : (
               <img
+                draggable="false"
                 src={`${process.env.PUBLIC_URL}/assets/images/create_expand_more.png`}
                 alt="expand_more"
               />
@@ -337,6 +345,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               제목
               <input id="headText" value={title} onChange={onChangeTitle} />
               <ErrorChecker
+                draggable="false"
                 src={
                   title
                     ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
@@ -357,6 +366,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
   ◦  나눌 때 용기가 필요한가요?`}
               />
               <ErrorChecker
+                draggable="false"
                 src={
                   text
                     ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
@@ -418,6 +428,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               />
               <span>₩</span>
               <ErrorChecker
+                draggable="false"
                 src={
                   price
                     ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
@@ -471,6 +482,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
 
             <div className="participant-control-wrapper">
               <img
+                draggable="false"
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
@@ -482,6 +494,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               />
               <div>
                 <img
+                  draggable="false"
                   alt="pariticipant"
                   src={`${process.env.PUBLIC_URL}/assets/images/create_person.png`}
                 />
@@ -489,6 +502,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               </div>
 
               <img
+                draggable="false"
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
@@ -568,6 +582,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
                     disabled={prevMonthButtonDisabled}
                   >
                     <img
+                      draggable="false"
                       alt="<"
                       src={`${process.env.PUBLIC_URL}/assets/images/create_chevron_left.png`}
                     />
@@ -588,6 +603,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
                     disabled={nextMonthButtonDisabled}
                   >
                     <img
+                      draggable="false"
                       alt="<"
                       src={`${process.env.PUBLIC_URL}/assets/images/create_chevron_right.png`}
                     />
@@ -596,6 +612,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               )}
             >
               <img
+                draggable="false"
                 className="calendar_x"
                 role="button"
                 onKeyDown={() => {}}
@@ -618,6 +635,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
               </MyCalendarButton>
             </DatePicker>
             <ErrorChecker
+              draggable="false"
               src={
                 dueDate
                   ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`

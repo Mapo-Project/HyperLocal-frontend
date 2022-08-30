@@ -220,6 +220,7 @@ export const HeadAndTextContainer = styled.div`
     width: 328px;
     height: 48px;
     padding: 12px 16px;
+    padding-right: 50px;
 
     background: #f5f5f5;
     border-radius: 4px;
@@ -228,6 +229,7 @@ export const HeadAndTextContainer = styled.div`
   textarea {
     margin-top: 4px;
     padding: 12px 16px;
+    /* padding-right: 50px; */
     width: 328px;
     height: 192px;
     background: #f5f5f5;
@@ -248,9 +250,14 @@ export const HeadAndTextContainer = styled.div`
 
 export const ErrorChecker = styled.img`
   position: absolute;
-  top: 47px;
-  right: 38px;
+
+  top: 40px;
+  right: 32px;
   width: 12.7px;
+  padding: 7px 6px;
+
+  z-index: 2;
+  box-sizing: content-box;
 `;
 
 export const LinkContainer = styled.div`
@@ -371,6 +378,7 @@ export const PriceContainer = styled.div`
     width: 328px;
     height: 48px;
     padding: 12px 16px;
+    padding-right: 50px;
     padding-left: 28px;
     background: ${(props) => (props.ishomemade ? '#BDBDBD' : '#f5f5f5')};
     border-radius: 4px;

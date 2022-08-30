@@ -55,6 +55,7 @@ export const Input = styled.input`
 
   font-family: 'Pretendard';
   padding-left: 12px;
+  padding-right: 50px;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -86,9 +87,14 @@ export const Error = styled.div`
 `;
 export const ErrorChecker = styled.img`
   position: absolute;
-  top: 40px;
-  right: 19px;
+  top: 33px;
+  right: 13px;
   width: 12.7px;
+
+  padding: 7px 6px;
+
+  z-index: 2;
+  box-sizing: content-box;
 `;
 
 export const SignupButton = styled(Button)`
