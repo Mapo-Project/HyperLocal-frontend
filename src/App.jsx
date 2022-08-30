@@ -13,7 +13,7 @@ import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
-import CategorySearch from './pages/Main/Components/TagSearch';
+import CategorySearch from './pages/Main/components/TagSearch';
 
 function App() {
   const [currentTown, setCurrentTown] = useState([]);
