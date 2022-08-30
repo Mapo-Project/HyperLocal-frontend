@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Navigate } from 'react-router';
+
 import useSWR from 'swr';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
@@ -20,6 +20,133 @@ import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+const IdInput = React.memo(function IdInput({
+  onChangeNickname,
+  nickname,
+  doubleCheck,
+  setIsNicknameDoubleCheck,
+  isWrongId,
+  isNicknameDoubleCheck,
+  idSpaceTypeCheck,
+  idMinCheck,
+  idMaxCheck,
+}) {
+  return (
+    <InputWrapper>
+      <Label>
+        <span>아이디</span>
+        <Input
+          type="text"
+          id="nickname"
+          name="nickname"
+          placeholder="아이디"
+          onChange={onChangeNickname}
+          value={nickname}
+          onBlur={doubleCheck}
+          onKeyUp={() => {
+            setIsNicknameDoubleCheck(false);
+            isWrongId();
+          }}
+        />
+      </Label>
+      <Error>
+        {nickname && isNicknameDoubleCheck
+          ? '사용 중인 아이디입니다.'
+          : nickname && !idSpaceTypeCheck
+          ? '띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.'
+          : nickname && !idMinCheck
+          ? '최소 2자 이상으로 작성해주세요.'
+          : nickname && !idMaxCheck
+          ? '최대 12자까지 작성할 수 있어요.'
+          : ''}
+      </Error>
+      <ErrorChecker
+        src={
+          !isNicknameDoubleCheck && idMaxCheck
+            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+        }
+      />
+    </InputWrapper>
+  );
+});
+
+const PhoneInput = React.memo(function PhoneInput({
+  phoneNumRef,
+  changePhoneNum,
+  onChangePhoneNum,
+  phoneNum,
+  isWrongPhone,
+  phoneNumCheck,
+}) {
+  return (
+    <InputWrapper>
+      <Label>
+        <span>전화번호</span>
+        <Input
+          ref={phoneNumRef}
+          type="text"
+          id="phoneNum"
+          name="phoneNum"
+          placeholder="000-0000-0000"
+          onChange={(e) => {
+            changePhoneNum();
+            onChangePhoneNum(e);
+          }}
+          value={phoneNum}
+          onKeyUp={isWrongPhone}
+          maxLength="13"
+        />
+      </Label>
+
+      <Error>
+        {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
+        {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
+      </Error>
+      <ErrorChecker
+        src={
+          phoneNumCheck
+            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+        }
+      />
+    </InputWrapper>
+  );
+});
+const EmailInput = React.memo(function EmailInput({
+  onChangeEmail,
+  email,
+  isWrongEmail,
+  EmailCheck,
+}) {
+  return (
+    <InputWrapper>
+      <Label>
+        <span>E-mail</span>
+        <Input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="E-mail"
+          onChange={onChangeEmail}
+          value={email}
+          onKeyUp={isWrongEmail}
+        />
+      </Label>
+      <Error>
+        {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
+        {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
+      </Error>
+      <ErrorChecker
+        src={
+          EmailCheck
+            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+        }
+      />
+    </InputWrapper>
+  );
+});
 function SignUp() {
   /*
   새로고침 시 마다 userAccessData 사라지니 아예 로컬,세션 스토리지에 저장?
@@ -105,7 +232,7 @@ function SignUp() {
   // 전화번호 validation
   const phoneNumRef = useRef();
 
-  const changePhoneNum = () => {
+  const changePhoneNum = useCallback(() => {
     const value = phoneNumRef.current.value.replace(/\D+/g, '');
     const numberLength = 11;
     let result = '';
@@ -124,7 +251,7 @@ function SignUp() {
       result += value[i];
     }
     phoneNumRef.current.value = result;
-  };
+  }, []);
 
   const isWrongPhone = useCallback(() => {
     phoneNumRef.current.value.length === 13
@@ -203,112 +330,45 @@ function SignUp() {
     return <div>로딩중</div>;
   }
 
-  if (userData) {
-    // console.log(userData);
-    return <Navigate to="/town" replace />;
-  }
+  // if (userData) {
+  //   // console.log(userData);
+  //   return <Navigate to="/town" replace />;
+  // }
 
-  // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  if (!localStorage?.verify) {
-    return <Navigate to="/login" replace />;
-  }
+  // // 소셜로그인 안하면 url로 접근 시 리다이렉트
+  // if (!localStorage?.verify) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return (
     <SignUpContainer>
       <h1>프로필 설정</h1>
+      <IdInput
+        onChangeNickname={onChangeNickname}
+        nickname={nickname}
+        doubleCheck={doubleCheck}
+        setIsNicknameDoubleCheck={setIsNicknameDoubleCheck}
+        isWrongId={isWrongId}
+        isNicknameDoubleCheck={isNicknameDoubleCheck}
+        idSpaceTypeCheck={idSpaceTypeCheck}
+        idMinCheck={idMinCheck}
+        idMaxCheck={idMaxCheck}
+      />
+      <PhoneInput
+        phoneNumRef={phoneNumRef}
+        changePhoneNum={changePhoneNum}
+        onChangePhoneNum={onChangePhoneNum}
+        phoneNum={phoneNum}
+        isWrongPhone={isWrongPhone}
+        phoneNumCheck={phoneNumCheck}
+      />
+      <EmailInput
+        onChangeEmail={onChangeEmail}
+        email={email}
+        isWrongEmail={isWrongEmail}
+        EmailCheck={EmailCheck}
+      />
       <SignupForm onSubmit={onSubmitSignUp}>
-        <InputWrapper>
-          <Label>
-            <span>아이디</span>
-            <Input
-              type="text"
-              id="nickname"
-              name="nickname"
-              placeholder="아이디"
-              onChange={onChangeNickname}
-              value={nickname}
-              onBlur={doubleCheck}
-              onKeyUp={() => {
-                setIsNicknameDoubleCheck(false);
-                isWrongId();
-              }}
-            />
-          </Label>
-          <Error>
-            {nickname && isNicknameDoubleCheck
-              ? '사용 중인 아이디입니다.'
-              : nickname && !idSpaceTypeCheck
-              ? '띄어쓰기없이 한글, 영어, 숫자로 작성해주세요.'
-              : nickname && !idMinCheck
-              ? '최소 2자 이상으로 작성해주세요.'
-              : nickname && !idMaxCheck
-              ? '최대 12자까지 작성할 수 있어요.'
-              : ''}
-          </Error>
-          <ErrorChecker
-            src={
-              !isNicknameDoubleCheck && idMaxCheck
-                ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-                : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
-            }
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Label>
-            <span>전화번호</span>
-            <Input
-              ref={phoneNumRef}
-              type="text"
-              id="phoneNum"
-              name="phoneNum"
-              placeholder="000-0000-0000"
-              onChange={(e) => {
-                changePhoneNum();
-                onChangePhoneNum(e);
-              }}
-              value={phoneNum}
-              onKeyUp={isWrongPhone}
-              maxLength="13"
-            />
-          </Label>
-
-          <Error>
-            {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
-            {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
-          </Error>
-          <ErrorChecker
-            src={
-              phoneNumCheck
-                ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-                : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
-            }
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Label>
-            <span>E-mail</span>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="E-mail"
-              onChange={onChangeEmail}
-              value={email}
-              onKeyUp={isWrongEmail}
-            />
-          </Label>
-          <Error>
-            {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
-            {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
-          </Error>
-          <ErrorChecker
-            src={
-              EmailCheck
-                ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-                : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
-            }
-          />
-        </InputWrapper>
         {!isNicknameDoubleCheck && idMaxCheck && phoneNumCheck && EmailCheck ? (
           <SignupButton>확인</SignupButton>
         ) : (
@@ -316,7 +376,6 @@ function SignUp() {
         )}
       </SignupForm>
       {joinError}
-      {/* <Footer /> */}
     </SignUpContainer>
   );
 }

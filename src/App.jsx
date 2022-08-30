@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import React, { useCallback, useRef, useState } from 'react';
+
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
@@ -12,35 +13,31 @@ import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
-import CategorySearch from './pages/Main/Components/TagSearch';
+import CategorySearch from './pages/Main/components/TagSearch';
 
 function App() {
   const [currentTown, setCurrentTown] = useState([]);
   const [currentSelectedTown, setCurrentSelectedTown] = useState('성산동');
   const townId = useRef(0);
-  const onSelectTown = (newTown) => {
+  const onSelectTown = useCallback((newTown) => {
     setCurrentTown((currentVal) => [
       ...currentVal,
       { town: newTown, townId: townId.current++ },
     ]);
-  };
-  const onDeleteTown = (id) => {
+  }, []);
+  const onDeleteTown = useCallback((id) => {
     setCurrentTown((currentVal) => [
       ...currentVal.filter((townValue) => id !== townValue.townId),
     ]);
-  };
+  }, []);
 
-  const onSelectCurrentTown = (curTown) => {
+  const onSelectCurrentTown = useCallback((curTown) => {
     setCurrentSelectedTown(curTown);
-  };
+  }, []);
 
   const [mainData, setMaindata] = useState([...mainItemsData]);
   // new Data
   const dataId = useRef(12);
-
-  // const onDetailItem = useCallback((id) => {
-  //   setMaindata((prov) => prov.filter((data) => `${data.itemId}` === id));
-  // }, []);
 
   // 하트
   const onClickHeart = useCallback((id) => {
@@ -63,6 +60,7 @@ function App() {
   return (
     <>
       <ResetStyle />
+
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route
@@ -132,13 +130,7 @@ function App() {
           />
           <Route
             path="/detail/:currentItemId"
-            element={
-              <Detail
-                mainData={mainData}
-                // onDetailItem={onDetailItem}
-                onClickHeart={onClickHeart}
-              />
-            }
+            element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
           />
         </Routes>
       </BrowserRouter>
