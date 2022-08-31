@@ -136,7 +136,7 @@ function Main({
             </h1>
             <img
               alt="no_data_img"
-              src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/search.png`}
             />
           </MainShowNoData>
         )}

@@ -87,8 +87,8 @@ function Detail({ mainData, onClickHeart }) {
           className="items_heart"
           src={
             selectedData.isHeartEmpty
-              ? `${process.env.PUBLIC_URL}/assets/images/main_heart.png`
-              : `${process.env.PUBLIC_URL}/assets/images/main_empty_heart.svg`
+              ? `${process.env.PUBLIC_URL}/assets/images/full_heart.png`
+              : `${process.env.PUBLIC_URL}/assets/images/empty_heart.png`
           }
           alt="heart"
         />

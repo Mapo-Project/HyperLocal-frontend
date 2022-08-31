@@ -31,6 +31,9 @@ export const FooterWrapper = styled.div`
     height: 32px;
     border-radius: 16px;
   }
+  .menu_photo {
+    width: 24px;
+  }
   .menu_text {
     font-style: normal;
     font-weight: 400;

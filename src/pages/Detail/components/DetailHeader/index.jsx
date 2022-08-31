@@ -26,17 +26,17 @@ const DetailHeader = React.memo(function DetailHeader({
         className="back_btn"
         alt="back_btn"
         onClick={onClicktoMain}
-        src={`${process.env.PUBLIC_URL}/assets/images/detail_arrow_back.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/arrow_back.png`}
       />
       <img
         className="share_btn"
         alt="share_btn"
-        src={`${process.env.PUBLIC_URL}/assets/images/detail_share.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/share.png`}
       />
       <img
         className="more_info_btn"
         alt="more_info_btn"
-        src={`${process.env.PUBLIC_URL}/assets/images/detail_more_vert.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/more_vert.png`}
       />
       <span>
         {/* 더미데이터면 1, 사진을 등록 안했으면 1 */}1 /{' '}

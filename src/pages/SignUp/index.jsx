@@ -61,10 +61,11 @@ const IdInput = React.memo(function IdInput({
           : ''}
       </Error>
       <ErrorChecker
+        draggable="false"
         src={
           !isNicknameDoubleCheck && idMaxCheck
-            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+            ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
         }
       />
     </InputWrapper>
@@ -104,10 +105,11 @@ const PhoneInput = React.memo(function PhoneInput({
         {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
       </Error>
       <ErrorChecker
+        draggable="false"
         src={
           phoneNumCheck
-            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+            ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
         }
       />
     </InputWrapper>
@@ -138,10 +140,11 @@ const EmailInput = React.memo(function EmailInput({
         {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
       </Error>
       <ErrorChecker
+        draggable="false"
         src={
           EmailCheck
-            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+            ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
         }
       />
     </InputWrapper>

@@ -34,10 +34,13 @@ export const InterestingContent = styled.div`
   .content_sub_wrapper {
     font-weight: 400;
     display: flex;
-    span {
+    span.interesting--content {
       display: flex;
       gap: 2px;
       align-items: center;
+    }
+    .interesting--content > span {
+      margin-top: 2px;
     }
   }
   .interesting--content_price {
@@ -45,23 +48,19 @@ export const InterestingContent = styled.div`
   }
 
   .interesting--content_participant {
-    margin-left: 7.3px;
+    margin-left: 4px;
     margin-right: 24px;
   }
 
   .interesting--price_img {
-    height: 12px;
+    width: 20px;
   }
 
   .interesting--pariticipant_img {
-    width: 13.3px;
-    padding: 3.33px;
-    box-sizing: content-box;
+    width: 20px;
   }
   .interesting--deadline_img {
-    width: 15px;
-    padding: 1.67px 2.5px;
-    box-sizing: content-box;
+    width: 20px;
   }
 `;
 
@@ -94,6 +93,10 @@ export const InterestingFooter = styled.footer`
     width: 64px;
     height: 32px;
     border-radius: 16px;
+
+    img {
+      width: 24px;
+    }
   }
   .menu_text {
     font-style: normal;

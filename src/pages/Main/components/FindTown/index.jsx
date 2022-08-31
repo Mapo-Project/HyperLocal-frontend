@@ -18,7 +18,7 @@ function SelectBox({
   return (
     <SelectWrapper onClick={() => setShowOptions((prev) => !prev)}>
       <img
-        src={`${process.env.PUBLIC_URL}/assets/images/main_expand_more.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/expand_more_down.png`}
         alt="expand_more"
       />
       <Label>{defaultValue}</Label>
@@ -76,7 +76,7 @@ const FindTown = React.memo(function FindTown({
       <div className="FindTown_search_container">
         <img
           className="FindTown_search"
-          src={`${process.env.PUBLIC_URL}/assets/images/main_search.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/search.png`}
           alt="search"
           role="button"
           onKeyDown={() => {}}

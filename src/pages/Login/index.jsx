@@ -23,7 +23,7 @@ function Login() {
           <div>
             <img
               alt="kakao_logo"
-              src={`${process.env.PUBLIC_URL}/assets/images/login_kakao.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/login_kakao.jpg`}
             />
             <span>카카오 로그인</span>
           </div>

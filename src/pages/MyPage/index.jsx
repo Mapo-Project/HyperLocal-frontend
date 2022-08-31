@@ -88,7 +88,7 @@ function MyPage({ currentSelectedTown, currentTown }) {
         <ProfileHeader>
           <h1>MY</h1>
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/mypage_settings.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/settings.png`}
             alt="setting"
           />
         </ProfileHeader>

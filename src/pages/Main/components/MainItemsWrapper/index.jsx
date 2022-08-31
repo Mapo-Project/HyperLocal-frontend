@@ -42,7 +42,7 @@ const MainItems = React.memo(function MainItems({
         </div>
         <img
           className="items_detail"
-          src={`${process.env.PUBLIC_URL}/assets/images/main_detail_bar.jpg`}
+          src={`${process.env.PUBLIC_URL}/assets/images/more_vert.png`}
           alt="items_detail_bar"
         />
       </div>
@@ -62,21 +62,27 @@ const MainItems = React.memo(function MainItems({
               : itemsHeadText}
           </h1>
           <div className="items_main">
-            <div className="items_price">₩ {itemsPrice} / </div>
+            {/* <div className="items_price">₩ {itemsPrice} / </div> */}
+            <div className="items_price">
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/images/price.png`}
+                alt="items_price"
+              />
+              <span>{itemsPrice}</span>/
+            </div>
             <div className="items_participants">
               <img
-                src={`${process.env.PUBLIC_URL}/assets/images/main_person.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/participant.png`}
                 alt="items_participants"
               />
               <span>{itemsLimitParticipants}</span>
             </div>
             <div className="items_deadline">
               <img
-                src={`${process.env.PUBLIC_URL}/assets/images/main_calendar_month.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
                 alt="items_deadline"
               />
-              {/* 더미데이터 때문에~ */}
-              {changeDate(itemsDeadline)}
+              {/* 더미데이터 때문에~ */}~{changeDate(itemsDeadline)}
             </div>
           </div>
         </div>
@@ -100,7 +106,7 @@ const MainItems = React.memo(function MainItems({
         <img
           className="items_chat"
           alt="chat"
-          src={`${process.env.PUBLIC_URL}/assets/images/main_chat_bubble.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/chat_bubble.png`}
         />
         {itemsCurrentParticipants}명 참여중
         <img
@@ -113,8 +119,8 @@ const MainItems = React.memo(function MainItems({
           className="items_heart"
           src={
             isHeartEmpty
-              ? `${process.env.PUBLIC_URL}/assets/images/main_heart.png`
-              : `${process.env.PUBLIC_URL}/assets/images/main_empty_heart.svg`
+              ? `${process.env.PUBLIC_URL}/assets/images/full_heart.png`
+              : `${process.env.PUBLIC_URL}/assets/images/empty_heart.png`
           }
           alt="heart"
         />

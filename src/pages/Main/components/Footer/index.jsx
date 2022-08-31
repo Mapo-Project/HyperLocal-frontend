@@ -12,7 +12,7 @@ const Footer = React.memo(function Footer({
         <div className="menu_border">
           <img
             className="menu_photo"
-            src={`${process.env.PUBLIC_URL}/assets/images/main_home.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/full_home.png`}
             alt="home"
           />
         </div>
@@ -28,7 +28,7 @@ const Footer = React.memo(function Footer({
         <div className="menu_border">
           <img
             className="menu_photo"
-            src={`${process.env.PUBLIC_URL}/assets/images/nav/favorite.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/empty_heart.png`}
             alt="heart"
           />
         </div>
@@ -38,7 +38,7 @@ const Footer = React.memo(function Footer({
         <div className="menu_border">
           <img
             className="menu_photo"
-            src={`${process.env.PUBLIC_URL}/assets/images/nav/mode_comment.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/chat_bubble.png`}
             alt="talk"
           />
         </div>
@@ -54,7 +54,7 @@ const Footer = React.memo(function Footer({
         <div className="menu_border">
           <img
             className="menu_photo"
-            src={`${process.env.PUBLIC_URL}/assets/images/nav/account_circle.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/account_circle.png`}
             alt="person"
           />
         </div>

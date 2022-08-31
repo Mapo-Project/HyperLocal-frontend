@@ -76,30 +76,30 @@ function Interesting({ mainData }) {
                 : data.itemsHeadText}
             </h1>
             <div className="content_sub_wrapper">
-              <span className="interesting--content_price">
+              <span className="interesting--content_price interesting--content">
                 <img
                   className="interesting--price_img"
                   alt="price"
-                  src={`${process.env.PUBLIC_URL}/assets/images/detail_Subtitle.png`}
+                  src={`${process.env.PUBLIC_URL}/assets/images/price.png`}
                 />
-                {data.itemsPrice}
+                <span>{data.itemsPrice}</span>
               </span>
               /
-              <span className="interesting--content_participant">
+              <span className="interesting--content_participant interesting--content">
                 <img
                   className="interesting--pariticipant_img"
                   alt="pariticipant"
-                  src={`${process.env.PUBLIC_URL}/assets/images/create_person.png`}
+                  src={`${process.env.PUBLIC_URL}/assets/images/participant.png`}
                 />
-                {data.itemsCurrentParticipants}
+                <span>{data.itemsCurrentParticipants}</span>
               </span>
-              <span className="interesting--content_dueDate">
+              <span className="interesting--content_dueDate interesting--content">
                 <img
                   className="interesting--deadline_img"
-                  src={`${process.env.PUBLIC_URL}/assets/images/main_calendar_month.png`}
+                  src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
                   alt="deadline"
                 />
-                ~{changeDate(data.itemsDeadline)}
+                <span>~{changeDate(data.itemsDeadline)}</span>
               </span>
             </div>
           </div>
@@ -117,7 +117,7 @@ function Interesting({ mainData }) {
           <div className="menu_border">
             <img
               className="menu_photo"
-              src={`${process.env.PUBLIC_URL}/assets/images/interest_home.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/home.png`}
               alt="home"
             />
           </div>
@@ -127,7 +127,7 @@ function Interesting({ mainData }) {
           <div className="menu_border">
             <img
               className="menu_photo"
-              src={`${process.env.PUBLIC_URL}/assets/images/main_heart.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/full_heart.png`}
               alt="heart"
             />
           </div>
@@ -137,7 +137,7 @@ function Interesting({ mainData }) {
           <div className="menu_border">
             <img
               className="menu_photo"
-              src={`${process.env.PUBLIC_URL}/assets/images/nav/mode_comment.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/chat_bubble.png`}
               alt="talk"
             />
           </div>
@@ -153,7 +153,7 @@ function Interesting({ mainData }) {
           <div className="menu_border">
             <img
               className="menu_photo"
-              src={`${process.env.PUBLIC_URL}/assets/images/nav/account_circle.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/account_circle.png`}
               alt="person"
             />
           </div>
