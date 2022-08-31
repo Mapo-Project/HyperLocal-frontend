@@ -59,10 +59,7 @@ export const MainItemsContainer = styled.div`
 
     top: 16px;
     right: 8px;
-    height: 20px;
     width: 20px;
-    /* padding: 4px 8.5px;
-  box-sizing: content-box; */
     cursor: pointer;
   }
 
@@ -104,7 +101,7 @@ export const MainItemsContainer = styled.div`
   .items_text_wrapper .items_main {
     display: flex;
     align-items: center;
-
+    min-width: 230px;
     margin-top: 16px;
     margin-left: 16px;
   }
@@ -112,16 +109,25 @@ export const MainItemsContainer = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      width: 20px;
+    }
+    span {
+      margin-right: 4px;
+    }
   }
   .items_participants {
-    margin-left: 7px;
-    margin-right: 29px;
+    margin-left: 4px;
+    margin-right: 20px;
     display: flex;
-    gap: 7px;
+    gap: 3px;
     align-items: center;
   }
   .items_participants img {
-    width: 13.46px;
+    width: 20px;
   }
   .items_participants span {
     font-weight: 400;
@@ -136,7 +142,7 @@ export const MainItemsContainer = styled.div`
     line-height: 20px;
     gap: 7px;
     img {
-      width: 14px;
+      width: 20px;
     }
   }
 
@@ -153,13 +159,13 @@ export const MainItemsContainer = styled.div`
     position: relative;
 
     .items_chat {
-      margin-right: 5px;
+      margin-right: 4px;
       width: 20px;
     }
     .items_heart {
       width: 20px;
-      margin-left: 18px;
-      margin-right: 6px;
+      margin-left: 16px;
+      margin-right: 4px;
       cursor: pointer;
     }
 

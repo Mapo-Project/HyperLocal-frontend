@@ -21,7 +21,7 @@ export const DetailFooter = styled.footer`
 
   img {
     margin-left: 34px;
-    width: 20px;
+    width: 24px;
     cursor: pointer;
   }
   p {

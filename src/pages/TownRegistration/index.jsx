@@ -61,14 +61,14 @@ function TownRegistration({
               }}
               tabIndex={0}
               alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
             />
           </RegisteredTown>
         ) : (
           <UnRegisteredTown onClick={onClickToAddTown}>
             <img
-              alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_add.png`}
+              alt="search_add"
+              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
             />
           </UnRegisteredTown>
         )}
@@ -97,14 +97,14 @@ function TownRegistration({
                 onSelectCurrentTown(currentTown[0].town);
               }}
               alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
             />
           </RegisteredTown>
         ) : (
           <UnRegisteredTown onClick={onClickToAddTown}>
             <img
-              alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_add.png`}
+              alt="search_add"
+              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
             />
           </UnRegisteredTown>
         )}
@@ -133,14 +133,14 @@ function TownRegistration({
                 onSelectCurrentTown(currentTown[1].town);
               }}
               alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_cancel.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
             />
           </RegisteredTown>
         ) : (
           <UnRegisteredTown onClick={onClickToAddTown}>
             <img
-              alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/search_add.png`}
+              alt="search_add"
+              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
             />
           </UnRegisteredTown>
         )}

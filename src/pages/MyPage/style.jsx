@@ -50,9 +50,9 @@ export const ProfileHeader = styled.div`
   }
   img {
     position: absolute;
-    width: 20px;
-    top: 42px;
-    right: 18px;
+    width: 24px;
+    top: 16px;
+    right: 16px;
     cursor: pointer;
   }
 `;

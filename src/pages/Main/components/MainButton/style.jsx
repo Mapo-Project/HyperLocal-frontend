@@ -17,7 +17,6 @@ export const MainButtonWrapper = styled.button`
   border: none;
 
   img {
-    width: 18px;
-    height: 18px;
+    width: 24px;
   }
 `;

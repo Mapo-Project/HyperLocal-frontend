@@ -27,33 +27,26 @@ export const DetailHeaderWrapper = styled.header`
   .back_btn {
     position: absolute;
 
-    padding: 4px;
-
-    width: 16px;
+    width: 24px;
     top: 16px;
     left: 16px;
 
-    box-sizing: content-box;
     cursor: pointer;
   }
   .share_btn {
     position: absolute;
-    width: 18px;
+    width: 24px;
 
     top: 16px;
     right: 64px;
 
-    padding: 2px 3px;
-    box-sizing: content-box;
     cursor: pointer;
   }
   .more_info_btn {
-    padding: 4px 10px;
     position: absolute;
-    width: 4px;
+    width: 24px;
     top: 16px;
     right: 16px;
-    box-sizing: content-box;
     cursor: pointer;
   }
   span {

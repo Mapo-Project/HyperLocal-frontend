@@ -25,13 +25,12 @@ export const TownRegistrationList = styled.div`
   gap: 16px;
 `;
 export const RegisteredTown = styled.button`
+  position: relative;
   border: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   padding: 12px 16px;
-
   width: 328px;
   height: 48px;
 
@@ -53,7 +52,11 @@ export const RegisteredTown = styled.button`
   cursor: pointer;
 
   img {
+    top: 14px;
+    right: 20px;
+    position: absolute;
     width: 20px;
+    height: 20px;
   }
 `;
 export const UnRegisteredTown = styled.button`
@@ -71,7 +74,7 @@ export const UnRegisteredTown = styled.button`
   cursor: pointer;
 
   img {
-    width: 14px;
+    width: 20px;
   }
 `;
 

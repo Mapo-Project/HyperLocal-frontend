@@ -38,7 +38,7 @@ export const HeaderText = React.memo(function HeaderText({ onClickToMain }) {
         tabIndex={0}
         onClick={onClickToMain}
         alt="x"
-        src={`${process.env.PUBLIC_URL}/assets/images/create_close.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/close.png`}
       />
       <h1>
         두근두근
@@ -55,7 +55,7 @@ export const SelectPhoto = React.memo(function SelectPhoto({ img, setImg }) {
       <label htmlFor="addImg">
         <img
           alt="dummy_photo"
-          src={`${process.env.PUBLIC_URL}/assets/images/create_add_a_photo.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/create/create_add_a_photo.png`}
         />
         <span>{img.length}/10</span>
         <input
@@ -111,14 +111,14 @@ export const SelectPhoto = React.memo(function SelectPhoto({ img, setImg }) {
                 }}
                 className="delete-img"
                 alt="delete-img"
-                src={`${process.env.PUBLIC_URL}/assets/images/create_delete.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/create/create_delete.png`}
               />
             )}
 
             <img
               className="drag-img"
               alt="delete-drag-img"
-              src={`${process.env.PUBLIC_URL}/assets/images/create_drag_indicator.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/create/create_drag_indicator.png`}
             />
           </div>
         ))}
@@ -143,13 +143,13 @@ export const SelectCategory = React.memo(function SelectCategory({
       {!isShowCategory ? (
         <img
           draggable="false"
-          src={`${process.env.PUBLIC_URL}/assets/images/main_expand_more.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/expand_more_down.png`}
           alt="expand_more"
         />
       ) : (
         <img
           draggable="false"
-          src={`${process.env.PUBLIC_URL}/assets/images/create_expand_more.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/expand_more_up.png`}
           alt="expand_more"
         />
       )}
@@ -187,8 +187,8 @@ export const HeadAndText = React.memo(function HeadAndText({
           draggable="false"
           src={
             title
-              ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-              : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+              ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+              : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
           }
         />
       </label>
@@ -208,8 +208,8 @@ export const HeadAndText = React.memo(function HeadAndText({
           draggable="false"
           src={
             text
-              ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-              : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+              ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+              : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
           }
         />
       </label>
@@ -294,8 +294,8 @@ export const Price = React.memo(function Price({
           draggable="false"
           src={
             price
-              ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-              : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+              ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+              : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
           }
         />
       </label>
@@ -365,7 +365,7 @@ export const SelectPaticipant = React.memo(function SelectPaticipant({
           onKeyDown={() => {}}
           tabIndex={0}
           alt="-"
-          src={`${process.env.PUBLIC_URL}/assets/images/create_do_not_disturb_on.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/create/create_do_not_disturb_on.png`}
           onClick={() => {
             if (participant > 2) setParticipant((data) => data - 1);
           }}
@@ -373,8 +373,8 @@ export const SelectPaticipant = React.memo(function SelectPaticipant({
         <div>
           <img
             draggable="false"
-            alt="pariticipant"
-            src={`${process.env.PUBLIC_URL}/assets/images/create_person.png`}
+            alt="participant"
+            src={`${process.env.PUBLIC_URL}/assets/images/participant.png`}
           />
           <span>{participant}</span>
         </div>
@@ -385,7 +385,7 @@ export const SelectPaticipant = React.memo(function SelectPaticipant({
           onKeyDown={() => {}}
           tabIndex={0}
           alt="+"
-          src={`${process.env.PUBLIC_URL}/assets/images/create_add_circle.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/create/create_add_circle.png`}
           onClick={() => {
             if (participant < 20) setParticipant((data) => data + 1);
           }}
@@ -498,7 +498,7 @@ export const SelectDate = React.memo(function SelectDate({
               <img
                 draggable="false"
                 alt="<"
-                src={`${process.env.PUBLIC_URL}/assets/images/create_chevron_left.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/create/create_chevron_left.png`}
               />
             </div>
             <div
@@ -519,7 +519,7 @@ export const SelectDate = React.memo(function SelectDate({
               <img
                 draggable="false"
                 alt="<"
-                src={`${process.env.PUBLIC_URL}/assets/images/create_chevron_right.png`}
+                src={`${process.env.PUBLIC_URL}/assets/images/create/create_chevron_right.png`}
               />
             </div>
           </div>
@@ -535,7 +535,7 @@ export const SelectDate = React.memo(function SelectDate({
             setIsCalenderOpen(false);
           }}
           alt="x"
-          src={`${process.env.PUBLIC_URL}/assets/images/create_close.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/close.png`}
         />
         <MyCalendarButton
           onClick={(e) => {
@@ -552,8 +552,8 @@ export const SelectDate = React.memo(function SelectDate({
         draggable="false"
         src={
           dueDate
-            ? `${process.env.PUBLIC_URL}/assets/images/signup_check.png`
-            : `${process.env.PUBLIC_URL}/assets/images/signup_uncheck.png`
+            ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
+            : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
         }
       />
     </SelectDateContainer>

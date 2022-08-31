@@ -57,11 +57,11 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
 
   return (
     <TownSearchContainer>
-      <h1>동네 찾기</h1>
+      <h1>내 동네 찾기</h1>
       <TownSearchWrapper>
         <Label>
           <TownSearchInput
-            placeholder="동네 찾기"
+            placeholder="동네를 검색하세요."
             onKeyDown={onDisplyTownSearch}
             value={town}
             onChange={onChangeTown}
@@ -69,13 +69,13 @@ function TownSearch({ onSelectTown, onSelectCurrentTown, currentTown }) {
           />
           <img
             alt="town_search"
-            src={`${process.env.PUBLIC_URL}/assets/images/town_search.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/search.png`}
           />
         </Label>
         <TownSearchButton>
           <img
             alt="town_my_location"
-            src={`${process.env.PUBLIC_URL}/assets/images/town_my_location.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/town/town_my_location.png`}
           />
           내 위치로 찾기
         </TownSearchButton>

@@ -37,7 +37,7 @@ const DetailContent = React.memo(function DetailContent({
         <div className="item_text_wrapper wrapper">
           <img
             alt="text"
-            src={`${process.env.PUBLIC_URL}/assets/images/detail_short_text.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/detail/short_text.png`}
           />
           <p>{itemsText}</p>
         </div>
@@ -45,7 +45,7 @@ const DetailContent = React.memo(function DetailContent({
           <div className="item_link_wrapper wrapper">
             <img
               alt="link"
-              src={`${process.env.PUBLIC_URL}/assets/images/detail_shopping_basket.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/detail/shopping_basket.png`}
             />
             <a href={itemsLink} target="_blank" rel="noreferrer">
               {itemsLink.length > 28
@@ -58,7 +58,7 @@ const DetailContent = React.memo(function DetailContent({
           <div className="item_confidence_wrapper wrapper">
             <img
               alt="chore"
-              src={`${process.env.PUBLIC_URL}/assets/images/detail_shopping_basket.png`}
+              src={`${process.env.PUBLIC_URL}/assets/images/detail/shopping_basket.png`}
             />
             <p>당신의 🧺용기가 필요해요</p>
           </div>
@@ -66,14 +66,14 @@ const DetailContent = React.memo(function DetailContent({
         <div className="item_price_wrapper wrapper">
           <img
             alt="price"
-            src={`${process.env.PUBLIC_URL}/assets/images/detail_Subtitle.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/price.png`}
           />
           <p>{itemsPrice}</p>
         </div>
         <div className="item_participant_wrapper wrapper">
           <img
             alt="participant"
-            src={`${process.env.PUBLIC_URL}/assets/images/detail_person.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/participant.png`}
           />
           <p>
             {`${itemsLimitParticipants} / 
@@ -83,7 +83,7 @@ const DetailContent = React.memo(function DetailContent({
         <div className="item_duedate_wrapper wrapper">
           <img
             alt="duedate"
-            src={`${process.env.PUBLIC_URL}/assets/images/detail_date_range.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
           />
           <p>{changeDate(itemsDeadline)}</p>
         </div>

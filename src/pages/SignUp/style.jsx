@@ -89,12 +89,7 @@ export const ErrorChecker = styled.img`
   position: absolute;
   top: 33px;
   right: 13px;
-  width: 12.7px;
-
-  padding: 7px 6px;
-
-  z-index: 2;
-  box-sizing: content-box;
+  width: 24px;
 `;
 
 export const SignupButton = styled(Button)`

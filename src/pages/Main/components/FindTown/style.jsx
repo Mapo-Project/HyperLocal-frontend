@@ -27,11 +27,11 @@ export const FindTownWrapper = styled.div`
   .FindTown_search_container {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
     margin-right: 18px;
   }
   .FindTown_search {
-    width: 18px;
+    width: 24px;
     cursor: pointer;
   }
   .FindTown_login {
@@ -76,10 +76,9 @@ export const SelectWrapper = styled.div`
 
   img {
     position: absolute;
-    left: 18px;
-    top: 24px;
-    width: 12px;
-    height: 7.4px;
+    left: 16px;
+    top: 16px;
+    width: 24px;
   }
 `;
 

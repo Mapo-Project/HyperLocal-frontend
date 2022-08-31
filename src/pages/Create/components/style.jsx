@@ -20,12 +20,10 @@ export const HeaderTextContainer = styled.div`
   }
   img {
     position: absolute;
-    width: 14px;
-    top: 10px;
-    left: 11px;
+    width: 24px;
+    top: 15px;
+    left: 16px;
     cursor: pointer;
-    box-sizing: content-box;
-    padding: 10px;
   }
 `;
 
@@ -59,12 +57,12 @@ export const SelectPhotoContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    gap: 6px;
+    gap: 4px;
     cursor: pointer;
 
     img {
-      margin-top: 24px;
-      width: 22px;
+      margin-top: 22px;
+      width: 24px;
     }
 
     span {
@@ -95,17 +93,15 @@ export const SelectPhotoWrapper = styled.div`
 
   .delete-img {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 12px;
-    height: 14px;
+    bottom: 5px;
+    right: 4px;
+    width: 20px;
   }
   .drag-img {
     position: absolute;
-    width: 8px;
-    height: 12px;
-    top: 34px;
-    left: 10px;
+    width: 20px;
+    top: 30px;
+    left: 4px;
   }
 `;
 
@@ -142,8 +138,9 @@ export const SelectCategoryWrapper = styled.div`
   cursor: pointer;
   img {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    width: 24px;
+    top: 12px;
+    right: 16px;
   }
 `;
 export const CategoryLabel = styled.div`
@@ -450,10 +447,10 @@ export const SelectPaticipantContainer = styled.div`
   .participant-control-wrapper {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
   .participant-control-wrapper img {
-    width: 20px;
+    width: 24px;
     cursor: pointer;
   }
   .participant-control-wrapper div {
@@ -467,10 +464,7 @@ export const SelectPaticipantContainer = styled.div`
     align-items: center;
   }
   .participant-control-wrapper div > img {
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-    box-sizing: content-box;
+    width: 24px;
     margin-right: 4px;
   }
   .participant-control-wrapper div > span {
@@ -542,9 +536,9 @@ export const MyCalendarContainer = styled.div`
   }
   .calendar_x {
     position: absolute;
-    top: 11px;
-    left: 11px;
-    padding: 10px;
+    top: 16px;
+    left: 16px;
+    width: 24px;
     cursor: pointer;
   }
   h1 {
@@ -569,8 +563,7 @@ export const MyCalendarContainer = styled.div`
     align-items: center;
   }
   .calender-btn img {
-    width: 7.4px;
-    height: 12px;
+    width: 40px;
   }
   .button--previous {
     left: 190px;
@@ -638,9 +631,5 @@ export const ErrorChecker = styled.img`
 
   top: 40px;
   right: 32px;
-  width: 12.7px;
-  padding: 7px 6px;
-
-  z-index: 2;
-  box-sizing: content-box;
+  width: 24px;
 `;
