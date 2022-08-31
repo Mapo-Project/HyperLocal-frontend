@@ -1,8 +1,9 @@
-import React, { useMemo, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
 
+import axios from 'axios';
 import { MainPageContainer, MainScrollbars, MainShowNoData } from './style';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
@@ -13,47 +14,76 @@ import MainItems from './components/MainItemsWrapper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function Main({
-  currentSelectedTown,
-  currentTown,
-  onSelectCurrentTown,
-  mainData,
-  onClickHeart,
-}) {
+function Main({ mainData, onClickHeart }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
-  const onSortByLocation = useMemo(
-    () =>
-      mainData.filter((data) =>
-        data.itemsTownLocation?.includes(currentSelectedTown),
-      ),
-    [mainData, currentSelectedTown],
-  );
-
-  const onSortByDate = useMemo(
-    () =>
-      onSortByLocation.sort((data1, data2) => {
-        return data2.itemRegistDate - data1.itemRegistDate;
-      }),
-    [onSortByLocation],
+  const { data: townData, mutate: townMutate } = useSWR(
+    `${BACKEND_URL}/user/neighborhood/select`,
+    fetcherAccessToken,
   );
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (townData?.count === '0') {
+      axios
+        .post(
+          `${BACKEND_URL}/user/neighborhood/registration/${'성산동'}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.accessToken}`,
+            },
+          },
+        )
+
+        .then((res) => {
+          console.log(res.data);
+          townMutate();
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          alert(error.response.data.message);
+          return new Error(`요청이 실패했습니다.`);
+        });
+    }
+  });
+
+  // 상태로 두고 변경해야 하는걸까?
+  const onSortByLocation =
+    userData && townData && townData?.count !== '0'
+      ? mainData.filter((data) =>
+          data.itemsTownLocation.includes(
+            // 현재 동네
+            townData?.data
+              .filter((towns) => towns.choiceYN === 'Y')[0]
+              // 현재 동네에서 앞 세글자
+              ?.neighborhoodName.slice(0, 3)
+              .includes('동')
+              ? townData?.data
+                  .filter((towns) => towns.choiceYN === 'Y')[0]
+                  ?.neighborhoodName.slice(0, 2)
+              : townData?.data
+                  .filter((towns) => towns.choiceYN === 'Y')[0]
+                  ?.neighborhoodName.slice(0, 3),
+          ),
+        )
+      : mainData.filter((data) => data.itemsTownLocation.includes('성산동'));
+
+  const onSortByDate = onSortByLocation.sort((data1, data2) => {
+    return data2.itemRegistDate - data1.itemRegistDate;
+  });
+
   const onSelectAdditionalTown = useCallback(() => {
     if (userData) {
-      if (currentTown.length === 3) {
-        navigate('/town/regist');
-      } else {
-        navigate('/town');
-      }
+      navigate('/town/regist');
     } else {
       navigate('/login');
     }
-  }, [currentTown.length, navigate, userData]);
+  }, [navigate, userData]);
 
   const onClickToCreatePage = useCallback(() => {
     navigate('/create');
@@ -81,11 +111,11 @@ function Main({
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, currentSelectedTown, currentTown });
+    console.log({ userData, townData, onSortByLocation });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
-  if (userData === undefined) {
+  if (userData === undefined && !townData) {
     return <div>로딩중</div>;
   }
 
@@ -95,10 +125,7 @@ function Main({
         userData={userData}
         onClickToLoginPage={onClickToLoginPage}
         onClickToMyPage={onClickToMyPage}
-        currentTown={currentTown}
-        currentSelectedTown={currentSelectedTown}
         onSelectAdditionalTown={onSelectAdditionalTown}
-        onSelectCurrentTown={onSelectCurrentTown}
       />
 
       <MainScrollbars
@@ -111,7 +138,7 @@ function Main({
           backgroundColor: '#f5f5f5',
         }}
       >
-        {onSortByDate.length ? (
+        {onSortByDate?.length ? (
           <>
             <img
               className="main_banner"

@@ -17,6 +17,23 @@ export const TownSearchContainer = styled(MainContainer)`
 
     color: #212121;
   }
+  .town_back_btn {
+    cursor: pointer;
+    width: 24px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+  p {
+    text-align: start;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 24px;
+    margin-bottom: 2px;
+    margin-left: 16px;
+  }
 `;
 export const TownSearchWrapper = styled.div`
   display: flex;

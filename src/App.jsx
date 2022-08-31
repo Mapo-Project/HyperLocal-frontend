@@ -16,25 +16,6 @@ import { mainItemsData } from './utils/dummyData/mainPageData';
 import CategorySearch from './pages/Main/components/TagSearch';
 
 function App() {
-  const [currentTown, setCurrentTown] = useState([]);
-  const [currentSelectedTown, setCurrentSelectedTown] = useState('성산동');
-  const townId = useRef(0);
-  const onSelectTown = useCallback((newTown) => {
-    setCurrentTown((currentVal) => [
-      ...currentVal,
-      { town: newTown, townId: townId.current++ },
-    ]);
-  }, []);
-  const onDeleteTown = useCallback((id) => {
-    setCurrentTown((currentVal) => [
-      ...currentVal.filter((townValue) => id !== townValue.townId),
-    ]);
-  }, []);
-
-  const onSelectCurrentTown = useCallback((curTown) => {
-    setCurrentSelectedTown(curTown);
-  }, []);
-
   const [mainData, setMaindata] = useState([...mainItemsData]);
   // new Data
   const dataId = useRef(12);
@@ -65,15 +46,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <Main
-                currentSelectedTown={currentSelectedTown}
-                currentTown={currentTown}
-                onSelectCurrentTown={onSelectCurrentTown}
-                mainData={mainData}
-                onClickHeart={onClickHeart}
-              />
-            }
+            element={<Main mainData={mainData} onClickHeart={onClickHeart} />}
           />
           <Route path="/search" element={<CategorySearch />} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -83,51 +56,17 @@ function App() {
             element={<SocialLoginCallback />}
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route
-            path="/town"
-            element={
-              <TownSearch
-                currentTown={currentTown}
-                onSelectTown={onSelectTown}
-                onSelectCurrentTown={onSelectCurrentTown}
-              />
-            }
-          />
-          <Route
-            path="/town/regist"
-            element={
-              <TownRegistration
-                currentTown={currentTown}
-                onDeleteTown={onDeleteTown}
-                currentSelectedTown={currentSelectedTown}
-                onSelectCurrentTown={onSelectCurrentTown}
-              />
-            }
-          />
+          <Route path="/town" element={<TownSearch />} />
+          <Route path="/town/regist" element={<TownRegistration />} />
           <Route
             path="/create"
-            element={
-              <Create
-                currentSelectedTown={currentSelectedTown}
-                dataId={dataId}
-                setMaindata={setMaindata}
-              />
-            }
+            element={<Create dataId={dataId} setMaindata={setMaindata} />}
           />
           <Route
             path="/interesting"
             element={<Interesting mainData={mainData} />}
           />
-          <Route
-            path="/mypage"
-            element={
-              <MyPage
-                currentSelectedTown={currentSelectedTown}
-                currentTown={currentTown}
-                onSelectCurrentTown={onSelectCurrentTown}
-              />
-            }
-          />
+          <Route path="/mypage" element={<MyPage />} />
           <Route
             path="/detail/:currentItemId"
             element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}

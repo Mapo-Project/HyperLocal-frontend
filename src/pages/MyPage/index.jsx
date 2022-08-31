@@ -15,13 +15,17 @@ import {
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function MyPage({ currentSelectedTown, currentTown }) {
+function MyPage() {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
   );
 
+  const { data: townData } = useSWR(
+    `${BACKEND_URL}/user/neighborhood/select`,
+    fetcherAccessToken,
+  );
   const [logout, setLogout] = useState(true);
 
   /**
@@ -71,7 +75,6 @@ function MyPage({ currentSelectedTown, currentTown }) {
       });
   }, [userMutate]);
 
-  console.log({ currentSelectedTown, currentTown });
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined) {
     return <div>로딩중</div>;
@@ -100,7 +103,11 @@ function MyPage({ currentSelectedTown, currentTown }) {
             </h1>
 
             <h1>
-              <b>내 동네</b> {currentSelectedTown}
+              <b>내 동네</b>{' '}
+              {
+                townData?.data.filter((town) => town.choiceYN === 'Y')[0]
+                  .neighborhoodName
+              }
             </h1>
           </div>
         </ProfileWrapper>

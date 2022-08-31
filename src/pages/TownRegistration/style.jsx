@@ -7,7 +7,6 @@ export const TownRegistrationContainer = styled(MainContainer)`
   text-align: center;
   h1 {
     margin-top: 16px;
-    margin-bottom: 44px;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -16,6 +15,24 @@ export const TownRegistrationContainer = styled(MainContainer)`
     text-align: center;
 
     color: #212121;
+  }
+  h2 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+
+    color: #9e9e9e;
+  }
+  .town_back_btn {
+    position: absolute;
+    height: 24px;
+    top: 16px;
+    left: 16px;
+    cursor: pointer;
   }
 `;
 

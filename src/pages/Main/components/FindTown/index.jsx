@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useCallback, useState } from 'react';
+import useSWR from 'swr';
+import fetcherAccessToken from '../../../../utils/fetcherAccessToken';
+
 import {
   FindTownWrapper,
   Label,
@@ -7,13 +11,30 @@ import {
   SelectWrapper,
 } from './style';
 
-function SelectBox({
-  options,
-  defaultValue,
-  onSelectAdditionalTown,
-  onSelectCurrentTown,
-}) {
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+function SelectBox({ onSelectAdditionalTown }) {
   const [isShowOptions, setShowOptions] = useState(false);
+
+  const { data: townData, mutate: townMutate } = useSWR(
+    `${BACKEND_URL}/user/neighborhood/select`,
+    fetcherAccessToken,
+  );
+
+  const onSelectTown = useCallback(
+    (id) => {
+      axios
+        .post(`${BACKEND_URL}/user/neighborhood/choice/${id}`, null, {
+          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+          townMutate();
+        })
+        .catch((error) => console.log(error.response.data.message));
+    },
+    [townMutate],
+  );
 
   return (
     <SelectWrapper onClick={() => setShowOptions((prev) => !prev)}>
@@ -21,23 +42,28 @@ function SelectBox({
         src={`${process.env.PUBLIC_URL}/assets/images/expand_more_down.png`}
         alt="expand_more"
       />
-      <Label>{defaultValue}</Label>
+      <Label>
+        {townData?.data?.length
+          ? townData?.data.filter((towns) => towns.choiceYN === 'Y')[0]
+              ?.neighborhoodName
+          : '성산동'}
+      </Label>
       <SelectOptions show={isShowOptions}>
-        {!options.length ? (
+        {!townData ? (
           <Option key="성산동" value="성산동">
             성산동
           </Option>
         ) : (
-          options?.map((option, idx) => (
+          townData?.data.map((option, idx) => (
             <Option
               key={idx}
               onClick={(e) => {
                 e.stopPropagation();
-                onSelectCurrentTown(e.target.textContent);
+                onSelectTown(option.neighborhoodId);
                 setShowOptions((prev) => !prev);
               }}
             >
-              {option.town}
+              {option.neighborhoodName}
             </Option>
           ))
         )}
@@ -60,19 +86,12 @@ const FindTown = React.memo(function FindTown({
   onClickToLoginPage,
   userData,
   onClickToMyPage,
-  currentTown,
-  currentSelectedTown,
+
   onSelectAdditionalTown,
-  onSelectCurrentTown,
 }) {
   return (
     <FindTownWrapper>
-      <SelectBox
-        options={currentTown}
-        defaultValue={currentSelectedTown}
-        onSelectAdditionalTown={onSelectAdditionalTown}
-        onSelectCurrentTown={onSelectCurrentTown}
-      />
+      <SelectBox onSelectAdditionalTown={onSelectAdditionalTown} />
       <div className="FindTown_search_container">
         <img
           className="FindTown_search"

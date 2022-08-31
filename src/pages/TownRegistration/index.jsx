@@ -1,5 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router';
+import axios from 'axios';
+import useSWR from 'swr';
 import {
   RegisteredTown,
   TownRegistrationButton,
@@ -7,15 +9,11 @@ import {
   TownRegistrationList,
   UnRegisteredTown,
 } from './style';
+import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
-function TownRegistration({
-  currentTown,
-  onDeleteTown,
-  currentSelectedTown,
-  onSelectCurrentTown,
-}) {
-  console.log({ currentTown, currentSelectedTown });
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+function TownRegistration() {
   const navigate = useNavigate();
   const onClickToMain = useCallback(() => {
     navigate('/');
@@ -25,39 +23,99 @@ function TownRegistration({
     navigate('/town');
   }, [navigate]);
 
+  const { data: townData, mutate: townMutate } = useSWR(
+    `${BACKEND_URL}/user/neighborhood/select`,
+    fetcherAccessToken,
+  );
+
+  useEffect(() => console.log(townData), [townData]);
+
+  const onSelectTown = useCallback(
+    (id) => {
+      axios
+        .post(`${BACKEND_URL}/user/neighborhood/choice/${id}`, null, {
+          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+
+          townMutate();
+        })
+        .catch((error) => console.log(error.response.data.message));
+    },
+    [townMutate],
+  );
+
+  const onDeleteTown = useCallback(
+    (id) => {
+      axios
+        .delete(`${BACKEND_URL}/user/neighborhood/${id}`, {
+          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
+        })
+        .then((res) => {
+          console.log(res);
+          townMutate();
+
+          // townMutate({ ...townData, count: `${--townData.count}` });
+          // if (townData.count === '1') {
+          //   onClickToAddTown();
+          // }
+        })
+        .catch((error) => console.log(error));
+    },
+    [townMutate],
+  );
+
   // 소셜로그인 안하면 url로 접근 시 리다이렉트
   if (!localStorage?.verify) {
     return <Navigate to="/login" replace />;
   }
+  if (!townData) {
+    return <h1>동네 데이터 불러오는 중</h1>;
+  }
 
   return (
     <TownRegistrationContainer>
-      <h1>동네 등록</h1>
-
+      <h1>내 동네 설정 </h1>
+      <h2>나의 동네는 최소 1곳 최대 3곳까지 등록 가능합니다.</h2>
+      <img
+        className="town_back_btn"
+        role="button"
+        onKeyDown={() => {}}
+        onClick={onClickToMain}
+        tabIndex={0}
+        alt="search_back"
+        src={`${process.env.PUBLIC_URL}/assets/images/expand_more_up.png`}
+      />
       <TownRegistrationList>
-        {currentTown[0]?.town ? (
+        {townData?.data[0] ? (
           <RegisteredTown
             selected={
-              currentTown[0].town === currentSelectedTown
-                ? 'selected'
-                : 'unSelected'
+              townData?.data[0].choiceYN === 'Y' ? 'selected' : 'unSelected'
             }
             onClick={() => {
-              onSelectCurrentTown(currentTown[0].town);
+              onSelectTown(townData?.data[0].neighborhoodId);
             }}
           >
-            {currentTown[0].town}
+            {townData?.data[0].neighborhoodName}
             <img
               role="button"
               onKeyDown={() => {}}
               onClick={(e) => {
-                onDeleteTown(currentTown[0].townId);
                 e.stopPropagation();
-                if (currentTown[0].town !== currentSelectedTown) {
-                  return;
+                if (townData?.count === '1') {
+                  if (
+                    // eslint-disable-next-line no-restricted-globals, no-alert
+                    confirm(`동네는 최소 한 곳 이상 등록되어 있어야 합니다.
+동네를 변경하시겠습니까?`)
+                  ) {
+                    onDeleteTown(townData?.data[0].neighborhoodId);
+                    navigate('/town');
+                  }
+                } else {
+                  onDeleteTown(townData?.data[0].neighborhoodId);
+                  onSelectTown(townData?.data[1].neighborhoodId);
                 }
-                onSelectCurrentTown('');
-                onClickToAddTown();
               }}
               tabIndex={0}
               alt="search_cancel"
@@ -72,29 +130,27 @@ function TownRegistration({
             />
           </UnRegisteredTown>
         )}
-        {currentTown[1]?.town ? (
+        {townData?.data[1] ? (
           <RegisteredTown
             selected={
-              currentTown[1].town === currentSelectedTown
-                ? 'selected'
-                : 'unSelected'
+              townData?.data[1].choiceYN === 'Y' ? 'selected' : 'unSelected'
             }
             onClick={() => {
-              onSelectCurrentTown(currentTown[1].town);
+              onSelectTown(townData?.data[1].neighborhoodId);
             }}
           >
-            {currentTown[1].town}
+            {townData?.data[1].neighborhoodName}
             <img
               role="button"
               onKeyDown={() => {}}
               tabIndex={0}
               onClick={(e) => {
-                onDeleteTown(currentTown[1].townId);
+                onDeleteTown(townData?.data[1].neighborhoodId);
                 e.stopPropagation();
-                if (currentTown[1].town !== currentSelectedTown) {
+                if (townData?.data[1].choiceYN !== 'Y') {
                   return;
                 }
-                onSelectCurrentTown(currentTown[0].town);
+                onSelectTown(townData?.data[0].neighborhoodId);
               }}
               alt="search_cancel"
               src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
@@ -108,29 +164,27 @@ function TownRegistration({
             />
           </UnRegisteredTown>
         )}
-        {currentTown[2]?.town ? (
+        {townData?.data[2] ? (
           <RegisteredTown
             selected={
-              currentTown[2].town === currentSelectedTown
-                ? 'selected'
-                : 'unSelected'
+              townData?.data[2].choiceYN === 'Y' ? 'selected' : 'unSelected'
             }
             onClick={() => {
-              onSelectCurrentTown(currentTown[2].town);
+              onSelectTown(townData?.data[2].neighborhoodId);
             }}
           >
-            {currentTown[2].town}
+            {townData?.data[2].neighborhoodName}
             <img
               role="button"
               onKeyDown={() => {}}
               tabIndex={0}
               onClick={(e) => {
-                onDeleteTown(currentTown[2].townId);
+                onDeleteTown(townData?.data[2].neighborhoodId);
                 e.stopPropagation();
-                if (currentTown[2].town !== currentSelectedTown) {
+                if (townData?.data[2].choiceYN !== 'Y') {
                   return;
                 }
-                onSelectCurrentTown(currentTown[1].town);
+                onSelectTown(townData?.data[1].neighborhoodId);
               }}
               alt="search_cancel"
               src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
@@ -145,8 +199,9 @@ function TownRegistration({
           </UnRegisteredTown>
         )}
       </TownRegistrationList>
+
       <TownRegistrationButton onClick={onClickToMain}>
-        이웃의 마켓 구경하기
+        확인
       </TownRegistrationButton>
     </TownRegistrationContainer>
   );

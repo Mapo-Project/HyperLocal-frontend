@@ -2,9 +2,9 @@ import React, { useCallback, useRef, useState } from 'react';
 
 import useSWR from 'swr';
 import axios from 'axios';
+import { Navigate } from 'react-router';
 import useInput from '../../hooks/useInput';
-// import Footer from '../../layout/Footer';
-// import getAccessData from '../../utils/getAccessData';
+
 import {
   Error,
   ErrorChecker,
@@ -333,10 +333,10 @@ function SignUp() {
     return <div>로딩중</div>;
   }
 
-  // if (userData) {
-  //   // console.log(userData);
-  //   return <Navigate to="/town" replace />;
-  // }
+  if (userData) {
+    // console.log(userData);
+    return <Navigate to="/" replace />;
+  }
 
   // // 소셜로그인 안하면 url로 접근 시 리다이렉트
   // if (!localStorage?.verify) {

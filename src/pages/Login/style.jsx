@@ -20,10 +20,11 @@ export const LoginContainer = styled(MainContainer)`
 `;
 
 export const LoginButton = styled(Button)`
-  background: ${(props) => (props.domain === 'kakao' ? '#FEE500' : '#03C75A')};
+  background: #fee500;
   position: absolute;
-  bottom: ${(props) => (props.domain === 'kakao' ? '116px' : '52px')};
+  bottom: 52px;
   left: 16px;
+  cursor: pointer;
 
   div {
     display: flex;
@@ -31,7 +32,7 @@ export const LoginButton = styled(Button)`
     align-items: center;
   }
   img {
-    width: ${(props) => (props.domain === 'kakao' ? '20px' : '16px')};
+    width: 20px;
   }
 
   span {
@@ -42,8 +43,8 @@ export const LoginButton = styled(Button)`
     font-size: 16px;
     line-height: 100%;
 
-    color: ${(props) => (props.domain === 'kakao' ? '#424242' : '#ffffff')};
+    color: #424242;
 
-    margin-left: ${(props) => (props.domain === 'kakao' ? '16px' : '18px')};
+    margin-left: 16px;
   }
 `;

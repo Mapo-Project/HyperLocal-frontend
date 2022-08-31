@@ -33,11 +33,15 @@ const radioBoxList = [
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function Create({ currentSelectedTown, setMaindata, dataId }) {
+function Create({ setMaindata, dataId }) {
   // 유저데이터
 
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
+    fetcherAccessToken,
+  );
+  const { data: townData } = useSWR(
+    `${BACKEND_URL}/user/neighborhood/select`,
     fetcherAccessToken,
   );
 
@@ -97,7 +101,9 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
             itemsLink: link,
             itemsConfidence: isConfidence,
             itemsHomemade: isHomemade,
-            itemsTownLocation: currentSelectedTown,
+            itemsTownLocation: townData?.data.filter(
+              (town) => town.choiceYN === 'Y',
+            )[0].neighborhoodName,
             itemsLimitParticipants: participant,
             itemsCurrentParticipants: 0,
             itemsPrice: price,
@@ -127,7 +133,6 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
           priceType,
           dueDate,
           category,
-          currentSelectedTown,
         });
         navigate('/', { replace: true });
       }
@@ -147,7 +152,7 @@ function Create({ currentSelectedTown, setMaindata, dataId }) {
       priceType,
       dueDate,
       category,
-      currentSelectedTown,
+      townData,
       setMaindata,
     ],
   );
