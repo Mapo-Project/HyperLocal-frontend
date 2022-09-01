@@ -27,6 +27,7 @@ function Main({ mainData, onClickHeart }) {
 
   const navigate = useNavigate();
 
+  // 동네 기본값이 성산동
   useEffect(() => {
     if (townData?.count === '0') {
       axios
@@ -77,6 +78,7 @@ function Main({ mainData, onClickHeart }) {
     return data2.itemRegistDate - data1.itemRegistDate;
   });
 
+  // 페이지 변경
   const onSelectAdditionalTown = useCallback(() => {
     if (userData) {
       navigate('/town/regist');

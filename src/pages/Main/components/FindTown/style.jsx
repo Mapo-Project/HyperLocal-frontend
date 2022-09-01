@@ -81,14 +81,21 @@ export const SelectWrapper = styled.div`
     width: 24px;
   }
 `;
-
+export const ModalCover = styled.div`
+  position: absolute;
+  top: -40px;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${(props) => (props.show ? 'rgba(0, 0, 0, 0.3)' : '')};
+  display: ${(props) => (props.show ? 'block' : 'none')}; ;
+`;
 export const SelectOptions = styled.div`
   z-index: 10;
 
-  width: 112px;
+  width: 128px;
   position: absolute;
   top: 56px;
-  left: 40px;
+  left: 24px;
   background: #ffffff;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 2px 6px 2px rgba(0, 0, 0, 0.15);
@@ -100,7 +107,7 @@ export const SelectOptions = styled.div`
 `;
 
 export const Option = styled.div`
-  padding: 12px 16px;
+  padding: 12px 32px;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;

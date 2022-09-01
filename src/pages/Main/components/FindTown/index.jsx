@@ -6,6 +6,7 @@ import fetcherAccessToken from '../../../../utils/fetcherAccessToken';
 import {
   FindTownWrapper,
   Label,
+  ModalCover,
   Option,
   SelectOptions,
   SelectWrapper,
@@ -48,6 +49,7 @@ function SelectBox({ onSelectAdditionalTown }) {
               ?.neighborhoodName
           : '성산동'}
       </Label>
+      <ModalCover show={isShowOptions} />
       <SelectOptions show={isShowOptions}>
         {!townData ? (
           <Option key="성산동" value="성산동">
@@ -58,9 +60,8 @@ function SelectBox({ onSelectAdditionalTown }) {
             <Option
               key={idx}
               onClick={(e) => {
-                e.stopPropagation();
                 onSelectTown(option.neighborhoodId);
-                setShowOptions((prev) => !prev);
+                e.stopPropagation();
               }}
             >
               {option.neighborhoodName}
@@ -86,7 +87,6 @@ const FindTown = React.memo(function FindTown({
   onClickToLoginPage,
   userData,
   onClickToMyPage,
-
   onSelectAdditionalTown,
 }) {
   return (
