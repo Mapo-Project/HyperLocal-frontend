@@ -59,7 +59,7 @@ export const FindTownWrapper = styled.div`
 
 export const SelectWrapper = styled.div`
   position: relative;
-  width: 145px;
+  width: 165px;
   cursor: pointer;
 
   font-family: 'Pretendard';
