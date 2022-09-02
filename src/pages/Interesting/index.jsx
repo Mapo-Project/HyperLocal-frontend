@@ -41,7 +41,21 @@ function Interesting({ mainData }) {
             onClickToDetailPage(data.itemId);
           }}
         >
-          {typeof data.itemsImg === 'string' ? (
+          {data.itemsImg.length ? (
+            <img
+              // 더미데이터때문에 만들어놓음
+              className="interesting_main_img"
+              src={
+                data.itemsImg[0] === '/'
+                  ? data.itemsImg
+                  : URL.createObjectURL(data.itemsImg[0].files)
+              }
+              alt="items_img"
+            />
+          ) : (
+            <div className="interesting_main_img dummy" />
+          )}
+          {/* {typeof data.itemsImg === 'string' ? (
             <img
               className="interesting_main_img"
               alt="header_img"
@@ -53,7 +67,7 @@ function Interesting({ mainData }) {
               alt="header_img"
               src={URL.createObjectURL(data.itemsImg[0].files)}
             />
-          )}
+          )} */}
           <div className="content_wrapper">
             <h1>
               {data.itemsHeadText.length > 20

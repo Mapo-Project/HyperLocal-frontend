@@ -38,6 +38,9 @@ export const InterestingContent = styled.div`
 
     border-radius: 16px;
   }
+  .interesting_main_img.dummy {
+    background-color: #e0e0e0;
+  }
   .content_wrapper {
     display: flex;
     flex-direction: column;
