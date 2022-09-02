@@ -165,7 +165,11 @@ function Main({ mainData, nonMemberTown }) {
         )}
       </MainScrollbars>
 
-      <MainButton onClickToCreatePage={onClickToCreatePage} />
+      <MainButton
+        onClickToCreatePage={onClickToCreatePage}
+        userData={userData}
+        onClickToLoginPage={onClickToLoginPage}
+      />
 
       <Footer page="main" />
     </MainPageContainer>

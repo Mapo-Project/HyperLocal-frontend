@@ -49,6 +49,9 @@ function Detail({ mainData, onClickHeart }) {
     navigate('/');
   }, [navigate]);
 
+  const onClicktoLogin = useCallback(() => {
+    navigate('/login');
+  }, [navigate]);
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined) {
     return <div>로딩중</div>;
@@ -83,7 +86,9 @@ function Detail({ mainData, onClickHeart }) {
           role="button"
           onKeyDown={() => {}}
           tabIndex={0}
-          onClick={() => onClickHeart(selectedData.itemId)}
+          onClick={() =>
+            userData ? onClickHeart(selectedData.itemId) : onClicktoLogin()
+          }
           className="items_heart"
           src={
             selectedData.isHeartEmpty
@@ -94,7 +99,9 @@ function Detail({ mainData, onClickHeart }) {
         />
         <p>{selectedData.itemsHeartCount}</p>
 
-        <DetailButton>채팅 참여</DetailButton>
+        <DetailButton onClick={() => (userData ? '' : onClicktoLogin())}>
+          채팅 참여
+        </DetailButton>
       </DetailFooter>
     </DetailMainContainer>
   );
