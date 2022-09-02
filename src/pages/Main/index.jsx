@@ -14,7 +14,7 @@ import MainItems from './components/MainItemsWrapper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function Main({ mainData }) {
+function Main({ mainData, nonMemberTown }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
@@ -27,12 +27,12 @@ function Main({ mainData }) {
 
   const navigate = useNavigate();
 
-  // 동네 기본값이 성산동
+  // 동네 기본값이 성산동(nonMemberTown)
   useEffect(() => {
     if (townData?.count === '0') {
       axios
         .post(
-          `${BACKEND_URL}/user/neighborhood/registration/${'성산동'}`,
+          `${BACKEND_URL}/user/neighborhood/registration/${nonMemberTown}`,
           null,
           {
             headers: {
@@ -72,7 +72,9 @@ function Main({ mainData }) {
                   ?.neighborhoodName.slice(0, 3),
           ),
         )
-      : mainData.filter((data) => data.itemsTownLocation.includes('성산동'));
+      : mainData.filter((data) =>
+          data.itemsTownLocation.includes(nonMemberTown),
+        );
 
   const onSortByDate = onSortByLocation.sort((data1, data2) => {
     return data2.itemRegistDate - data1.itemRegistDate;
@@ -80,12 +82,8 @@ function Main({ mainData }) {
 
   // 페이지 변경
   const onSelectAdditionalTown = useCallback(() => {
-    if (userData) {
-      navigate('/town/regist');
-    } else {
-      navigate('/login');
-    }
-  }, [navigate, userData]);
+    navigate('/town/regist');
+  }, [navigate]);
 
   const onClickToCreatePage = useCallback(() => {
     navigate('/create');
@@ -109,7 +107,7 @@ function Main({ mainData }) {
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, townData, onSortByLocation });
+    console.log({ userData, townData, onSortByLocation, nonMemberTown });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
@@ -124,6 +122,7 @@ function Main({ mainData }) {
         onClickToLoginPage={onClickToLoginPage}
         onClickToMyPage={onClickToMyPage}
         onSelectAdditionalTown={onSelectAdditionalTown}
+        nonMemberTown={nonMemberTown}
       />
 
       <MainScrollbars

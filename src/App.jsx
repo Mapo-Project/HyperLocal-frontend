@@ -16,8 +16,21 @@ import { mainItemsData } from './utils/dummyData/mainPageData';
 import CategorySearch from './pages/Main/components/TagSearch';
 import Chat from './pages/Chat';
 
+// 비회원의 초기 동네 설정
+
+if (!sessionStorage.nonMemberTown) {
+  sessionStorage.setItem('nonMemberTown', '성산동');
+}
+
 function App() {
   const [mainData, setMaindata] = useState([...mainItemsData]);
+
+  const [nonMemberTown, setNonMemberTown] = useState(
+    sessionStorage.nonMemberTown,
+  );
+
+  const [tempTown, setTempTown] = useState('');
+
   // new Data
   const dataId = useRef(12);
 
@@ -47,7 +60,13 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Main mainData={mainData} onClickHeart={onClickHeart} />}
+            element={
+              <Main
+                mainData={mainData}
+                onClickHeart={onClickHeart}
+                nonMemberTown={nonMemberTown}
+              />
+            }
           />
           <Route path="/search" element={<CategorySearch />} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -57,8 +76,25 @@ function App() {
             element={<SocialLoginCallback />}
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/town" element={<TownSearch />} />
-          <Route path="/town/regist" element={<TownRegistration />} />
+          <Route
+            path="/town"
+            element={
+              <TownSearch
+                nonMemberTown={nonMemberTown}
+                setNonMemberTown={setNonMemberTown}
+                tempTown={tempTown}
+              />
+            }
+          />
+          <Route
+            path="/town/regist"
+            element={
+              <TownRegistration
+                nonMemberTown={nonMemberTown}
+                setTempTown={setTempTown}
+              />
+            }
+          />
           <Route
             path="/create"
             element={<Create dataId={dataId} setMaindata={setMaindata} />}
