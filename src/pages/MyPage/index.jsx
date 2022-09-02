@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { Navigate } from 'react-router';
 
 import useSWR from 'swr';
 
@@ -12,6 +11,7 @@ import {
   ProfileHeader,
   ProfileWrapper,
 } from './style';
+import Footer from '../../layout/Footer';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -80,11 +80,6 @@ function MyPage() {
     return <div>로딩중</div>;
   }
 
-  // 유저데이터가 없으면 첫 페이지로 이동
-  if (!userData) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
     <MyPageMainContainer>
       <MyPageProfileBox>
@@ -96,18 +91,25 @@ function MyPage() {
           />
         </ProfileHeader>
         <ProfileWrapper>
-          <img alt="profile_img" src={userData.data.profileImg} />
+          {userData ? (
+            <img alt="profile_img" src={userData.data.profileImg} />
+          ) : (
+            <img
+              alt="dummy_img"
+              src={`${process.env.PUBLIC_URL}/assets/images/main_thumbnail.png`}
+            />
+          )}
           <div>
             <h1>
-              <b>아이디</b> {userData.data.nickname}
+              <b>아이디</b> {userData ? userData.data.nickname : '-'}
             </h1>
 
             <h1>
               <b>내 동네</b>{' '}
-              {
-                townData?.data.filter((town) => town.choiceYN === 'Y')[0]
-                  .neighborhoodName
-              }
+              {userData
+                ? townData?.data.filter((town) => town.choiceYN === 'Y')[0]
+                    .neighborhoodName
+                : '-'}
             </h1>
           </div>
         </ProfileWrapper>
@@ -125,13 +127,14 @@ function MyPage() {
       </button>
 
       <h2>---------- 개발용 ---------</h2>
-      <h2>email : {userData.data.email}</h2>
-      <h2>전화번호 : {userData.data.phoneNum}</h2>
+      <h2>email : {userData ? userData.data.email : '-'}</h2>
+      <h2>전화번호 : {userData ? userData.data.phoneNum : '-'}</h2>
       {logout ? <h2>로그인 중</h2> : <h2>로그인해라</h2>}
 
       <button style={{ marginLeft: '28px' }} type="submit" onClick={withdrawal}>
         회원탈퇴
       </button>
+      <Footer page="mypage" />
     </MyPageMainContainer>
   );
 }

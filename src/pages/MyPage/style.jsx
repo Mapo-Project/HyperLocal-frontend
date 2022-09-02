@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const MyPageMainContainer = styled(MainContainer)`
+  position: relative;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -82,7 +83,8 @@ export const ProfileWrapper = styled.div`
   }
   img {
     border-radius: 29px;
-    width: 96px;
+    width: 88px;
+    height: 88px;
   }
 `;
 

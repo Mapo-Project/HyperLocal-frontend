@@ -9,7 +9,7 @@ import { MainPageContainer, MainScrollbars, MainShowNoData } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import FindTown from './components/FindTown';
 import MainButton from './components/MainButton';
-import Footer from './components/Footer';
+import Footer from '../../layout/Footer';
 import MainItems from './components/MainItemsWrapper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -91,10 +91,6 @@ function Main({ mainData }) {
     navigate('/create');
   }, [navigate]);
 
-  const onClickToInterestingPage = useCallback(() => {
-    navigate('/interesting');
-  }, [navigate]);
-
   // const onClickToCategorySearchPage = () => {
   //   navigate('/search');
   // };
@@ -171,11 +167,8 @@ function Main({ mainData }) {
       </MainScrollbars>
 
       <MainButton onClickToCreatePage={onClickToCreatePage} />
-      <Footer
-        onClickToInterestingPage={onClickToInterestingPage}
-        onClickToMyPage={onClickToMyPage}
-        userData={userData}
-      />
+
+      <Footer page="main" />
     </MainPageContainer>
   );
 }

@@ -14,6 +14,7 @@ import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
 import CategorySearch from './pages/Main/components/TagSearch';
+import Chat from './pages/Chat';
 
 function App() {
   const [mainData, setMaindata] = useState([...mainItemsData]);
@@ -67,6 +68,7 @@ function App() {
             element={<Interesting mainData={mainData} />}
           />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/chat" element={<Chat />} />
           <Route
             path="/detail/:currentItemId"
             element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}

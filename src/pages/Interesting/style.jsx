@@ -4,6 +4,18 @@ import MainContainer from '../../layout/MainContainer';
 export const InterestingMainContainer = styled(MainContainer)`
   position: relative;
   overflow: hidden;
+
+  .interesting_title {
+    margin-top: 16px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    text-align: center;
+
+    color: #212121;
+  }
 `;
 
 export const InterestingContent = styled.div`
@@ -61,47 +73,5 @@ export const InterestingContent = styled.div`
   }
   .interesting--deadline_img {
     width: 20px;
-  }
-`;
-
-export const InterestingFooter = styled.footer`
-  background-color: #ffffff;
-  font-family: 'Pretendard';
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 80px;
-  z-index: 1;
-  display: flex;
-  gap: 8px;
-
-  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.1);
-  div.menu_container {
-    padding-top: 8px;
-    padding-left: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .menu_border {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 64px;
-    height: 32px;
-    border-radius: 16px;
-
-    img {
-      width: 24px;
-    }
-  }
-  .menu_text {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
   }
 `;
