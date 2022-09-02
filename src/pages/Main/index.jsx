@@ -9,12 +9,12 @@ import { MainPageContainer, MainScrollbars, MainShowNoData } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import FindTown from './components/FindTown';
 import MainButton from './components/MainButton';
-import Footer from './components/Footer';
+import Footer from '../../layout/Footer';
 import MainItems from './components/MainItemsWrapper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function Main({ mainData, onClickHeart }) {
+function Main({ mainData, nonMemberTown }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
@@ -27,11 +27,12 @@ function Main({ mainData, onClickHeart }) {
 
   const navigate = useNavigate();
 
+  // 동네 기본값이 성산동(nonMemberTown)
   useEffect(() => {
     if (townData?.count === '0') {
       axios
         .post(
-          `${BACKEND_URL}/user/neighborhood/registration/${'성산동'}`,
+          `${BACKEND_URL}/user/neighborhood/registration/${nonMemberTown}`,
           null,
           {
             headers: {
@@ -71,26 +72,21 @@ function Main({ mainData, onClickHeart }) {
                   ?.neighborhoodName.slice(0, 3),
           ),
         )
-      : mainData.filter((data) => data.itemsTownLocation.includes('성산동'));
+      : mainData.filter((data) =>
+          data.itemsTownLocation.includes(nonMemberTown),
+        );
 
   const onSortByDate = onSortByLocation.sort((data1, data2) => {
     return data2.itemRegistDate - data1.itemRegistDate;
   });
 
+  // 페이지 변경
   const onSelectAdditionalTown = useCallback(() => {
-    if (userData) {
-      navigate('/town/regist');
-    } else {
-      navigate('/login');
-    }
-  }, [navigate, userData]);
+    navigate('/town/regist');
+  }, [navigate]);
 
   const onClickToCreatePage = useCallback(() => {
     navigate('/create');
-  }, [navigate]);
-
-  const onClickToInterestingPage = useCallback(() => {
-    navigate('/interesting');
   }, [navigate]);
 
   // const onClickToCategorySearchPage = () => {
@@ -111,7 +107,7 @@ function Main({ mainData, onClickHeart }) {
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, townData, onSortByLocation });
+    console.log({ userData, townData, onSortByLocation, nonMemberTown });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
@@ -126,6 +122,7 @@ function Main({ mainData, onClickHeart }) {
         onClickToLoginPage={onClickToLoginPage}
         onClickToMyPage={onClickToMyPage}
         onSelectAdditionalTown={onSelectAdditionalTown}
+        nonMemberTown={nonMemberTown}
       />
 
       <MainScrollbars
@@ -149,7 +146,6 @@ function Main({ mainData, onClickHeart }) {
               <MainItems
                 key={data.itemId}
                 {...data}
-                onClickHeart={onClickHeart}
                 onClickToDetailPage={onClickToDetailPage}
               />
             ))}
@@ -169,12 +165,13 @@ function Main({ mainData, onClickHeart }) {
         )}
       </MainScrollbars>
 
-      <MainButton onClickToCreatePage={onClickToCreatePage} />
-      <Footer
-        onClickToInterestingPage={onClickToInterestingPage}
-        onClickToMyPage={onClickToMyPage}
+      <MainButton
+        onClickToCreatePage={onClickToCreatePage}
         userData={userData}
+        onClickToLoginPage={onClickToLoginPage}
       />
+
+      <Footer page="main" />
     </MainPageContainer>
   );
 }

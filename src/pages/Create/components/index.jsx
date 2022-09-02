@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import DatePicker, { CalendarContainer } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
@@ -6,9 +6,11 @@ import { getYear, getMonth } from 'date-fns';
 import {
   BarterContainer,
   CategoryLabel,
+  CategoryModalCover,
   CategoryOption,
   CategorySelectOptions,
   ConfidenceWrapper,
+  DateModalCover,
   ErrorChecker,
   HeadAndTextContainer,
   HeaderTextContainer,
@@ -155,6 +157,7 @@ export const SelectCategory = React.memo(function SelectCategory({
       )}
 
       <CategoryLabel>{category}</CategoryLabel>
+      <CategoryModalCover show={isShowCategory} category={category} />
       <CategorySelectOptions show={isShowCategory}>
         {categroies?.map((option, idx) => (
           <CategoryOption
@@ -412,6 +415,8 @@ export const SelectDate = React.memo(function SelectDate({
   isCalenderOpen,
   setIsCalenderOpen,
 }) {
+  const [showModal, setShowModal] = useState(false);
+
   // lodash 안쓰고 직접 구현
   const myRange = useCallback((prevNum, nextNum) => {
     return new Array(nextNum - prevNum)
@@ -428,10 +433,16 @@ export const SelectDate = React.memo(function SelectDate({
     [myRange],
   );
 
+  // console.log(years, months, dueDate, getMonth(dueDate));
   return (
     <SelectDateContainer>
       마켓 기한
+      <DateModalCover show={showModal} />
       <DatePicker
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        show={showModal}
         selected={dueDate}
         onChange={(date) => setDueDate(date)}
         minDate={new Date()} // 이전 날짜 disable
@@ -442,10 +453,24 @@ export const SelectDate = React.memo(function SelectDate({
         calendarStartDay={1} // 시작하는 요일
         dateFormat="yyyy-MM-dd" //  날짜 형식
         open={isCalenderOpen} // 달력 열린 상태
-        onInputClick={() => setIsCalenderOpen(true)}
-        onClickOutside={() => setIsCalenderOpen(false)}
+        onInputClick={() => {
+          setIsCalenderOpen(true);
+          setShowModal((prev) => !prev);
+        }}
+        onClickOutside={() => {
+          setIsCalenderOpen(false);
+          setShowModal((prev) => !prev);
+        }}
         readOnly // 값 임의 변경 금지
         popperPlacement="top-start" // 팝업 위치
+        popperModifiers={[
+          {
+            name: 'offset',
+            options: {
+              offset: [-1, -182],
+            },
+          },
+        ]} // 팝업 위치 세부조정
         renderCustomHeader={({
           date,
           changeYear,
@@ -465,7 +490,7 @@ export const SelectDate = React.memo(function SelectDate({
                 ]
               }
               onChange={({ target: { value } }) => {
-                if (value > 12) {
+                if (value >= 12) {
                   changeMonth(value - 12);
                   changeYear(years[1]);
                 } else {
@@ -533,6 +558,7 @@ export const SelectDate = React.memo(function SelectDate({
           tabIndex={0}
           onClick={() => {
             setIsCalenderOpen(false);
+            setShowModal((prev) => !prev);
           }}
           alt="x"
           src={`${process.env.PUBLIC_URL}/assets/images/close.png`}
@@ -542,6 +568,7 @@ export const SelectDate = React.memo(function SelectDate({
             e.preventDefault();
             if (dueDate) {
               setIsCalenderOpen(false);
+              setShowModal((prev) => !prev);
             }
           }}
         >

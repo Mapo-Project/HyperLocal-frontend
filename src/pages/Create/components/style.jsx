@@ -135,6 +135,7 @@ export const SelectCategoryWrapper = styled.div`
   color: #212121;
   border: 1px solid #9e9e9e;
   border-radius: 4px;
+
   cursor: pointer;
   img {
     position: absolute;
@@ -143,11 +144,23 @@ export const SelectCategoryWrapper = styled.div`
     right: 16px;
   }
 `;
+
+export const CategoryModalCover = styled.div`
+  position: absolute;
+  top: -300px;
+  left: -17px;
+  width: 360px;
+  height: ${(props) => (props.category === '식품' ? '1550px' : '1460px')};
+  background-color: ${(props) => (props.show ? 'rgba(0, 0, 0, 0.3)' : '')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  z-index: 2;
+`;
+
 export const CategoryLabel = styled.div`
   text-align: start;
 `;
 export const CategorySelectOptions = styled.div`
-  z-index: 10;
+  z-index: 2;
 
   width: 326px;
   position: absolute;
@@ -508,6 +521,9 @@ export const SelectDateContainer = styled.div`
 `;
 
 export const MyCalendarContainer = styled.div`
+  position: relative;
+
+  z-index: 2;
   .selectbox-wrapper {
     text-align: start;
     margin-left: 24px;
@@ -619,6 +635,17 @@ export const MyCalendarContainer = styled.div`
     border-radius: 50%;
     background-color: #00d082;
   }
+`;
+
+export const DateModalCover = styled.div`
+  position: absolute;
+  top: -1200px;
+  left: -16px;
+  width: 360px;
+  height: 1550px;
+  background-color: ${(props) => (props.show ? 'rgba(0, 0, 0, 0.3)' : '')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  z-index: 1;
 `;
 
 export const MyCalendarButton = styled(Button)`

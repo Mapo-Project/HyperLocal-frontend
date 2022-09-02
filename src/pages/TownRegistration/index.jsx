@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 import useSWR from 'swr';
 import {
@@ -13,7 +13,7 @@ import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function TownRegistration() {
+function TownRegistration({ nonMemberTown, setTempTown }) {
   const navigate = useNavigate();
   const onClickToMain = useCallback(() => {
     navigate('/');
@@ -22,6 +22,14 @@ function TownRegistration() {
   const onClickToAddTown = useCallback(() => {
     navigate('/town');
   }, [navigate]);
+
+  const onClickToLoginPage = useCallback(() => {
+    navigate('/login');
+  }, [navigate]);
+  const { data: userData } = useSWR(
+    `${BACKEND_URL}/user/profile/select`,
+    fetcherAccessToken,
+  );
 
   const { data: townData, mutate: townMutate } = useSWR(
     `${BACKEND_URL}/user/neighborhood/select`,
@@ -55,23 +63,14 @@ function TownRegistration() {
         .then((res) => {
           console.log(res);
           townMutate();
-
-          // townMutate({ ...townData, count: `${--townData.count}` });
-          // if (townData.count === '1') {
-          //   onClickToAddTown();
-          // }
         })
         .catch((error) => console.log(error));
     },
     [townMutate],
   );
 
-  // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  if (!localStorage?.verify) {
-    return <Navigate to="/login" replace />;
-  }
-  if (!townData) {
-    return <h1>동네 데이터 불러오는 중</h1>;
+  if (userData === undefined && !townData) {
+    return <div>로딩중</div>;
   }
 
   return (
@@ -87,118 +86,151 @@ function TownRegistration() {
         alt="search_back"
         src={`${process.env.PUBLIC_URL}/assets/images/expand_more_up.png`}
       />
-      <TownRegistrationList>
-        {townData?.data[0] ? (
-          <RegisteredTown
-            selected={
-              townData?.data[0].choiceYN === 'Y' ? 'selected' : 'unSelected'
-            }
-            onClick={() => {
-              onSelectTown(townData?.data[0].neighborhoodId);
-            }}
-          >
-            {townData?.data[0].neighborhoodName}
-            <img
-              role="button"
-              onKeyDown={() => {}}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (townData?.count === '1') {
-                  if (
-                    // eslint-disable-next-line no-restricted-globals, no-alert
-                    confirm(`동네는 최소 한 곳 이상 등록되어 있어야 합니다.
+
+      {userData ? (
+        <TownRegistrationList>
+          {townData?.data[0] ? (
+            <RegisteredTown
+              selected={
+                townData.data[0].choiceYN === 'Y' ? 'selected' : 'unSelected'
+              }
+              onClick={() => {
+                onSelectTown(townData.data[0].neighborhoodId);
+              }}
+            >
+              {townData.data[0].neighborhoodName}
+              <img
+                role="button"
+                onKeyDown={() => {}}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (townData.count === '1') {
+                    if (
+                      // eslint-disable-next-line no-restricted-globals, no-alert
+                      confirm(`동네는 최소 한 곳 이상 등록되어 있어야 합니다.
 동네를 변경하시겠습니까?`)
-                  ) {
+                    ) {
+                      onDeleteTown(townData.data[0].neighborhoodId);
+                      setTempTown(townData.data[0].neighborhoodName);
+                      navigate('/town');
+                    }
+                  } else {
                     onDeleteTown(townData?.data[0].neighborhoodId);
-                    navigate('/town');
+                    onSelectTown(townData?.data[1].neighborhoodId);
                   }
-                } else {
-                  onDeleteTown(townData?.data[0].neighborhoodId);
-                  onSelectTown(townData?.data[1].neighborhoodId);
-                }
-              }}
-              tabIndex={0}
-              alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
-            />
-          </RegisteredTown>
-        ) : (
-          <UnRegisteredTown onClick={onClickToAddTown}>
-            <img
-              alt="search_add"
-              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
-            />
-          </UnRegisteredTown>
-        )}
-        {townData?.data[1] ? (
-          <RegisteredTown
-            selected={
-              townData?.data[1].choiceYN === 'Y' ? 'selected' : 'unSelected'
-            }
-            onClick={() => {
-              onSelectTown(townData?.data[1].neighborhoodId);
-            }}
-          >
-            {townData?.data[1].neighborhoodName}
-            <img
-              role="button"
-              onKeyDown={() => {}}
-              tabIndex={0}
-              onClick={(e) => {
-                onDeleteTown(townData?.data[1].neighborhoodId);
-                e.stopPropagation();
-                if (townData?.data[1].choiceYN !== 'Y') {
-                  return;
-                }
-                onSelectTown(townData?.data[0].neighborhoodId);
-              }}
-              alt="search_cancel"
-              src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
-            />
-          </RegisteredTown>
-        ) : (
-          <UnRegisteredTown onClick={onClickToAddTown}>
-            <img
-              alt="search_add"
-              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
-            />
-          </UnRegisteredTown>
-        )}
-        {townData?.data[2] ? (
-          <RegisteredTown
-            selected={
-              townData?.data[2].choiceYN === 'Y' ? 'selected' : 'unSelected'
-            }
-            onClick={() => {
-              onSelectTown(townData?.data[2].neighborhoodId);
-            }}
-          >
-            {townData?.data[2].neighborhoodName}
-            <img
-              role="button"
-              onKeyDown={() => {}}
-              tabIndex={0}
-              onClick={(e) => {
-                onDeleteTown(townData?.data[2].neighborhoodId);
-                e.stopPropagation();
-                if (townData?.data[2].choiceYN !== 'Y') {
-                  return;
-                }
+                }}
+                tabIndex={0}
+                alt="search_cancel"
+                src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
+              />
+            </RegisteredTown>
+          ) : (
+            <UnRegisteredTown onClick={onClickToAddTown}>
+              <img
+                alt="search_add"
+                src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
+              />
+            </UnRegisteredTown>
+          )}
+          {townData?.data[1] ? (
+            <RegisteredTown
+              selected={
+                townData?.data[1].choiceYN === 'Y' ? 'selected' : 'unSelected'
+              }
+              onClick={() => {
                 onSelectTown(townData?.data[1].neighborhoodId);
               }}
+            >
+              {townData?.data[1].neighborhoodName}
+              <img
+                role="button"
+                onKeyDown={() => {}}
+                tabIndex={0}
+                onClick={(e) => {
+                  onDeleteTown(townData?.data[1].neighborhoodId);
+                  e.stopPropagation();
+                  if (townData?.data[1].choiceYN !== 'Y') {
+                    return;
+                  }
+                  onSelectTown(townData?.data[0].neighborhoodId);
+                }}
+                alt="search_cancel"
+                src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
+              />
+            </RegisteredTown>
+          ) : (
+            <UnRegisteredTown
+              onClick={userData ? onClickToAddTown : onClickToLoginPage}
+            >
+              <img
+                alt="search_add"
+                src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
+              />
+            </UnRegisteredTown>
+          )}
+          {townData?.data[2] ? (
+            <RegisteredTown
+              selected={
+                townData?.data[2].choiceYN === 'Y' ? 'selected' : 'unSelected'
+              }
+              onClick={() => {
+                onSelectTown(townData?.data[2].neighborhoodId);
+              }}
+            >
+              {townData?.data[2].neighborhoodName}
+              <img
+                role="button"
+                onKeyDown={() => {}}
+                tabIndex={0}
+                onClick={(e) => {
+                  onDeleteTown(townData?.data[2].neighborhoodId);
+                  e.stopPropagation();
+                  if (townData?.data[2].choiceYN !== 'Y') {
+                    return;
+                  }
+                  onSelectTown(townData?.data[1].neighborhoodId);
+                }}
+                alt="search_cancel"
+                src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
+              />
+            </RegisteredTown>
+          ) : (
+            <UnRegisteredTown
+              onClick={userData ? onClickToAddTown : onClickToLoginPage}
+            >
+              <img
+                alt="search_add"
+                src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
+              />
+            </UnRegisteredTown>
+          )}
+        </TownRegistrationList>
+      ) : (
+        <TownRegistrationList>
+          <RegisteredTown selected="selected" onClick={onClickToAddTown}>
+            <img
+              role="button"
+              onKeyDown={() => {}}
+              tabIndex={0}
               alt="search_cancel"
               src={`${process.env.PUBLIC_URL}/assets/images/cancel.png`}
             />
+            {nonMemberTown}
           </RegisteredTown>
-        ) : (
-          <UnRegisteredTown onClick={onClickToAddTown}>
+          <UnRegisteredTown onClick={onClickToLoginPage}>
             <img
               alt="search_add"
               src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
             />
           </UnRegisteredTown>
-        )}
-      </TownRegistrationList>
+          <UnRegisteredTown onClick={onClickToLoginPage}>
+            <img
+              alt="search_add"
+              src={`${process.env.PUBLIC_URL}/assets/images/black_add.png`}
+            />
+          </UnRegisteredTown>
+        </TownRegistrationList>
+      )}
 
       <TownRegistrationButton onClick={onClickToMain}>
         확인

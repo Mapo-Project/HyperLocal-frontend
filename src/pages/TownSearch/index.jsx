@@ -28,7 +28,12 @@ const TownList = [
   { townId: 9, townValue: '서교동', townName: '마포구 서교동' },
   { townId: 10, townValue: '상암동', townName: '마포구 상암동' },
 ];
-function TownSearch() {
+function TownSearch({ setNonMemberTown, tempTown, setTempTown }) {
+  const { data: userData } = useSWR(
+    `${BACKEND_URL}/user/profile/select`,
+    fetcherAccessToken,
+  );
+
   const { data: townData, mutate: townMutate } = useSWR(
     `${BACKEND_URL}/user/neighborhood/select`,
     fetcherAccessToken,
@@ -83,16 +88,22 @@ function TownSearch() {
     [navigate, townData, townMutate],
   );
 
+  // 비회원 동네설정
+  const onSelectNonMemberRegistTown = useCallback(
+    (curtown) => {
+      setNonMemberTown(curtown);
+      sessionStorage.setItem('nonMemberTown', curtown);
+      navigate('/town/regist');
+    },
+    [setNonMemberTown, navigate],
+  );
+
   // 동네 3개까지 선택가능 url로 접근하려하면 막는다.
   if (townData?.count === '3') {
     navigate('/town/regist', { replace: true });
   }
-  if (!townData) {
+  if (townData === undefined) {
     return <div>동네 데이터 받아오는중</div>;
-  }
-  // 소셜로그인 안하면 url로 접근 시 리다이렉트
-  if (!localStorage?.verify) {
-    navigate('/login', { replace: true });
   }
 
   return (
@@ -103,6 +114,10 @@ function TownSearch() {
         role="button"
         onKeyDown={() => {}}
         onClick={() => {
+          if (tempTown) {
+            onSelectRegistTown(tempTown);
+            setTempTown('');
+          }
           navigate('/town/regist');
         }}
         tabIndex={0}
@@ -152,7 +167,9 @@ function TownSearch() {
             }).map((townVal) => (
               <TownItem
                 onClick={() => {
-                  onSelectRegistTown(townVal.townValue);
+                  userData
+                    ? onSelectRegistTown(townVal.townValue)
+                    : onSelectNonMemberRegistTown(townVal.townValue);
                 }}
                 key={townVal.townId}
               >

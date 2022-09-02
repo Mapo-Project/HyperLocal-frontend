@@ -6,6 +6,7 @@ import fetcherAccessToken from '../../../../utils/fetcherAccessToken';
 import {
   FindTownWrapper,
   Label,
+  ModalCover,
   Option,
   SelectOptions,
   SelectWrapper,
@@ -13,7 +14,7 @@ import {
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function SelectBox({ onSelectAdditionalTown }) {
+function SelectBox({ onSelectAdditionalTown, nonMemberTown }) {
   const [isShowOptions, setShowOptions] = useState(false);
 
   const { data: townData, mutate: townMutate } = useSWR(
@@ -46,21 +47,22 @@ function SelectBox({ onSelectAdditionalTown }) {
         {townData?.data?.length
           ? townData?.data.filter((towns) => towns.choiceYN === 'Y')[0]
               ?.neighborhoodName
-          : '성산동'}
+          : nonMemberTown}
       </Label>
+      <ModalCover show={isShowOptions} />
       <SelectOptions show={isShowOptions}>
         {!townData ? (
-          <Option key="성산동" value="성산동">
-            성산동
+          <Option key={nonMemberTown} value={nonMemberTown}>
+            {nonMemberTown}
           </Option>
         ) : (
           townData?.data.map((option, idx) => (
             <Option
               key={idx}
               onClick={(e) => {
-                e.stopPropagation();
                 onSelectTown(option.neighborhoodId);
                 setShowOptions((prev) => !prev);
+                e.stopPropagation();
               }}
             >
               {option.neighborhoodName}
@@ -86,12 +88,15 @@ const FindTown = React.memo(function FindTown({
   onClickToLoginPage,
   userData,
   onClickToMyPage,
-
   onSelectAdditionalTown,
+  nonMemberTown,
 }) {
   return (
     <FindTownWrapper>
-      <SelectBox onSelectAdditionalTown={onSelectAdditionalTown} />
+      <SelectBox
+        onSelectAdditionalTown={onSelectAdditionalTown}
+        nonMemberTown={nonMemberTown}
+      />
       <div className="FindTown_search_container">
         <img
           className="FindTown_search"

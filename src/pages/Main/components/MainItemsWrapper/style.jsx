@@ -166,7 +166,6 @@ export const MainItemsContainer = styled.div`
       width: 20px;
       margin-left: 16px;
       margin-right: 4px;
-      cursor: pointer;
     }
 
     span {
