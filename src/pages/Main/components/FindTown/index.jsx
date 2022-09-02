@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import useSWR from 'swr';
+import axiosInstance from '../../../../utils/axiosConfig';
 import fetcherAccessToken from '../../../../utils/fetcherAccessToken';
 
 import {
@@ -12,22 +12,18 @@ import {
   SelectWrapper,
 } from './style';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 function SelectBox({ onSelectAdditionalTown, nonMemberTown }) {
   const [isShowOptions, setShowOptions] = useState(false);
 
   const { data: townData, mutate: townMutate } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
   );
 
   const onSelectTown = useCallback(
     (id) => {
-      axios
-        .post(`${BACKEND_URL}/user/neighborhood/choice/${id}`, null, {
-          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
-        })
+      axiosInstance
+        .post(`/user/neighborhood/choice/${id}`, null)
         .then((res) => {
           console.log(res.data.data);
           townMutate();

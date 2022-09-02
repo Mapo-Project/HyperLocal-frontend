@@ -15,6 +15,7 @@ import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
 import CategorySearch from './pages/Main/components/TagSearch';
 import Chat from './pages/Chat';
+import Test from './pages/Test';
 
 // 비회원의 초기 동네 설정
 
@@ -83,6 +84,7 @@ function App() {
                 nonMemberTown={nonMemberTown}
                 setNonMemberTown={setNonMemberTown}
                 tempTown={tempTown}
+                setTempTown={setTempTown}
               />
             }
           />
@@ -109,6 +111,7 @@ function App() {
             path="/detail/:currentItemId"
             element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
           />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </>

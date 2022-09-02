@@ -31,17 +31,12 @@ const radioBoxList = [
   { label: '물물교환', value: 'exchange', checked: false },
 ];
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 function Create({ setMaindata, dataId }) {
   // 유저데이터
 
-  const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
-    fetcherAccessToken,
-  );
+  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
   const { data: townData } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
   );
 

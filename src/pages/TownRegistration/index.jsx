@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
 import useSWR from 'swr';
 import {
   RegisteredTown,
@@ -10,8 +9,7 @@ import {
   UnRegisteredTown,
 } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import axiosInstance from '../../utils/axiosConfig';
 
 function TownRegistration({ nonMemberTown, setTempTown }) {
   const navigate = useNavigate();
@@ -26,13 +24,10 @@ function TownRegistration({ nonMemberTown, setTempTown }) {
   const onClickToLoginPage = useCallback(() => {
     navigate('/login');
   }, [navigate]);
-  const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
-    fetcherAccessToken,
-  );
+  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
 
   const { data: townData, mutate: townMutate } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
   );
 
@@ -40,10 +35,8 @@ function TownRegistration({ nonMemberTown, setTempTown }) {
 
   const onSelectTown = useCallback(
     (id) => {
-      axios
-        .post(`${BACKEND_URL}/user/neighborhood/choice/${id}`, null, {
-          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
-        })
+      axiosInstance
+        .post(`/user/neighborhood/choice/${id}`, null)
         .then((res) => {
           console.log(res.data.data);
 
@@ -56,10 +49,8 @@ function TownRegistration({ nonMemberTown, setTempTown }) {
 
   const onDeleteTown = useCallback(
     (id) => {
-      axios
-        .delete(`${BACKEND_URL}/user/neighborhood/${id}`, {
-          headers: { Authorization: `Bearer ${localStorage.accessToken}` },
-        })
+      axiosInstance
+        .delete(`/user/neighborhood/${id}`)
         .then((res) => {
           console.log(res);
           townMutate();
