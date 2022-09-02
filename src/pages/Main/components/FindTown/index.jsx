@@ -61,6 +61,7 @@ function SelectBox({ onSelectAdditionalTown }) {
               key={idx}
               onClick={(e) => {
                 onSelectTown(option.neighborhoodId);
+                setShowOptions((prev) => !prev);
                 e.stopPropagation();
               }}
             >
