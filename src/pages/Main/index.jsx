@@ -14,7 +14,7 @@ import MainItems from './components/MainItemsWrapper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-function Main({ mainData, onClickHeart }) {
+function Main({ mainData }) {
   const { data: userData } = useSWR(
     `${BACKEND_URL}/user/profile/select`,
     fetcherAccessToken,
@@ -151,7 +151,6 @@ function Main({ mainData, onClickHeart }) {
               <MainItems
                 key={data.itemId}
                 {...data}
-                onClickHeart={onClickHeart}
                 onClickToDetailPage={onClickToDetailPage}
               />
             ))}

@@ -25,7 +25,6 @@ const MainItems = React.memo(function MainItems({
   itemsHeartCount, // 해야함
   itemsDeadline, //
   isHeartEmpty, // 해야함
-  onClickHeart, // 해야함
   onClickToDetailPage,
   itemsHomemade,
   itemUserName,
@@ -113,9 +112,6 @@ const MainItems = React.memo(function MainItems({
           role="button"
           onKeyDown={() => {}}
           tabIndex={itemId}
-          onClick={() => {
-            onClickHeart(itemId);
-          }}
           className="items_heart"
           src={
             isHeartEmpty
