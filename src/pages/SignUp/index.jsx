@@ -80,6 +80,8 @@ const PhoneInput = React.memo(function PhoneInput({
   isWrongPhone,
   phoneNumCheck,
 }) {
+  const [PhoneErrorMessage, setPhoneErrorMessage] = useState(false);
+
   return (
     <InputWrapper>
       <Label>
@@ -95,19 +97,29 @@ const PhoneInput = React.memo(function PhoneInput({
             onChangePhoneNum(e);
           }}
           value={phoneNum}
-          onKeyUp={isWrongPhone}
+          onBlur={() => {
+            setPhoneErrorMessage(true);
+            isWrongPhone();
+          }}
+          onFocus={() => {
+            setPhoneErrorMessage(false);
+          }}
           maxLength="13"
         />
       </Label>
 
       <Error>
         {/* 전화번호가 있고, 전화번호가 유효하지 않을때 출력 */}
-        {phoneNum && !phoneNumCheck ? '유효하지 않은 전화번호입니다.' : ''}
+        {PhoneErrorMessage && !phoneNumCheck
+          ? '유효하지 않은 전화번호입니다.'
+          : ''}
       </Error>
+
       <ErrorChecker
         draggable="false"
         src={
-          phoneNumCheck
+          // 전화번호가 있고, 전화번호가 유효하면 체크
+          phoneNum && phoneNumCheck
             ? `${process.env.PUBLIC_URL}/assets/images/input_check.png`
             : `${process.env.PUBLIC_URL}/assets/images/input_uncheck.png`
         }
@@ -121,6 +133,7 @@ const EmailInput = React.memo(function EmailInput({
   isWrongEmail,
   EmailCheck,
 }) {
+  const [EmailErrorMessage, setEmailErrorMessage] = useState(false);
   return (
     <InputWrapper>
       <Label>
@@ -132,13 +145,21 @@ const EmailInput = React.memo(function EmailInput({
           placeholder="E-mail"
           onChange={onChangeEmail}
           value={email}
-          onKeyUp={isWrongEmail}
+          onBlur={() => {
+            setEmailErrorMessage(true);
+            isWrongEmail();
+          }}
+          onFocus={() => {
+            setEmailErrorMessage(false);
+          }}
         />
       </Label>
+
       <Error>
         {/* 이메일이 있고 이메일이 유효하지 않을때 출력 */}
-        {email && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
+        {EmailErrorMessage && !EmailCheck ? '사용할 수 없는 이메일입니다.' : ''}
       </Error>
+
       <ErrorChecker
         draggable="false"
         src={
