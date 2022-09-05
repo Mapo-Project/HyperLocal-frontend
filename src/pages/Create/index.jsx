@@ -34,10 +34,15 @@ const radioBoxList = [
 function Create({ setMaindata, dataId }) {
   // 유저데이터
 
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
   const { data: townData } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   // 사진

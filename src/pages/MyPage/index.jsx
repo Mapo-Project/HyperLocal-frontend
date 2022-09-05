@@ -18,11 +18,13 @@ function MyPage() {
   const { data: userData, mutate: userMutate } = useSWR(
     `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const { data: townData } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
   const [logout, setLogout] = useState(true);
 

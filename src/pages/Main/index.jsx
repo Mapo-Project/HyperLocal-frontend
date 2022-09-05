@@ -13,11 +13,16 @@ import MainItems from './components/MainItemsWrapper';
 import axiosInstance from '../../utils/axiosConfig';
 
 function Main({ mainData, nonMemberTown }) {
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
 
   const { data: townData, mutate: townMutate } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const navigate = useNavigate();

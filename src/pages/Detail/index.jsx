@@ -16,7 +16,11 @@ function Detail({ mainData, onClickHeart }) {
 
   // 유저데이터
 
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
 
   const selectedData = mainData.filter(
     (data) => data.itemId === currentItemId * 1,

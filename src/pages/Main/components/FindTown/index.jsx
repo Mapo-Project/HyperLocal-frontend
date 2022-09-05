@@ -18,6 +18,7 @@ function SelectBox({ onSelectAdditionalTown, nonMemberTown }) {
   const { data: townData, mutate: townMutate } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const onSelectTown = useCallback(

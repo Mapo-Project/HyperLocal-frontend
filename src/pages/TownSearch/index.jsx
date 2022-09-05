@@ -27,11 +27,16 @@ const TownList = [
   { townId: 10, townValue: '상암동', townName: '마포구 상암동' },
 ];
 function TownSearch({ setNonMemberTown, tempTown, setTempTown }) {
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
 
   const { data: townData, mutate: townMutate } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const [isTownSearch, setIsTownSearch] = useState(false);

@@ -9,7 +9,11 @@ import { changeDate } from '../../utils/changeFormat';
 import Footer from '../../layout/Footer';
 
 function Interesting({ mainData }) {
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
 
   const interestingDate = mainData.filter((data) => data.isHeartEmpty);
 

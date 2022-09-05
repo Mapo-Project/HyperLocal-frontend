@@ -24,11 +24,16 @@ function TownRegistration({ nonMemberTown, setTempTown }) {
   const onClickToLoginPage = useCallback(() => {
     navigate('/login');
   }, [navigate]);
-  const { data: userData } = useSWR(`/user/profile/select`, fetcherAccessToken);
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
 
   const { data: townData, mutate: townMutate } = useSWR(
     `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   useEffect(() => console.log(townData), [townData]);
