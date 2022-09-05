@@ -3,7 +3,6 @@ import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
 
-import axios from 'axios';
 import { MainPageContainer, MainScrollbars, MainShowNoData } from './style';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
@@ -11,18 +10,19 @@ import FindTown from './components/FindTown';
 import MainButton from './components/MainButton';
 import Footer from '../../layout/Footer';
 import MainItems from './components/MainItemsWrapper';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import axiosInstance from '../../utils/axiosConfig';
 
 function Main({ mainData, nonMemberTown }) {
   const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const { data: townData, mutate: townMutate } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const navigate = useNavigate();
@@ -30,16 +30,8 @@ function Main({ mainData, nonMemberTown }) {
   // 동네 기본값이 성산동(nonMemberTown)
   useEffect(() => {
     if (townData?.count === '0') {
-      axios
-        .post(
-          `${BACKEND_URL}/user/neighborhood/registration/${nonMemberTown}`,
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.accessToken}`,
-            },
-          },
-        )
+      axiosInstance
+        .post(`/user/neighborhood/registration/${nonMemberTown}`, null)
 
         .then((res) => {
           console.log(res.data);

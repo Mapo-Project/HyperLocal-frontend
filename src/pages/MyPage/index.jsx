@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
-
 import useSWR from 'swr';
 
-import axios from 'axios';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import axiosInstance from '../../utils/axiosConfig';
+
 import {
   MyPageMainContainer,
   MyPageProfileBox,
@@ -13,18 +13,18 @@ import {
 } from './style';
 import Footer from '../../layout/Footer';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 function MyPage() {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const { data: townData } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
   const [logout, setLogout] = useState(true);
 
@@ -34,12 +34,8 @@ function MyPage() {
    */
   const Logout = useCallback(() => {
     setLogout(false);
-    axios
-      .get(`${BACKEND_URL}/user/logout`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.accessToken}`,
-        },
-      })
+    axiosInstance
+      .get(`/user/logout`)
       .then((response) => {
         console.log(response.data);
         // setLogout(true);
@@ -58,12 +54,8 @@ function MyPage() {
    * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const withdrawal = useCallback(() => {
-    axios
-      .delete(`${BACKEND_URL}/user/withdrawal`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.accessToken}`,
-        },
-      })
+    axiosInstance
+      .delete(`/user/withdrawal`)
       .then((response) => {
         console.log(response);
         // 탈퇴 후 로컬스토리지 비우고 swr데이터들을 초기화한다.

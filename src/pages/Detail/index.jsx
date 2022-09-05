@@ -11,16 +11,15 @@ import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import DetailHeader from './components/DetailHeader';
 import DetailContent from './components/DetailContent';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 function Detail({ mainData, onClickHeart }) {
   const { currentItemId } = useParams();
 
   // 유저데이터
 
   const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const selectedData = mainData.filter(

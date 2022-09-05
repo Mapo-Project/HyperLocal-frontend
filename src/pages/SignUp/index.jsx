@@ -17,6 +17,7 @@ import {
   SignupForm,
 } from './style';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import axiosInstance from '../../utils/axiosConfig';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -181,7 +182,7 @@ function SignUp() {
   // const { data: userAccessData } = useSWR('localStorage', getAccessData);
 
   const { data: userData, mutate: userMutate } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
   );
 
@@ -297,20 +298,12 @@ function SignUp() {
   const onSubmitSignUp = useCallback(
     (e) => {
       e.preventDefault();
-      axios
-        .post(
-          `${BACKEND_URL}/user/profile/add`,
-          {
-            nickname,
-            phoneNum,
-            email,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.accessToken}`,
-            },
-          },
-        )
+      axiosInstance
+        .post(`/user/profile/add`, {
+          nickname,
+          phoneNum,
+          email,
+        })
         .then((response) => {
           console.log(response);
           // setJoinError(response.data.message);

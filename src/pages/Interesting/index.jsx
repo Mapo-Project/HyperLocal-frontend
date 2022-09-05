@@ -8,12 +8,11 @@ import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import { changeDate } from '../../utils/changeFormat';
 import Footer from '../../layout/Footer';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 function Interesting({ mainData }) {
   const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const interestingDate = mainData.filter((data) => data.isHeartEmpty);

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Scrollbars from 'react-custom-scrollbars-2';
@@ -13,8 +12,7 @@ import {
   TownSearchInput,
   TownSearchWrapper,
 } from './style';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import axiosInstance from '../../utils/axiosConfig';
 
 const TownList = [
   { townId: 1, townValue: '성산동', townName: '마포구 성산동' },
@@ -30,13 +28,15 @@ const TownList = [
 ];
 function TownSearch({ setNonMemberTown, tempTown, setTempTown }) {
   const { data: userData } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const { data: townData, mutate: townMutate } = useSWR(
-    `${BACKEND_URL}/user/neighborhood/select`,
+    `/user/neighborhood/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
   const [isTownSearch, setIsTownSearch] = useState(false);
@@ -65,12 +65,8 @@ function TownSearch({ setNonMemberTown, tempTown, setTempTown }) {
       }
 
       // 2번째 인자로 null 안 넣으면 header에 인증 안됨.
-      axios
-        .post(`${BACKEND_URL}/user/neighborhood/registration/${value}`, null, {
-          headers: {
-            Authorization: `Bearer ${localStorage.accessToken}`,
-          },
-        })
+      axiosInstance
+        .post(`/user/neighborhood/registration/${value}`, null)
 
         .then((res) => {
           console.log(res.data);
