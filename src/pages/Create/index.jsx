@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import loadable from '@loadable/component';
+import React, { useCallback, useState, useEffect, lazy, Suspense } from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
@@ -22,10 +21,10 @@ import {
   SelectPaticipant,
   SelectPhoto,
 } from './components';
+import SelectCategory from './components/SelectCategory';
 
 // modal code spliting
-const SelectDate = loadable(() => import('./components/SelectDate'));
-const SelectCategory = loadable(() => import('./components/SelectCategory'));
+const SelectDate = lazy(() => import('./components/SelectDate'));
 
 const radioBoxList = [
   { label: '같이 정해요', value: 'together', checked: false },
@@ -224,12 +223,14 @@ function Create({ setMaindata, dataId }) {
             participant={participant}
             setParticipant={setParticipant}
           />
-          <SelectDate
-            dueDate={dueDate}
-            setDueDate={setDueDate}
-            isCalenderOpen={isCalenderOpen}
-            setIsCalenderOpen={setIsCalenderOpen}
-          />
+          <Suspense>
+            <SelectDate
+              dueDate={dueDate}
+              setDueDate={setDueDate}
+              isCalenderOpen={isCalenderOpen}
+              setIsCalenderOpen={setIsCalenderOpen}
+            />
+          </Suspense>
 
           {title &&
           text &&
