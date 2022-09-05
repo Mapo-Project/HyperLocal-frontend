@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback } from 'react';
-
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
 
