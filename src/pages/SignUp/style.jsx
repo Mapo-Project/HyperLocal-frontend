@@ -65,7 +65,6 @@ export const Input = styled.input`
   border-radius: 4px 4px 0px 0px;
 
   border: 0;
-  border-bottom: 1px solid black;
   ::placeholder,
   ::-webkit-input-placeholder {
     color: #9e9e9e;

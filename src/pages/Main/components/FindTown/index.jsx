@@ -86,6 +86,7 @@ const FindTown = React.memo(function FindTown({
   userData,
   onClickToMyPage,
   onSelectAdditionalTown,
+  onClickToCategorySearchPage,
   nonMemberTown,
 }) {
   return (
@@ -102,7 +103,7 @@ const FindTown = React.memo(function FindTown({
           role="button"
           onKeyDown={() => {}}
           tabIndex={0}
-          // onClick={onClickToCategorySearchPage}
+          onClick={onClickToCategorySearchPage}
         />
         {!userData ? (
           <span

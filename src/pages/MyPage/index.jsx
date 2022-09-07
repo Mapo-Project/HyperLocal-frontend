@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import useSWR from 'swr';
 
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
@@ -26,14 +26,14 @@ function MyPage() {
     fetcherAccessToken,
     { dedupingInterval: 500 },
   );
-  const [logout, setLogout] = useState(true);
+  // const [logout, setLogout] = useState(true);
 
   /**
    * 로그아웃
    * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const Logout = useCallback(() => {
-    setLogout(false);
+    // setLogout(false);
     axiosInstance
       .get(`/user/logout`)
       .then((response) => {
@@ -47,7 +47,7 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [setLogout, userMutate]);
+  }, [userMutate]);
 
   /**
    * 회원탈퇴
@@ -118,10 +118,10 @@ function MyPage() {
         로그아웃
       </button>
 
-      <h2>---------- 개발용 ---------</h2>
+      {/* <h2>---------- 개발용 ---------</h2>
       <h2>email : {userData ? userData.data.email : '-'}</h2>
       <h2>전화번호 : {userData ? userData.data.phoneNum : '-'}</h2>
-      {logout ? <h2>로그인 중</h2> : <h2>로그인해라</h2>}
+      {logout ? <h2>로그인 중</h2> : <h2>로그인해라</h2>} */}
 
       <button style={{ marginLeft: '28px' }} type="submit" onClick={withdrawal}>
         회원탈퇴
