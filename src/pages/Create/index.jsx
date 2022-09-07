@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import loadable from '@loadable/component';
+
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useNavigate } from 'react-router';
 import useSWR from 'swr';
@@ -19,13 +19,11 @@ import {
   HeaderText,
   LinkText,
   Price,
+  SelectCategory,
+  SelectDate,
   SelectPaticipant,
   SelectPhoto,
 } from './components';
-
-// modal code spliting
-const SelectDate = loadable(() => import('./components/SelectDate'));
-const SelectCategory = loadable(() => import('./components/SelectCategory'));
 
 const radioBoxList = [
   { label: '같이 정해요', value: 'together', checked: false },
@@ -75,7 +73,6 @@ function Create({ setMaindata, dataId }) {
   const [radioValue, setradioValue] = useState(radioBoxList);
 
   // console.log(radioValue);
-
   // 캘린더
   const [dueDate, setDueDate] = useState(null);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);

@@ -1,56 +1,24 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import React, { useCallback, useRef, useState } from 'react';
-import loadable from '@loadable/component';
 
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import TownRegistration from './pages/TownRegistration';
 import ResetStyle from './utils/ResetStyle';
+import SocialLoginCallback from './pages/SocialLoginCallback';
+import Main from './pages/Main';
+import Create from './pages/Create';
+import Interesting from './pages/Interesting';
+import Detail from './pages/Detail';
+import TownSearch from './pages/TownSearch';
+import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
-
-// code spliting
-const Login = loadable(() => import('./pages/Login'), {
-  fallback: <div>로딩중...</div>,
-});
-const SignUp = loadable(() => import('./pages/SignUp'), {
-  fallback: <div>로딩중...</div>,
-});
-const TownRegistration = loadable(() => import('./pages/TownRegistration'), {
-  fallback: <div>로딩중...</div>,
-});
-const SocialLoginCallback = loadable(
-  () => import('./pages/SocialLoginCallback'),
-  {
-    fallback: <div>로딩중...</div>,
-  },
-);
-const Main = loadable(() => import('./pages/Main'), {
-  fallback: <div>로딩중...</div>,
-});
-const Create = loadable(() => import('./pages/Create'), {
-  fallback: <div>로딩중...</div>,
-});
-const Interesting = loadable(() => import('./pages/Interesting'), {
-  fallback: <div>로딩중...</div>,
-});
-const Detail = loadable(() => import('./pages/Detail'), {
-  fallback: <div>로딩중...</div>,
-});
-const TownSearch = loadable(() => import('./pages/TownSearch'), {
-  fallback: <div>로딩중...</div>,
-});
-const MyPage = loadable(() => import('./pages/MyPage'), {
-  fallback: <div>로딩중...</div>,
-});
-const Chat = loadable(() => import('./pages/Chat'), {
-  fallback: <div>로딩중...</div>,
-});
-const Test = loadable(() => import('./pages/Test'), {
-  fallback: <div>로딩중...</div>,
-});
-const CategorySearch = loadable(
-  () => import('./pages/Main/components/TagSearch'),
-  { fallback: <div>로딩중...</div> },
-);
+import CategorySearch from './pages/Main/components/TagSearch';
+import Chat from './pages/Chat';
+import Test from './pages/Test';
 
 // 비회원의 초기 동네 설정
+
 if (!sessionStorage.nonMemberTown) {
   sessionStorage.setItem('nonMemberTown', '성산동');
 }
