@@ -1,12 +1,10 @@
 import React from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { getDate } from 'date-fns';
-import { changeTagFormat } from '../../../../utils/changeFormat';
 import { DetailContentWrapper } from './style';
 
 const DetailContent = React.memo(function DetailContent({
   itemsTag,
-
   itemsHeadText,
   itemsText,
   itemsLink,
@@ -17,20 +15,19 @@ const DetailContent = React.memo(function DetailContent({
   itemUserImg,
   itemUserName,
   itemsTownLocation,
-  changeDate,
   itemsLimitParticipants,
-  itemsCurrentParticipants,
-  itemsHomemade,
 }) {
   return (
     <Scrollbars autoHide style={{ height: '530px' }}>
       <DetailContentWrapper>
         <div className="item_tag_wrapper">
-          {changeTagFormat(itemsTag, itemsHomemade).map((tag, idx) => (
+          <div className="item_tag">{itemsTag}</div>
+
+          {/* {changeTagFormat(itemsTag, itemsHomemade).map((tag, idx) => (
             <div key={idx} className="item_tag">
               {tag}
             </div>
-          ))}
+          ))} */}
         </div>
 
         <h1 className="item_title">{itemsHeadText}</h1>
@@ -77,7 +74,7 @@ const DetailContent = React.memo(function DetailContent({
           />
           <p>
             {`${itemsLimitParticipants} / 
-        ${itemsCurrentParticipants}명 참여중`}
+        ${'1'}명 참여중`}
           </p>
         </div>
         <div className="item_duedate_wrapper wrapper">
@@ -85,7 +82,7 @@ const DetailContent = React.memo(function DetailContent({
             alt="duedate"
             src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
           />
-          <p>{changeDate(itemsDeadline)}</p>
+          <p>{itemsDeadline}</p>
         </div>
         <div className="item_user_wrapper">
           {itemUserImg ? (

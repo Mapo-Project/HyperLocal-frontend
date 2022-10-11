@@ -32,7 +32,7 @@ import axiosInstance from '../../utils/axiosConfig';
 //   { label: '물물교환', value: 'exchange', checked: false },
 // ];
 
-function Create({ dataId }) {
+function Create() {
   // 유저데이터
 
   const { data: userData } = useSWR(
@@ -141,7 +141,6 @@ function Create({ dataId }) {
           .catch((error) => console.log(error));
 
         console.log({
-          dataId,
           img,
           title,
           text,
@@ -159,7 +158,7 @@ function Create({ dataId }) {
     },
     [
       navigate,
-      dataId,
+
       img,
       title,
       text,

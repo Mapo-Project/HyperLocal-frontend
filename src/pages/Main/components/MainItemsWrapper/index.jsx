@@ -1,5 +1,5 @@
 import React from 'react';
-import { changeDate, changeTagFormat } from '../../../../utils/changeFormat';
+import { changeTagFormat } from '../../../../utils/changeFormat';
 import { MainItemsContainer } from './style';
 
 // 하트 변경되지 않으면 리렌더링 되지 않게
@@ -14,30 +14,21 @@ function areEqual(prevProps, nextProps) {
 }
 
 const MainItems = React.memo(function MainItems({
-  itemId, //
-  itemsTag, //
-  itemsImg, //
-  itemsHeadText, //
-  itemsTownLocation, //
-  itemsLimitParticipants, //
-  itemsCurrentParticipants, // 처음에 0
-  itemsPrice, //
-  itemsHeartCount, // 해야함
-  itemsDeadline, //
-  isHeartEmpty, // 해야함
+  noticeId, //
+  townData,
+  category,
+  title,
+  deadline,
+  noticeImg,
+  personnel,
+  price,
   onClickToDetailPage,
-  itemsHomemade,
-  itemUserName,
 }) {
   return (
     <MainItemsContainer>
       <div className="items_header">
         <div className="items_tag_wrapper">
-          {changeTagFormat(itemsTag, itemsHomemade).map((tag, idx) => (
-            <div key={idx} className="items_tag">
-              {tag}
-            </div>
-          ))}
+          <div className="items_tag">{changeTagFormat(category)}</div>
         </div>
         <img
           className="items_detail"
@@ -51,15 +42,11 @@ const MainItems = React.memo(function MainItems({
         onKeyDown={() => {}}
         tabIndex={0}
         onClick={() => {
-          onClickToDetailPage(itemId);
+          onClickToDetailPage(noticeId);
         }}
       >
         <div className="items_text_wrapper">
-          <h1>
-            {itemsHeadText.length > 30
-              ? `${itemsHeadText.slice(0, 30)}...`
-              : itemsHeadText}
-          </h1>
+          <h1>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</h1>
           <div className="items_main">
             {/* <div className="items_price">₩ {itemsPrice} / </div> */}
             <div className="items_price">
@@ -67,38 +54,26 @@ const MainItems = React.memo(function MainItems({
                 src={`${process.env.PUBLIC_URL}/assets/images/price.png`}
                 alt="items_price"
               />
-              <span>{itemsPrice}</span>/
+              <span>{price}</span>/
             </div>
             <div className="items_participants">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/images/participant.png`}
                 alt="items_participants"
               />
-              <span>{itemsLimitParticipants}</span>
+              <span>{personnel}</span>
             </div>
             <div className="items_deadline">
               <img
                 src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
                 alt="items_deadline"
               />
-              {/* 더미데이터 때문에~ */}~{changeDate(itemsDeadline)}
+              ~{deadline.slice(5, 10).replace('-', '.')}
             </div>
           </div>
         </div>
         <div className="items_img_wrapper">
-          {itemsImg.length ? (
-            <img
-              // 더미데이터때문에 만들어놓음
-              src={
-                itemsImg[0] === '/'
-                  ? itemsImg
-                  : URL.createObjectURL(itemsImg[0].files)
-              }
-              alt="items_img"
-            />
-          ) : (
-            <div />
-          )}
+          {false ? <img src={noticeImg} alt="items_img" /> : <div />}
         </div>
       </div>
       <div className="items_footer">
@@ -107,22 +82,29 @@ const MainItems = React.memo(function MainItems({
           alt="chat"
           src={`${process.env.PUBLIC_URL}/assets/images/chat_bubble.png`}
         />
-        {itemsCurrentParticipants}명 참여중
+        {/* {itemsCurrentParticipants}명 참여중 */}
+        1명 참여중
         <img
           role="button"
           onKeyDown={() => {}}
-          tabIndex={itemId}
+          tabIndex={noticeId}
           className="items_heart"
           src={
-            isHeartEmpty
+            // isHeartEmpty
+            false
               ? `${process.env.PUBLIC_URL}/assets/images/full_heart.png`
               : `${process.env.PUBLIC_URL}/assets/images/empty_heart.png`
           }
           alt="heart"
         />
-        <p>{itemsHeartCount}</p>
+        <p>4</p>
+        {/* <p>{itemsHeartCount}</p> */}
         <span>
-          {itemsTownLocation} ◦ {itemUserName}
+          {
+            townData?.data.filter((towns) => towns.choiceYN === 'Y')[0]
+              .neighborhoodName
+          }{' '}
+          ◦ 유저이름
         </span>
       </div>
     </MainItemsContainer>

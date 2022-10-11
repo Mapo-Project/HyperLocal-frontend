@@ -1,13 +1,11 @@
 import React from 'react';
 import { DetailHeaderWrapper } from './style';
 
-const DetailHeader = React.memo(function DetailHeader({
-  itemsImg,
-  onClicktoMain,
-}) {
+const DetailHeader = React.memo(function DetailHeader({ onClicktoMain }) {
   return (
     <DetailHeaderWrapper>
-      {typeof itemsImg === 'string' ? (
+      <div className="detail_main_img" />
+      {/* {typeof itemsImg === 'string' ? (
         <img className="detail_main_no_img" alt="header_img" src={itemsImg} />
       ) : itemsImg.length ? (
         <img
@@ -17,8 +15,7 @@ const DetailHeader = React.memo(function DetailHeader({
         />
       ) : (
         <div className="detail_main_img" />
-      )}
-
+      )} */}
       <img
         role="button"
         onKeyDown={() => {}}
@@ -39,12 +36,12 @@ const DetailHeader = React.memo(function DetailHeader({
         src={`${process.env.PUBLIC_URL}/assets/images/more_vert.png`}
       />
       <span>
-        {/* 더미데이터면 1, 사진을 등록 안했으면 1 */}1 /{' '}
-        {typeof itemsImg === 'string'
+        {/* 더미데이터면 1, 사진을 등록 안했으면 1 */}1 / 1
+        {/* {typeof itemsImg === 'string'
           ? 1
           : itemsImg.length
           ? itemsImg.length
-          : 1}
+          : 1} */}
       </span>
       {/* 전체 너비에서 원지름 8을 나누고 8px마다 있으므로 2로 나눈다. 첫번째는 마진이므로 반내림한다. */}
       {/* <section className="circle_border">

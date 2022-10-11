@@ -12,7 +12,7 @@ import Footer from '../../layout/Footer';
 import MainItems from './components/MainItemsWrapper';
 import axiosInstance from '../../utils/axiosConfig';
 
-function Main({ mainData, nonMemberTown }) {
+function Main({ nonMemberTown }) {
   const { data: userData } = useSWR(
     `/user/profile/select`,
     fetcherAccessToken,
@@ -21,6 +21,15 @@ function Main({ mainData, nonMemberTown }) {
 
   const { data: townData, mutate: townMutate } = useSWR(
     `/user/neighborhood/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
+
+  const { data: boardData } = useSWR(
+    `/board/neighborhood/select/4/${
+      townData?.data.filter((towns) => towns.choiceYN === 'Y')[0]
+        .neighborhoodName
+    }`,
     fetcherAccessToken,
     { dedupingInterval: 500 },
   );
@@ -43,33 +52,6 @@ function Main({ mainData, nonMemberTown }) {
           return new Error(`요청이 실패했습니다.`);
         });
     }
-  });
-
-  // 상태로 두고 변경해야 하는걸까?
-  const onSortByLocation =
-    userData && townData && townData?.count !== '0'
-      ? mainData.filter((data) =>
-          data.itemsTownLocation.includes(
-            // 현재 동네
-            townData?.data
-              .filter((towns) => towns.choiceYN === 'Y')[0]
-              // 현재 동네에서 앞 세글자
-              ?.neighborhoodName.slice(0, 3)
-              .includes('동')
-              ? townData?.data
-                  .filter((towns) => towns.choiceYN === 'Y')[0]
-                  ?.neighborhoodName.slice(0, 2)
-              : townData?.data
-                  .filter((towns) => towns.choiceYN === 'Y')[0]
-                  ?.neighborhoodName.slice(0, 3),
-          ),
-        )
-      : mainData.filter((data) =>
-          data.itemsTownLocation.includes(nonMemberTown),
-        );
-
-  const onSortByDate = onSortByLocation.sort((data1, data2) => {
-    return data2.itemRegistDate - data1.itemRegistDate;
   });
 
   // 페이지 변경
@@ -99,7 +81,7 @@ function Main({ mainData, nonMemberTown }) {
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, townData, onSortByLocation, nonMemberTown });
+    console.log({ userData, townData, boardData, nonMemberTown });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
@@ -127,20 +109,27 @@ function Main({ mainData, nonMemberTown }) {
           backgroundColor: '#f5f5f5',
         }}
       >
-        {onSortByDate?.length ? (
+        {boardData?.data?.length ? (
           <>
             <img
               className="main_banner"
               src={`${process.env.PUBLIC_URL}/assets/images/main_banner.jpg`}
               alt="banner"
             />
-            {onSortByDate?.map((data) => (
-              <MainItems
-                key={data.itemId}
-                {...data}
-                onClickToDetailPage={onClickToDetailPage}
-              />
-            ))}
+            {boardData?.data
+              ?.sort(
+                (a, b) =>
+                  b.deadline.slice(0, 10).replace(/-/g, '') -
+                  a.deadline.slice(0, 10).replace(/-/g, ''),
+              )
+              .map((data) => (
+                <MainItems
+                  key={data.noticeId}
+                  {...data}
+                  onClickToDetailPage={onClickToDetailPage}
+                  townData={townData}
+                />
+              ))}
           </>
         ) : (
           <MainShowNoData>

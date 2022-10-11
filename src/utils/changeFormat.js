@@ -15,31 +15,28 @@ export const changeDate = (originDate) => {
   return originDate;
 };
 
-export const changeTagFormat = (tag, isHomemade) => {
-  switch (tag[0]) {
-    case '배달':
+export const changeTagFormat = (category) => {
+  switch (category) {
+    case '300':
       return ['배달 🛵'];
-    case 'OTT':
+    case '600':
       return ['OTT 📺'];
-    case '식품':
-      if (isHomemade) {
-        return ['식품 🍎', '홈메이드 🧡'];
-      }
+    case '100':
       return ['식품 🍎'];
-    case '의류':
+    case '400':
       return ['의류 👕'];
-    case '장보기친구':
+    case '900':
       return ['장보기친구 🙋 '];
-    case '생활용품':
+    case '200':
       return ['생활용품 🧹 '];
-    case '미용/화장품':
+    case '500':
       return ['미용/화장품 💄 '];
-    case '온라인강의/Software':
+    case '700':
       return ['온라인강의/Software 💻 '];
-    case '반려동물':
+    case '800':
       return ['반려동물 🐾 '];
 
     default:
-      return tag;
+      return category;
   }
 };

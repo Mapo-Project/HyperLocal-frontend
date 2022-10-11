@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -12,7 +12,7 @@ import Interesting from './pages/Interesting';
 import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
-import { mainItemsData } from './utils/dummyData/mainPageData';
+
 import CategorySearch from './pages/Main/components/TagSearch';
 import Chat from './pages/Chat';
 import Test from './pages/Test';
@@ -24,7 +24,7 @@ if (!sessionStorage.nonMemberTown) {
 }
 
 function App() {
-  const [mainData, setMaindata] = useState([...mainItemsData]);
+  // const [mainData, setMaindata] = useState([...mainItemsData]);
 
   const [nonMemberTown, setNonMemberTown] = useState(
     sessionStorage.nonMemberTown,
@@ -33,25 +33,25 @@ function App() {
   const [tempTown, setTempTown] = useState('');
 
   // new Data
-  const dataId = useRef(12);
+  // const dataId = useRef(12);
 
   // 하트
-  const onClickHeart = useCallback((id) => {
-    setMaindata((prov) =>
-      prov.map((data) =>
-        data.itemId === id
-          ? {
-              ...data,
-              isHeartEmpty: !data.isHeartEmpty,
+  // const onClickHeart = useCallback((id) => {
+  //   setMaindata((prov) =>
+  //     prov.map((data) =>
+  //       data.itemId === id
+  //         ? {
+  //             ...data,
+  //             isHeartEmpty: !data.isHeartEmpty,
 
-              itemsHeartCount: !data.isHeartEmpty
-                ? data.itemsHeartCount + 1
-                : data.itemsHeartCount - 1,
-            }
-          : data,
-      ),
-    );
-  }, []);
+  //             itemsHeartCount: !data.isHeartEmpty
+  //               ? data.itemsHeartCount + 1
+  //               : data.itemsHeartCount - 1,
+  //           }
+  //         : data,
+  //     ),
+  //   );
+  // }, []);
 
   return (
     <>
@@ -63,8 +63,8 @@ function App() {
             path="/"
             element={
               <Main
-                mainData={mainData}
-                onClickHeart={onClickHeart}
+                // mainData={mainData}
+                // onClickHeart={onClickHeart}
                 nonMemberTown={nonMemberTown}
               />
             }
@@ -97,19 +97,18 @@ function App() {
               />
             }
           />
-          <Route
-            path="/create"
-            element={<Create dataId={dataId} setMaindata={setMaindata} />}
-          />
+          <Route path="/create" element={<Create />} />
           <Route
             path="/interesting"
-            element={<Interesting mainData={mainData} />}
+            element={<Interesting />}
+            // element={<Interesting mainData={mainData} />}
           />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/chat" element={<Chat />} />
           <Route
             path="/detail/:currentItemId"
-            element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
+            element={<Detail />}
+            // element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
           />
           <Route path="/test" element={<Test />} />
         </Routes>
