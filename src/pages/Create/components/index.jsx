@@ -3,6 +3,7 @@ import DatePicker, { CalendarContainer } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 import { getYear, getMonth } from 'date-fns';
+
 import {
   BarterContainer,
   CategoryLabel,
@@ -27,8 +28,6 @@ import {
   SelectPhotoContainer,
   SelectPhotoWrapper,
 } from './style';
-
-import { category as categroies } from '../../../utils/dummyData/createPageData';
 
 export const HeaderText = React.memo(function HeaderText({ onClickToMain }) {
   return (
@@ -134,6 +133,7 @@ export const SelectCategory = React.memo(function SelectCategory({
   isShowCategory,
   category,
   setCategory,
+  categroies,
 }) {
   return (
     <SelectCategoryWrapper
@@ -156,7 +156,7 @@ export const SelectCategory = React.memo(function SelectCategory({
         />
       )}
 
-      <CategoryLabel>{category}</CategoryLabel>
+      <CategoryLabel>{category.codeName}</CategoryLabel>
       <CategoryModalCover show={isShowCategory} category={category} />
       <CategorySelectOptions show={isShowCategory}>
         {categroies?.map((option, idx) => (
@@ -164,11 +164,15 @@ export const SelectCategory = React.memo(function SelectCategory({
             key={idx}
             onClick={(e) => {
               e.stopPropagation();
-              setCategory(e.target.textContent);
+              setCategory((prev) => ({
+                ...prev,
+                codeName: option.codeName,
+                code: option.code,
+              }));
               setShowCategory((prev) => !prev);
             }}
           >
-            {option.label}
+            {option.codeName}
           </CategoryOption>
         ))}
       </CategorySelectOptions>
@@ -242,7 +246,7 @@ export const Confidence = React.memo(function Confidence({
 }) {
   return (
     <ConfidenceWrapper>
-      {category === '식품' && (
+      {category.codeName === '식품' && (
         <>
           <label htmlFor="confidence">
             <input
@@ -319,22 +323,22 @@ export const Barter = React.memo(function Barter({
           {/* 라디오 박스를 state로 설정하고 활성화되면 true, 체크해제는 false하여 조작한다. */}
           <RadioBox
             type="radio"
-            id={radioBox.value}
-            value={radioBox.value}
+            id={radioBox.codeName}
+            value={radioBox.codeName}
             name="barter"
-            disabled={radioBox.value === 'together' && isHomemade}
-            ishomemade={radioBox.value === 'together' && isHomemade}
+            disabled={radioBox.code === '100' && isHomemade}
+            ishomemade={radioBox.code === '100' && isHomemade}
             onClick={() => {
               setradioValue((prov) =>
                 prov.map((data) =>
-                  data.value === radioBox.value
+                  data.codeName === radioBox.codeName
                     ? { ...data, checked: !data.checked }
                     : { ...data, checked: false },
                 ),
               );
               if (!radioBox.checked) {
-                setPriceType(radioBox.value);
-                setPrice(radioBox.label);
+                setPriceType(radioBox.codeName);
+                setPrice(radioBox.codeName);
               } else {
                 setPriceType('');
                 setPrice('');
@@ -343,10 +347,10 @@ export const Barter = React.memo(function Barter({
             isChecked={radioBox.checked}
           />
           <RadioBoxLabel
-            htmlFor={radioBox.value}
-            ishomemade={radioBox.value === 'together' && isHomemade}
+            htmlFor={radioBox.codeName}
+            ishomemade={radioBox.code === '100' && isHomemade}
           >
-            {radioBox.label}
+            {radioBox.codeName}
           </RadioBoxLabel>
         </div>
       ))}

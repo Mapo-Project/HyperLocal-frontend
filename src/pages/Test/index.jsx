@@ -4,14 +4,13 @@ import axiosInstance from '../../utils/axiosConfig';
 
 export default function Test() {
   const [data, setData] = useState();
-  // const [data2, setData2] = useState();
+  const [data2, setData2] = useState();
 
   axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
   axios.defaults.headers.common.Authorization = `Bearer ${localStorage.accessToken}`;
   axios.defaults.timeout = 2500; // 응답 대기 시간
 
   useEffect(() => {
-    setData('');
     axios
       .get('/user/profile/select')
       .then((res) => console.log(res.data))
@@ -24,16 +23,18 @@ export default function Test() {
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
   }, []);
+
   useEffect(() => {
     // setData2('');
     axiosInstance
       .get('/board/neighborhood/select/1')
       .then((res) => {
-        console.log(res.data);
-        // setData2(res.data);
+        console.log(res.data.data);
+        setData(res.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
+
   // useEffect(() => {
   //   axiosInstance
   //     .post(
@@ -70,6 +71,7 @@ export default function Test() {
   //     })
   //     .catch((error) => console.log(error));
   // }, []);
+
   useEffect(() => {
     axiosInstance
       .get('/board/category/select/1/100')
@@ -79,15 +81,51 @@ export default function Test() {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/board/detail/select/a4e123ae-e815-469e-bfe9-3582ae718a8a')
+      .then((res) => {
+        console.log(res.data.data);
+        setData2(res.data.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  if (!data) {
+    return <div>로딩중...</div>;
+  }
   return (
     <div>
       <h1>테스트 페이지</h1>
-      <p>{data}</p>
-      {/* <p>
-        {data2.map((pages) => (
-          <div>{pages.data.title}</div>
-        ))}
-      </p> */}
+      <hr />
+      <h1>게시글 조회</h1>
+      {data.map((article) => (
+        <div
+          key={article.noticeId}
+          style={{ margin: '10px', padding: '10px', border: '1px solid #000' }}
+        >
+          <h1>{article.noticeId}</h1>
+          <h1>{article.title}</h1>
+          <h1>{article.category}</h1>
+          <h1>{article.price}</h1>
+          <h1>{article.personal}</h1>
+          <h1>{article.noticeImg}</h1>
+        </div>
+      ))}
+
+      <div
+        style={{ margin: '10px', padding: '10px', border: '1px solid #000' }}
+      >
+        <h1>{data2.noticeId}</h1>
+        <h1>{data2.title}</h1>
+        <h1>{data2.category}</h1>
+        <h1>{data2.description}</h1>
+        <h1>{data2.link}</h1>
+        <h1>{data2.price}</h1>
+        <h1>{data2.personal}</h1>
+        {/* <h1>{data2.noticeImg}</h1> */}
+      </div>
     </div>
   );
 }

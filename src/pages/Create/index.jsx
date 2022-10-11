@@ -24,23 +24,19 @@ import {
   SelectPaticipant,
   SelectPhoto,
 } from './components';
+import axiosInstance from '../../utils/axiosConfig';
 
-const radioBoxList = [
-  { label: '같이 정해요', value: 'together', checked: false },
-  { label: '나눔', value: 'share', checked: false },
-  { label: '물물교환', value: 'exchange', checked: false },
-];
+// const radioBoxList = [
+//   { label: '같이 정해요', value: 'together', checked: false },
+//   { label: '나눔', value: 'share', checked: false },
+//   { label: '물물교환', value: 'exchange', checked: false },
+// ];
 
-function Create({ setMaindata, dataId }) {
+function Create({ dataId }) {
   // 유저데이터
 
   const { data: userData } = useSWR(
     `/user/profile/select`,
-    fetcherAccessToken,
-    { dedupingInterval: 500 },
-  );
-  const { data: townData } = useSWR(
-    `/user/neighborhood/select`,
     fetcherAccessToken,
     { dedupingInterval: 500 },
   );
@@ -61,7 +57,9 @@ function Create({ setMaindata, dataId }) {
 
   // 카테고리
   const [isShowCategory, setShowCategory] = useState(false);
-  const [category, setCategory] = useState('카테고리');
+  const [category, setCategory] = useState({ codeName: '카테고리' });
+  const [categroies, setCategories] = useState();
+
   // 참여 인원
   const [participant, setParticipant] = useState(2);
 
@@ -70,12 +68,25 @@ function Create({ setMaindata, dataId }) {
   // 가격 유형
   const [priceType, setPriceType] = useState('');
   // radioBox
-  const [radioValue, setradioValue] = useState(radioBoxList);
+  const [radioValue, setradioValue] = useState();
 
   // console.log(radioValue);
   // 캘린더
   const [dueDate, setDueDate] = useState(null);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/board/menu/select')
+      .then((res) => {
+        console.log(res.data);
+        setradioValue(
+          res.data.data.howShare.map((elm) => ({ ...elm, checked: false })),
+        );
+        setCategories(res.data.data.category);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const navigate = useNavigate();
   // 데이터 제출
@@ -90,36 +101,45 @@ function Create({ setMaindata, dataId }) {
         price &&
         dueDate
       ) {
-        setMaindata((prov) => [
-          {
-            // eslint-disable-next-line no-param-reassign
-            itemId: dataId.current++,
-            itemsTag: [category],
-            itemsImg: img,
-            itemsHeadText: title,
-            itemsText: text,
-            itemsLink: link,
-            itemsConfidence: isConfidence,
-            itemsHomemade: isHomemade,
-            itemsTownLocation: townData?.data.filter(
-              (town) => town.choiceYN === 'Y',
-            )[0].neighborhoodName,
-            itemsLimitParticipants: participant,
-            itemsCurrentParticipants: 0,
-            itemsPrice: price,
-            itemsPriceType: priceType,
-            itemsHeartCount: 0,
-            itemsDeadline: dueDate,
-            isHeartEmpty: false,
-            isLock: !!isHomemade,
-            itemUserName: userData?.data?.nickname,
-            itemUserImg: userData?.data?.profileImg,
-            // eslint-disable-next-line radix
-            itemRegistDate: new Date(),
-          },
+        // setMaindata((prov) => [
+        //   {
+        //     itemsTag: [category],
+        //     itemsCurrentParticipants: 0,
+        //     itemsPrice: price,
+        //     itemsPriceType: priceType,
+        //     itemsHeartCount: 0,
+        //     isHeartEmpty: false,
+        //   },
 
-          ...prov,
-        ]);
+        //   ...prov,
+        // ]);
+        axiosInstance
+          .post(
+            '/board/register',
+            {
+              // board: img.map((elm) => elm.files),
+              board: [],
+              category: category.code,
+              title,
+              description: text,
+              link,
+              container_yn: isConfidence ? 'Y' : 'N',
+              homemade_yn: isHomemade ? 'Y' : 'N',
+              price: typeof price === 'string' ? 0 : price,
+              personnel: participant,
+              how_share: radioValue.filter((elm) => elm.checked)[0]?.code,
+              deadline: dueDate,
+              // deadline: '1',
+            },
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            },
+          )
+          .then((res) => console.log(res.data))
+          .catch((error) => console.log(error));
+
         console.log({
           dataId,
           img,
@@ -138,7 +158,6 @@ function Create({ setMaindata, dataId }) {
       }
     },
     [
-      userData,
       navigate,
       dataId,
       img,
@@ -152,8 +171,7 @@ function Create({ setMaindata, dataId }) {
       priceType,
       dueDate,
       category,
-      townData,
-      setMaindata,
+      radioValue,
     ],
   );
 
@@ -166,7 +184,7 @@ function Create({ setMaindata, dataId }) {
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
-  if (userData === undefined) {
+  if (userData === undefined || !radioValue || !categroies) {
     return <div>로딩중</div>;
   }
 
@@ -187,6 +205,7 @@ function Create({ setMaindata, dataId }) {
             isShowCategory={isShowCategory}
             category={category}
             setCategory={setCategory}
+            categroies={categroies}
           />
           <HeadAndText
             title={title}
