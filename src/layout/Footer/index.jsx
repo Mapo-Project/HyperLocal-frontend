@@ -9,9 +9,9 @@ function Footer({ page }) {
   const onClickToMainPage = useCallback(() => {
     navigate(`/`);
   }, [navigate]);
-  const onClickToInterestingPage = useCallback(() => {
-    navigate('/interesting');
-  }, [navigate]);
+  // const onClickToInterestingPage = useCallback(() => {
+  //   navigate('/interesting');
+  // }, [navigate]);
 
   const onClickToMyPage = useCallback(() => {
     navigate('/mypage');
@@ -57,9 +57,9 @@ function Footer({ page }) {
         role="button"
         onKeyDown={() => {}}
         tabIndex={0}
-        onClick={() => {
-          if (page !== 'interesting') onClickToInterestingPage();
-        }}
+        // onClick={() => {
+        //   if (page !== 'interesting') onClickToInterestingPage();
+        // }}
       >
         <div className="menu_border">
           {page === 'interesting' ? (

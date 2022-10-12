@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 
 import Scrollbars from 'react-custom-scrollbars-2';
 import { useNavigate } from 'react-router';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import {
   CreateButton,
   CreateButtonDisable,
@@ -101,18 +101,6 @@ function Create() {
         price &&
         dueDate
       ) {
-        // setMaindata((prov) => [
-        //   {
-        //     itemsTag: [category],
-        //     itemsCurrentParticipants: 0,
-        //     itemsPrice: price,
-        //     itemsPriceType: priceType,
-        //     itemsHeartCount: 0,
-        //     isHeartEmpty: false,
-        //   },
-
-        //   ...prov,
-        // ]);
         axiosInstance
           .post(
             '/board/register',
@@ -127,9 +115,9 @@ function Create() {
               homemade_yn: isHomemade ? 'Y' : 'N',
               price: typeof price === 'string' ? 0 : price,
               personnel: participant,
-              how_share: radioValue.filter((elm) => elm.checked)[0]?.code,
+              how_share:
+                radioValue.filter((elm) => elm.checked)[0]?.code || '100',
               deadline: dueDate,
-              // deadline: '1',
             },
             {
               headers: {
@@ -153,6 +141,7 @@ function Create() {
           dueDate,
           category,
         });
+        mutate();
         navigate('/', { replace: true });
       }
     },
@@ -177,10 +166,6 @@ function Create() {
   const onClickToMain = useCallback(() => {
     navigate('/');
   }, [navigate]);
-
-  useEffect(() => {
-    console.log('create 컴포넌트 리렌더링되는중');
-  });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined || !radioValue || !categroies) {

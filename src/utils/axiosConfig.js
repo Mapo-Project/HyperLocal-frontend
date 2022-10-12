@@ -9,6 +9,11 @@ const axiosInstance = axios.create({
   timeout: 2500, // 요청제한시간
 });
 
+export const axiosSimpleInstance = axios.create({
+  baseURL: BASE_URL,
+  timeout: 2500, // 요청제한시간
+});
+
 // axios 요청보내기 전 처리
 axiosInstance.interceptors.request.use(
   (request) => {

@@ -5,7 +5,9 @@ import useSWR from 'swr';
 
 import { MainPageContainer, MainScrollbars, MainShowNoData } from './style';
 
-import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import fetcherAccessToken, {
+  fetcherNonAccessToken,
+} from '../../utils/fetcherAccessToken';
 import FindTown from './components/FindTown';
 import MainButton from './components/MainButton';
 import Footer from '../../layout/Footer';
@@ -26,11 +28,11 @@ function Main({ nonMemberTown }) {
   );
 
   const { data: boardData } = useSWR(
-    `/board/neighborhood/select/4/${
+    `/board/neighborhood/select/1/${
       townData?.data.filter((towns) => towns.choiceYN === 'Y')[0]
         .neighborhoodName
     }`,
-    fetcherAccessToken,
+    fetcherNonAccessToken,
     { dedupingInterval: 500 },
   );
 
@@ -81,7 +83,12 @@ function Main({ nonMemberTown }) {
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, townData, boardData, nonMemberTown });
+    console.log({
+      userData,
+      townData,
+      boardData,
+      nonMemberTown,
+    });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.

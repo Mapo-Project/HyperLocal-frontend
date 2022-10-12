@@ -2,6 +2,7 @@ import React from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { getDate } from 'date-fns';
 import { DetailContentWrapper } from './style';
+import { changeTagFormat } from '../../../../utils/changeFormat';
 
 const DetailContent = React.memo(function DetailContent({
   itemsTag,
@@ -16,18 +17,13 @@ const DetailContent = React.memo(function DetailContent({
   itemUserName,
   itemsTownLocation,
   itemsLimitParticipants,
+  howShare,
 }) {
   return (
     <Scrollbars autoHide style={{ height: '530px' }}>
       <DetailContentWrapper>
         <div className="item_tag_wrapper">
-          <div className="item_tag">{itemsTag}</div>
-
-          {/* {changeTagFormat(itemsTag, itemsHomemade).map((tag, idx) => (
-            <div key={idx} className="item_tag">
-              {tag}
-            </div>
-          ))} */}
+          <div className="item_tag">{changeTagFormat(itemsTag)}</div>
         </div>
 
         <h1 className="item_title">{itemsHeadText}</h1>
@@ -51,7 +47,7 @@ const DetailContent = React.memo(function DetailContent({
             </a>
           </div>
         )}
-        {itemsConfidence && (
+        {itemsConfidence === 'Y' && (
           <div className="item_confidence_wrapper wrapper">
             <img
               alt="chore"
@@ -65,7 +61,15 @@ const DetailContent = React.memo(function DetailContent({
             alt="price"
             src={`${process.env.PUBLIC_URL}/assets/images/price.png`}
           />
-          <p>{itemsPrice}</p>
+          <p>
+            {itemsPrice !== 0 && howShare === '100'
+              ? '같이 정해요'
+              : howShare === '200'
+              ? '나눔'
+              : howShare === '300'
+              ? '물물교환'
+              : itemsPrice}
+          </p>
         </div>
         <div className="item_participant_wrapper wrapper">
           <img
@@ -82,7 +86,10 @@ const DetailContent = React.memo(function DetailContent({
             alt="duedate"
             src={`${process.env.PUBLIC_URL}/assets/images/date_range.png`}
           />
-          <p>{itemsDeadline}</p>
+          <p>{`${itemsDeadline?.slice(5, 7)}월 ${itemsDeadline?.slice(
+            8,
+            10,
+          )}일까지`}</p>
         </div>
         <div className="item_user_wrapper">
           {itemUserImg ? (
@@ -100,9 +107,11 @@ const DetailContent = React.memo(function DetailContent({
           <div className="user_create_date">
             {itemRegistDate
               ? `${
-                  getDate(new Date() - itemRegistDate) - 1 === 0
+                  getDate(new Date() - new Date(itemRegistDate)) - 1 === 0
                     ? '오늘 작성'
-                    : `${getDate(new Date() - itemRegistDate) - 1}일전 작성`
+                    : `${
+                        getDate(new Date() - new Date(itemRegistDate)) - 1
+                      }일전 작성`
                 }`
               : '1일전 작성'}
           </div>
