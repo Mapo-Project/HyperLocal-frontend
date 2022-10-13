@@ -12,7 +12,7 @@ import Footer from '../../layout/Footer';
 import MainItems from './components/MainItemsWrapper';
 import axiosInstance from '../../utils/axiosConfig';
 
-function Main({ mainData, nonMemberTown }) {
+function Main({ mainData, nonMemberTown, currentSearchValue }) {
   const { data: userData } = useSWR(
     `/user/profile/select`,
     fetcherAccessToken,
@@ -68,7 +68,13 @@ function Main({ mainData, nonMemberTown }) {
           data.itemsTownLocation.includes(nonMemberTown),
         );
 
-  const onSortByDate = onSortByLocation.sort((data1, data2) => {
+  const onSortBySearchValue = currentSearchValue
+    ? onSortByLocation.filter((elm) =>
+        elm.itemsHeadText.includes(currentSearchValue),
+      )
+    : onSortByLocation;
+
+  const onSortByDate = onSortBySearchValue.sort((data1, data2) => {
     return data2.itemRegistDate - data1.itemRegistDate;
   });
 
@@ -81,9 +87,9 @@ function Main({ mainData, nonMemberTown }) {
     navigate('/create');
   }, [navigate]);
 
-  // const onClickToCategorySearchPage = () => {
-  //   navigate('/search');
-  // };
+  const onClickToCategorySearchPage = () => {
+    navigate('/search');
+  };
 
   const onClickToDetailPage = useCallback(
     (id) => {
@@ -99,7 +105,13 @@ function Main({ mainData, nonMemberTown }) {
   }, [navigate]);
 
   useEffect(() => {
-    console.log({ userData, townData, onSortByLocation, nonMemberTown });
+    console.log({
+      userData,
+      townData,
+      onSortByLocation,
+      currentSearchValue,
+      nonMemberTown,
+    });
   });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
@@ -113,6 +125,7 @@ function Main({ mainData, nonMemberTown }) {
         userData={userData}
         onClickToLoginPage={onClickToLoginPage}
         onClickToMyPage={onClickToMyPage}
+        onClickToCategorySearchPage={onClickToCategorySearchPage}
         onSelectAdditionalTown={onSelectAdditionalTown}
         nonMemberTown={nonMemberTown}
       />

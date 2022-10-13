@@ -32,6 +32,8 @@ function App() {
 
   const [tempTown, setTempTown] = useState('');
 
+  const [currentSearchValue, setCurrentSearchValue] = useState('');
+
   // new Data
   const dataId = useRef(12);
 
@@ -66,10 +68,19 @@ function App() {
                 mainData={mainData}
                 onClickHeart={onClickHeart}
                 nonMemberTown={nonMemberTown}
+                currentSearchValue={currentSearchValue}
               />
             }
           />
-          <Route path="/search" element={<CategorySearch />} />
+          <Route
+            path="/search"
+            element={
+              <CategorySearch
+                setCurrentSearchValue={setCurrentSearchValue}
+                currentSearchValue={currentSearchValue}
+              />
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Login />} />
           <Route
