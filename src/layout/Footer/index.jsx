@@ -122,7 +122,9 @@ function Footer({ page }) {
         onKeyDown={() => {}}
         tabIndex={0}
         onClick={() => {
-          if (page !== 'mypage' && userData) onClickToMyPage();
+          page !== 'mypage' && userData
+            ? onClickToMyPage()
+            : navigate('/login');
         }}
       >
         <div className="menu_border">
