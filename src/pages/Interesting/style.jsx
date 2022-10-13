@@ -4,6 +4,25 @@ import MainContainer from '../../layout/MainContainer';
 export const InterestingMainContainer = styled(MainContainer)`
   position: relative;
   overflow: hidden;
+
+  .interesting_title {
+    margin: 16px 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    text-align: center;
+
+    color: #212121;
+  }
+  p {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+
+    color: #9e9e9e;
+  }
 `;
 
 export const InterestingContent = styled.div`
@@ -26,6 +45,9 @@ export const InterestingContent = styled.div`
 
     border-radius: 16px;
   }
+  .interesting_main_img.dummy {
+    background-color: #e0e0e0;
+  }
   .content_wrapper {
     display: flex;
     flex-direction: column;
@@ -34,10 +56,13 @@ export const InterestingContent = styled.div`
   .content_sub_wrapper {
     font-weight: 400;
     display: flex;
-    span {
+    span.interesting--content {
       display: flex;
       gap: 2px;
       align-items: center;
+    }
+    .interesting--content > span {
+      margin-top: 2px;
     }
   }
   .interesting--content_price {
@@ -45,60 +70,18 @@ export const InterestingContent = styled.div`
   }
 
   .interesting--content_participant {
-    margin-left: 7.3px;
+    margin-left: 4px;
     margin-right: 24px;
   }
 
   .interesting--price_img {
-    height: 12px;
+    width: 20px;
   }
 
   .interesting--pariticipant_img {
-    width: 13.3px;
-    padding: 3.33px;
-    box-sizing: content-box;
+    width: 20px;
   }
   .interesting--deadline_img {
-    width: 15px;
-    padding: 1.67px 2.5px;
-    box-sizing: content-box;
-  }
-`;
-
-export const InterestingFooter = styled.footer`
-  background-color: #ffffff;
-  font-family: 'Pretendard';
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 80px;
-  z-index: 1;
-  display: flex;
-  gap: 8px;
-
-  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.1);
-  div.menu_container {
-    padding-top: 8px;
-    padding-left: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .menu_border {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 64px;
-    height: 32px;
-    border-radius: 16px;
-  }
-  .menu_text {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
+    width: 20px;
   }
 `;

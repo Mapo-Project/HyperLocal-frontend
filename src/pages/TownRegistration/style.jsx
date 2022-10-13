@@ -7,7 +7,6 @@ export const TownRegistrationContainer = styled(MainContainer)`
   text-align: center;
   h1 {
     margin-top: 16px;
-    margin-bottom: 44px;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -17,6 +16,24 @@ export const TownRegistrationContainer = styled(MainContainer)`
 
     color: #212121;
   }
+  h2 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+
+    color: #9e9e9e;
+  }
+  .town_back_btn {
+    position: absolute;
+    height: 24px;
+    top: 16px;
+    left: 16px;
+    cursor: pointer;
+  }
 `;
 
 export const TownRegistrationList = styled.div`
@@ -25,13 +42,12 @@ export const TownRegistrationList = styled.div`
   gap: 16px;
 `;
 export const RegisteredTown = styled.button`
+  position: relative;
   border: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   padding: 12px 16px;
-
   width: 328px;
   height: 48px;
 
@@ -53,7 +69,11 @@ export const RegisteredTown = styled.button`
   cursor: pointer;
 
   img {
+    top: 14px;
+    right: 20px;
+    position: absolute;
     width: 20px;
+    height: 20px;
   }
 `;
 export const UnRegisteredTown = styled.button`
@@ -71,7 +91,7 @@ export const UnRegisteredTown = styled.button`
   cursor: pointer;
 
   img {
-    width: 14px;
+    width: 20px;
   }
 `;
 

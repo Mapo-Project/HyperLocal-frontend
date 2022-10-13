@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const ResetStyle = createGlobalStyle`
 
+
 /* RESET CSS */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -49,13 +50,15 @@ table {
 
 
 *{
+	font-family: 'Pretendard';
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 body {
     font-family: 'Noto Sans KR', sans-serif;
-	${'' /* background-color: ${({ theme }) => theme.colors.bg}; */}
+	background-color: ${({ theme }) => theme.background.lightgray};
+	
 }
 ol, ul {
 	list-style: none;
@@ -65,9 +68,6 @@ a, ul, li{
     color: inherit;
 }
 
-body{
-	background-color: #d7d2cb;
-}
 `;
 
 export default ResetStyle;

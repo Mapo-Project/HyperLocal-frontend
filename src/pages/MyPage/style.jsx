@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MainContainer from '../../layout/MainContainer';
 
 export const MyPageMainContainer = styled(MainContainer)`
+  position: relative;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -10,7 +11,7 @@ export const MyPageMainContainer = styled(MainContainer)`
 
   letter-spacing: 0.15px;
 
-  color: #000000;
+  color: #212121;
 
   h2 {
     font-family: 'Pretendard';
@@ -22,7 +23,7 @@ export const MyPageMainContainer = styled(MainContainer)`
 
     letter-spacing: -0.25px;
 
-    color: #000000;
+    color: #212121;
     margin-left: 28px;
     margin-top: 20px;
   }
@@ -46,13 +47,13 @@ export const ProfileHeader = styled.div`
 
     letter-spacing: 0.15px;
 
-    color: #000000;
+    color: #212121;
   }
   img {
     position: absolute;
-    width: 20px;
-    top: 42px;
-    right: 18px;
+    width: 24px;
+    top: 16px;
+    right: 16px;
     cursor: pointer;
   }
 `;
@@ -71,7 +72,7 @@ export const ProfileWrapper = styled.div`
 
     letter-spacing: -0.25px;
 
-    color: #000000;
+    color: #212121;
     h1 {
       margin-bottom: 14px;
     }
@@ -82,7 +83,8 @@ export const ProfileWrapper = styled.div`
   }
   img {
     border-radius: 29px;
-    width: 96px;
+    width: 88px;
+    height: 88px;
   }
 `;
 

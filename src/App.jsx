@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import React, { useCallback, useRef, useState } from 'react';
+
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import TownRegistration from './pages/TownRegistration';
@@ -12,35 +13,28 @@ import Detail from './pages/Detail';
 import TownSearch from './pages/TownSearch';
 import MyPage from './pages/MyPage';
 import { mainItemsData } from './utils/dummyData/mainPageData';
-import CategorySearch from './pages/Main/Components/TagSearch';
+import CategorySearch from './pages/Main/components/TagSearch';
+import Chat from './pages/Chat';
+
+// 비회원의 초기 동네 설정
+
+if (!sessionStorage.nonMemberTown) {
+  sessionStorage.setItem('nonMemberTown', '성산동');
+}
 
 function App() {
-  const [currentTown, setCurrentTown] = useState([]);
-  const [currentSelectedTown, setCurrentSelectedTown] = useState('성산동');
-  const townId = useRef(0);
-  const onSelectTown = (newTown) => {
-    setCurrentTown((currentVal) => [
-      ...currentVal,
-      { town: newTown, townId: townId.current++ },
-    ]);
-  };
-  const onDeleteTown = (id) => {
-    setCurrentTown((currentVal) => [
-      ...currentVal.filter((townValue) => id !== townValue.townId),
-    ]);
-  };
-
-  const onSelectCurrentTown = (curTown) => {
-    setCurrentSelectedTown(curTown);
-  };
-
   const [mainData, setMaindata] = useState([...mainItemsData]);
+
+  const [nonMemberTown, setNonMemberTown] = useState(
+    sessionStorage.nonMemberTown,
+  );
+
+  const [tempTown, setTempTown] = useState('');
+
+  const [currentSearchValue, setCurrentSearchValue] = useState('');
+
   // new Data
   const dataId = useRef(12);
-
-  // const onDetailItem = useCallback((id) => {
-  //   setMaindata((prov) => prov.filter((data) => `${data.itemId}` === id));
-  // }, []);
 
   // 하트
   const onClickHeart = useCallback((id) => {
@@ -63,21 +57,29 @@ function App() {
   return (
     <>
       <ResetStyle />
+
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route
             path="/"
             element={
               <Main
-                currentSelectedTown={currentSelectedTown}
-                currentTown={currentTown}
-                onSelectCurrentTown={onSelectCurrentTown}
                 mainData={mainData}
                 onClickHeart={onClickHeart}
+                nonMemberTown={nonMemberTown}
+                currentSearchValue={currentSearchValue}
               />
             }
           />
-          <Route path="/search" element={<CategorySearch />} />
+          <Route
+            path="/search"
+            element={
+              <CategorySearch
+                setCurrentSearchValue={setCurrentSearchValue}
+                currentSearchValue={currentSearchValue}
+              />
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<Login />} />
           <Route
@@ -89,9 +91,10 @@ function App() {
             path="/town"
             element={
               <TownSearch
-                currentTown={currentTown}
-                onSelectTown={onSelectTown}
-                onSelectCurrentTown={onSelectCurrentTown}
+                nonMemberTown={nonMemberTown}
+                setNonMemberTown={setNonMemberTown}
+                tempTown={tempTown}
+                setTempTown={setTempTown}
               />
             }
           />
@@ -99,46 +102,24 @@ function App() {
             path="/town/regist"
             element={
               <TownRegistration
-                currentTown={currentTown}
-                onDeleteTown={onDeleteTown}
-                currentSelectedTown={currentSelectedTown}
-                onSelectCurrentTown={onSelectCurrentTown}
+                nonMemberTown={nonMemberTown}
+                setTempTown={setTempTown}
               />
             }
           />
           <Route
             path="/create"
-            element={
-              <Create
-                currentSelectedTown={currentSelectedTown}
-                dataId={dataId}
-                setMaindata={setMaindata}
-              />
-            }
+            element={<Create dataId={dataId} setMaindata={setMaindata} />}
           />
           <Route
             path="/interesting"
             element={<Interesting mainData={mainData} />}
           />
-          <Route
-            path="/mypage"
-            element={
-              <MyPage
-                currentSelectedTown={currentSelectedTown}
-                currentTown={currentTown}
-                onSelectCurrentTown={onSelectCurrentTown}
-              />
-            }
-          />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/chat" element={<Chat />} />
           <Route
             path="/detail/:currentItemId"
-            element={
-              <Detail
-                mainData={mainData}
-                // onDetailItem={onDetailItem}
-                onClickHeart={onClickHeart}
-              />
-            }
+            element={<Detail mainData={mainData} onClickHeart={onClickHeart} />}
           />
         </Routes>
       </BrowserRouter>

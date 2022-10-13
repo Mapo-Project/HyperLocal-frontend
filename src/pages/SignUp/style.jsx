@@ -55,6 +55,7 @@ export const Input = styled.input`
 
   font-family: 'Pretendard';
   padding-left: 12px;
+  padding-right: 50px;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -64,7 +65,6 @@ export const Input = styled.input`
   border-radius: 4px 4px 0px 0px;
 
   border: 0;
-  border-bottom: 1px solid black;
   ::placeholder,
   ::-webkit-input-placeholder {
     color: #9e9e9e;
@@ -86,9 +86,9 @@ export const Error = styled.div`
 `;
 export const ErrorChecker = styled.img`
   position: absolute;
-  top: 40px;
-  right: 19px;
-  width: 12.7px;
+  top: 33px;
+  right: 13px;
+  width: 24px;
 `;
 
 export const SignupButton = styled(Button)`

@@ -17,6 +17,23 @@ export const TownSearchContainer = styled(MainContainer)`
 
     color: #212121;
   }
+  .town_back_btn {
+    cursor: pointer;
+    width: 24px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+  p {
+    text-align: start;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 24px;
+    margin-bottom: 2px;
+    margin-left: 16px;
+  }
 `;
 export const TownSearchWrapper = styled.div`
   display: flex;
@@ -28,26 +45,25 @@ export const TownSearchWrapper = styled.div`
 
 export const Label = styled.label`
   position: relative;
-  height: 56px;
+  height: 48px;
   width: 328px;
   img {
     position: absolute;
-    top: 21px;
-    left: 19px;
-    width: 14px;
+    top: 12px;
+    left: 16px;
+    width: 24px;
   }
 `;
 
 export const TownSearchInput = styled.input`
   width: 100%;
-  height: 56px;
+  height: 48px;
   padding-left: 44px;
 
   background: #f5f5f5;
   border-radius: 4px 4px 0px 0px;
 
   border: 0;
-  border-bottom: 1px solid black;
 
   font-family: 'Pretendard';
   font-style: normal;
@@ -70,7 +86,7 @@ export const TownSearchButton = styled(Button)`
   gap: 9px;
 
   img {
-    width: 18px;
+    width: 20px;
   }
 `;
 

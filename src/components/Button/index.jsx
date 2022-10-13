@@ -12,7 +12,6 @@ const Button = styled.button`
 
   cursor: pointer;
 
-  font-family: 'Pretendard';
   color: #ffffff;
   font-style: normal;
   font-weight: 500;

@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { Navigate } from 'react-router';
-
+import React, { useCallback } from 'react';
 import useSWR from 'swr';
 
-import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
+import axiosInstance from '../../utils/axiosConfig';
+
 import {
   MyPageMainContainer,
   MyPageProfileBox,
@@ -12,30 +12,31 @@ import {
   ProfileHeader,
   ProfileWrapper,
 } from './style';
+import Footer from '../../layout/Footer';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
-function MyPage({ currentSelectedTown, currentTown }) {
+function MyPage() {
   // 유저데이터
   const { data: userData, mutate: userMutate } = useSWR(
-    `${BACKEND_URL}/user/profile/select`,
+    `/user/profile/select`,
     fetcherAccessToken,
+    { dedupingInterval: 500 },
   );
 
-  const [logout, setLogout] = useState(true);
+  const { data: townData } = useSWR(
+    `/user/neighborhood/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
+  const navigate = useNavigate();
 
   /**
    * 로그아웃
    * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const Logout = useCallback(() => {
-    setLogout(false);
-    axios
-      .get(`${BACKEND_URL}/user/logout`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.accessToken}`,
-        },
-      })
+    // setLogout(false);
+    axiosInstance
+      .get(`/user/logout`)
       .then((response) => {
         console.log(response.data);
         // setLogout(true);
@@ -47,19 +48,16 @@ function MyPage({ currentSelectedTown, currentTown }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [setLogout, userMutate]);
+    navigate('/');
+  }, [userMutate, navigate]);
 
   /**
    * 회원탈퇴
    * 성공 시 로컬스토리지 비우고 swr데이터(유저 데이터) 초기화한다.
    */
   const withdrawal = useCallback(() => {
-    axios
-      .delete(`${BACKEND_URL}/user/withdrawal`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.accessToken}`,
-        },
-      })
+    axiosInstance
+      .delete(`/user/withdrawal`)
       .then((response) => {
         console.log(response);
         // 탈퇴 후 로컬스토리지 비우고 swr데이터들을 초기화한다.
@@ -69,43 +67,47 @@ function MyPage({ currentSelectedTown, currentTown }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [userMutate]);
+    navigate('/');
+  }, [userMutate, navigate]);
 
-  console.log({ currentSelectedTown, currentTown });
-  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
-  if (userData === undefined) {
-    return <div>로딩중</div>;
-  }
-
-  // 유저데이터가 없으면 첫 페이지로 이동
   if (!userData) {
-    return <Navigate to="/login" replace />;
+    return <Navigate replace to="/" />;
   }
-
   return (
     <MyPageMainContainer>
       <MyPageProfileBox>
         <ProfileHeader>
           <h1>MY</h1>
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/mypage_settings.png`}
+            src={`${process.env.PUBLIC_URL}/assets/images/settings.png`}
             alt="setting"
           />
         </ProfileHeader>
         <ProfileWrapper>
-          <img alt="profile_img" src={userData.data.profileImg} />
+          {userData ? (
+            <img alt="profile_img" src={userData.data.profileImg} />
+          ) : (
+            <img
+              alt="dummy_img"
+              src={`${process.env.PUBLIC_URL}/assets/images/main_thumbnail.png`}
+            />
+          )}
           <div>
             <h1>
-              <b>아이디</b> {userData.data.nickname}
+              <b>아이디</b> {userData ? userData.data.nickname : '-'}
             </h1>
 
             <h1>
-              <b>내 동네</b> {currentSelectedTown}
+              <b>내 동네</b>{' '}
+              {userData
+                ? townData?.data.filter((town) => town.choiceYN === 'Y')[0]
+                    .neighborhoodName
+                : '-'}
             </h1>
           </div>
         </ProfileWrapper>
         <ProfileFooter>
-          등록 : 2022년 8월 4일 {'>>>>>>>>>>>>>>>>>>>>>>>>>'}
+          {'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'}
         </ProfileFooter>
       </MyPageProfileBox>
       <h2>나의 식빵 지수</h2>
@@ -117,14 +119,10 @@ function MyPage({ currentSelectedTown, currentTown }) {
         로그아웃
       </button>
 
-      <h2>---------- 개발용 ---------</h2>
-      <h2>email : {userData.data.email}</h2>
-      <h2>전화번호 : {userData.data.phoneNum}</h2>
-      {logout ? <h2>로그인 중</h2> : <h2>로그인해라</h2>}
-
       <button style={{ marginLeft: '28px' }} type="submit" onClick={withdrawal}>
         회원탈퇴
       </button>
+      <Footer page="mypage" />
     </MyPageMainContainer>
   );
 }

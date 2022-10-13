@@ -21,6 +21,8 @@
     "error" or 2 - 에러 호출
   */
   "rules": {
+    "consistent-return": 0,
+    "import/no-unresolved": 0,
     "no-useless-escape": 0,
     "no-unused-expressions": 0,
     "no-plusplus": 0,
