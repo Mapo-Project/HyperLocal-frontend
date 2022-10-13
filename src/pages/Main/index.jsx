@@ -104,15 +104,15 @@ function Main({ mainData, nonMemberTown, currentSearchValue }) {
     navigate('/mypage');
   }, [navigate]);
 
-  useEffect(() => {
-    console.log({
-      userData,
-      townData,
-      onSortByLocation,
-      currentSearchValue,
-      nonMemberTown,
-    });
-  });
+  // useEffect(() => {
+  //   console.log({
+  //     userData,
+  //     townData,
+  //     onSortByLocation,
+  //     currentSearchValue,
+  //     nonMemberTown,
+  //   });
+  // });
 
   // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
   if (userData === undefined && !townData) {
@@ -159,13 +159,9 @@ function Main({ mainData, nonMemberTown, currentSearchValue }) {
           <MainShowNoData>
             <h1>
               찾고있는 공동구매가 없나요?
-              <br /> 직접 마켓을 열어 공동구매를
+              <br /> 직접 마켓을 열어
               <br /> 함께 할 이웃을 찾아보세요!
             </h1>
-            <img
-              alt="no_data_img"
-              src={`${process.env.PUBLIC_URL}/assets/images/search.png`}
-            />
           </MainShowNoData>
         )}
       </MainScrollbars>

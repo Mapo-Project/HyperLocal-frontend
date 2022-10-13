@@ -6,7 +6,7 @@ export const InterestingMainContainer = styled(MainContainer)`
   overflow: hidden;
 
   .interesting_title {
-    margin-top: 16px;
+    margin: 16px 0;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -15,6 +15,13 @@ export const InterestingMainContainer = styled(MainContainer)`
     text-align: center;
 
     color: #212121;
+  }
+  p {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+
+    color: #9e9e9e;
   }
 `;
 

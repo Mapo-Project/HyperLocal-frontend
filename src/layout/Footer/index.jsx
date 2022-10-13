@@ -1,9 +1,17 @@
 import React, { useCallback } from 'react';
+import useSWR from 'swr';
 
 import { useNavigate } from 'react-router';
 import { FooterWrapper } from './style';
+import fetcherAccessToken from '../../utils/fetcherAccessToken';
 
 function Footer({ page }) {
+  const { data: userData } = useSWR(
+    `/user/profile/select`,
+    fetcherAccessToken,
+    { dedupingInterval: 500 },
+  );
+
   const navigate = useNavigate();
 
   const onClickToMainPage = useCallback(() => {
@@ -114,7 +122,7 @@ function Footer({ page }) {
         onKeyDown={() => {}}
         tabIndex={0}
         onClick={() => {
-          if (page !== 'mypage') onClickToMyPage();
+          if (page !== 'mypage' && userData) onClickToMyPage();
         }}
       >
         <div className="menu_border">

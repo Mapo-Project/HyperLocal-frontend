@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Scrollbars from 'react-custom-scrollbars-2';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import useSWR from 'swr';
 import {
   CreateButton,
@@ -120,20 +120,20 @@ function Create({ setMaindata, dataId }) {
 
           ...prov,
         ]);
-        console.log({
-          dataId,
-          img,
-          title,
-          text,
-          link,
-          isConfidence,
-          isHomemade,
-          participant,
-          price,
-          priceType,
-          dueDate,
-          category,
-        });
+        // console.log({
+        //   dataId,
+        //   img,
+        //   title,
+        //   text,
+        //   link,
+        //   isConfidence,
+        //   isHomemade,
+        //   participant,
+        //   price,
+        //   priceType,
+        //   dueDate,
+        //   category,
+        // });
         navigate('/', { replace: true });
       }
     },
@@ -161,19 +161,14 @@ function Create({ setMaindata, dataId }) {
     navigate('/');
   }, [navigate]);
 
-  useEffect(() => {
-    console.log('create 컴포넌트 리렌더링되는중');
-  });
-
-  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
+  // 유저데이터가 없으면 첫 페이지로 이동
   if (userData === undefined) {
     return <div>로딩중</div>;
   }
 
-  // // 유저데이터가 없으면 첫 페이지로 이동
-  // if (!userData) {
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!userData) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <CreatePageMainContainer>

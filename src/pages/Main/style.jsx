@@ -26,8 +26,8 @@ export const MainShowNoData = styled.div`
     font-family: 'Pretendard';
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
-    line-height: 150%;
+    font-size: 20px;
+    line-height: 28px;
 
     display: flex;
     align-items: center;

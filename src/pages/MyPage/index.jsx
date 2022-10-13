@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import useSWR from 'swr';
 
+import { Navigate, useNavigate } from 'react-router';
 import fetcherAccessToken from '../../utils/fetcherAccessToken';
 import axiosInstance from '../../utils/axiosConfig';
 
@@ -26,7 +27,7 @@ function MyPage() {
     fetcherAccessToken,
     { dedupingInterval: 500 },
   );
-  // const [logout, setLogout] = useState(true);
+  const navigate = useNavigate();
 
   /**
    * 로그아웃
@@ -47,7 +48,8 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [userMutate]);
+    navigate('/');
+  }, [userMutate, navigate]);
 
   /**
    * 회원탈퇴
@@ -65,13 +67,12 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [userMutate]);
+    navigate('/');
+  }, [userMutate, navigate]);
 
-  // swr로 데이터를 불러오는 중에는 로딩중 창을 띄운다.
-  if (userData === undefined) {
-    return <div>로딩중</div>;
+  if (!userData) {
+    return <Navigate replace to="/" />;
   }
-
   return (
     <MyPageMainContainer>
       <MyPageProfileBox>
@@ -106,7 +107,7 @@ function MyPage() {
           </div>
         </ProfileWrapper>
         <ProfileFooter>
-          등록 : 2022년 8월 4일 {'>>>>>>>>>>>>>>>>>>>>>>>>>'}
+          {'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'}
         </ProfileFooter>
       </MyPageProfileBox>
       <h2>나의 식빵 지수</h2>
@@ -117,11 +118,6 @@ function MyPage() {
       <button style={{ marginLeft: '28px' }} type="submit" onClick={Logout}>
         로그아웃
       </button>
-
-      {/* <h2>---------- 개발용 ---------</h2>
-      <h2>email : {userData ? userData.data.email : '-'}</h2>
-      <h2>전화번호 : {userData ? userData.data.phoneNum : '-'}</h2>
-      {logout ? <h2>로그인 중</h2> : <h2>로그인해라</h2>} */}
 
       <button style={{ marginLeft: '28px' }} type="submit" onClick={withdrawal}>
         회원탈퇴
